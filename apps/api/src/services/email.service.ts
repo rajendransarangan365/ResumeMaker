@@ -1,6 +1,13 @@
 import nodemailer from 'nodemailer';
 import { env } from '../config/env';
 
+export interface EmailDeliveryResult {
+  sent: boolean;
+  reason?: string;
+  error?: string;
+  code?: string;
+}
+
 class EmailService {
   private transporter: nodemailer.Transporter | null = null;
   private isConfigured: boolean = false;
@@ -18,9 +25,9 @@ class EmailService {
             user: env.SMTP_USER,
             pass: env.SMTP_PASS,
           },
-          connectionTimeout: 3500,
-          greetingTimeout: 3500,
-          socketTimeout: 4000,
+          connectionTimeout: 4000,
+          greetingTimeout: 4000,
+          socketTimeout: 5000,
         });
       } else {
         this.transporter = nodemailer.createTransport({
@@ -31,9 +38,9 @@ class EmailService {
             user: env.SMTP_USER,
             pass: env.SMTP_PASS,
           },
-          connectionTimeout: 3500,
-          greetingTimeout: 3500,
-          socketTimeout: 4000,
+          connectionTimeout: 4000,
+          greetingTimeout: 4000,
+          socketTimeout: 5000,
         });
       }
       this.isConfigured = true;
@@ -46,7 +53,7 @@ class EmailService {
     }
   }
 
-  public async sendVerificationOtp(email: string, otp: string): Promise<boolean> {
+  public async sendVerificationOtp(email: string, otp: string): Promise<EmailDeliveryResult> {
     const subject = `${otp} is your verification code - ATS Resume Studio`;
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 580px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px;">
@@ -68,7 +75,7 @@ class EmailService {
     return this.sendMail(email, subject, text, html, otp);
   }
 
-  public async sendPasswordResetOtp(email: string, otp: string): Promise<boolean> {
+  public async sendPasswordResetOtp(email: string, otp: string): Promise<EmailDeliveryResult> {
     const subject = `${otp} is your password recovery code - ATS Resume Studio`;
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 580px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px;">
@@ -96,16 +103,19 @@ class EmailService {
     text: string,
     html: string,
     otpCode: string
-  ): Promise<boolean> {
+  ): Promise<EmailDeliveryResult> {
     if (!this.isConfigured || !this.transporter) {
-      // Local development simulation fallback
       console.log(`\n======================================================`);
-      console.log(`[LOCAL DEV EMAIL DISPATCH]`);
+      console.log(`[LOCAL DEV EMAIL DISPATCH - SMTP NOT CONFIGURED]`);
       console.log(`To: ${to}`);
       console.log(`Subject: ${subject}`);
       console.log(`>>> OTP CODE: [ ${otpCode} ] <<<`);
       console.log(`======================================================\n`);
-      return true;
+      return {
+        sent: false,
+        reason: 'SMTP credentials not configured on server (SMTP_USER or SMTP_PASS missing).',
+        code: 'SMTP_NOT_CONFIGURED',
+      };
     }
 
     try {
@@ -117,7 +127,7 @@ class EmailService {
         html,
       });
       console.log(`[EmailService] Email successfully delivered to ${to} via Gmail SMTP`);
-      return true;
+      return { sent: true };
     } catch (error: any) {
       console.error(`[EmailService] SMTP delivery failed for ${to}:`, error.message);
       console.warn(`[EmailService] OTP logged to server console below for manual retrieval:`);
@@ -127,7 +137,12 @@ class EmailService {
       console.log(`Subject: ${subject}`);
       console.log(`>>> OTP CODE: [ ${otpCode} ] <<<`);
       console.log(`======================================================\n`);
-      return true;
+      return {
+        sent: false,
+        reason: error.message || 'SMTP delivery rejected by mail server',
+        error: error.message,
+        code: error.code || 'SMTP_ERROR',
+      };
     }
   }
 }

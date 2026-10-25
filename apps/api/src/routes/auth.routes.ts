@@ -97,19 +97,28 @@ router.post(
         maxAttempts: env.OTP_MAX_ATTEMPTS,
       });
 
-      await emailService.sendVerificationOtp(normalizedEmail, otp);
+      const mailResult = await emailService.sendVerificationOtp(normalizedEmail, otp);
 
       await SecurityAuditLog.create({
         ipAddress: req.ip || '127.0.0.1',
         userAgent: req.headers['user-agent'] || '',
         action: 'USER_REGISTRATION_REQUESTED',
-        status: 'success',
-        metadata: { email: normalizedEmail },
+        status: mailResult.sent ? 'success' : 'partial_success',
+        metadata: { email: normalizedEmail, emailDelivery: mailResult },
       });
 
       res.status(201).json({
         success: true,
-        message: 'Registration initiated. Verification OTP sent to your email.',
+        message: mailResult.sent
+          ? 'Registration initiated. Verification OTP sent to your email.'
+          : `Account created, but email delivery failed (${mailResult.reason || 'mail error'}).`,
+        data: {
+          emailDelivery: {
+            sent: mailResult.sent,
+            reason: mailResult.reason,
+            fallbackOtp: !mailResult.sent ? otp : undefined,
+          },
+        },
       });
     } catch (error) {
       next(error);
@@ -298,11 +307,20 @@ router.post(
         maxAttempts: env.OTP_MAX_ATTEMPTS,
       });
 
-      await emailService.sendVerificationOtp(normalizedEmail, otp);
+      const mailResult = await emailService.sendVerificationOtp(normalizedEmail, otp);
 
       res.status(200).json({
         success: true,
-        message: 'Verification code resent successfully.',
+        message: mailResult.sent
+          ? 'Verification code resent successfully.'
+          : `Fresh code generated, but email delivery failed (${mailResult.reason || 'mail error'}).`,
+        data: {
+          emailDelivery: {
+            sent: mailResult.sent,
+            reason: mailResult.reason,
+            fallbackOtp: !mailResult.sent ? otp : undefined,
+          },
+        },
       });
     } catch (error) {
       next(error);
@@ -449,7 +467,22 @@ router.post(
           maxAttempts: env.OTP_MAX_ATTEMPTS,
         });
 
-        await emailService.sendPasswordResetOtp(normalizedEmail, otp);
+        const mailResult = await emailService.sendPasswordResetOtp(normalizedEmail, otp);
+
+        res.status(200).json({
+          success: true,
+          message: mailResult.sent
+            ? 'Recovery instructions have been sent to your email.'
+            : `Recovery initiated, but email delivery failed (${mailResult.reason || 'mail error'}).`,
+          data: {
+            emailDelivery: {
+              sent: mailResult.sent,
+              reason: mailResult.reason,
+              fallbackOtp: !mailResult.sent ? otp : undefined,
+            },
+          },
+        });
+        return;
       }
 
       res.status(200).json({

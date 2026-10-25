@@ -10,10 +10,15 @@ function VerifyResetOtpContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get('email') || '';
+  const initialCode = searchParams.get('code') || '';
+  const initialReason = searchParams.get('reason') || '';
 
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [otp, setOtp] = useState(
+    initialCode && initialCode.length === 6 ? initialCode.split('') : ['', '', '', '', '', '']
+  );
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [deliveryWarning] = useState(initialReason);
 
   const handleOtpChange = (index: number, value: string) => {
     if (value.length > 1) {
@@ -69,6 +74,21 @@ function VerifyResetOtpContent() {
             Enter the 6-digit recovery code sent to <span className="font-semibold text-studio-800">{email}</span>
           </p>
         </div>
+
+        {deliveryWarning && (
+          <div className="mb-4 p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-xs">
+            <p className="font-semibold flex items-center gap-1.5 mb-1">
+              <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0" />
+              <span>Email Delivery Notice:</span>
+            </p>
+            <p className="text-amber-700 leading-relaxed mb-2 font-mono text-[11px] bg-amber-100/60 p-1.5 rounded">
+              {deliveryWarning}
+            </p>
+            <p className="text-amber-700 text-[11px] leading-relaxed">
+              If using Gmail SMTP, verify your 16-character Google App Password in Render. For immediate access, your recovery code has been auto-filled below!
+            </p>
+          </div>
+        )}
 
         {errorMessage && (
           <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-start gap-2">

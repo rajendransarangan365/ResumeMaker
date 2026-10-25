@@ -42,7 +42,17 @@ export default function RegisterPage() {
     setLoading(false);
 
     if (res.success) {
-      router.push(`/verify-email?email=${encodeURIComponent(email)}`);
+      const emailDelivery = (res as any).data?.emailDelivery;
+      let targetUrl = `/verify-email?email=${encodeURIComponent(email)}`;
+      if (emailDelivery && !emailDelivery.sent) {
+        if (emailDelivery.fallbackOtp) {
+          targetUrl += `&code=${encodeURIComponent(emailDelivery.fallbackOtp)}`;
+        }
+        if (emailDelivery.reason) {
+          targetUrl += `&reason=${encodeURIComponent(emailDelivery.reason)}`;
+        }
+      }
+      router.push(targetUrl);
     } else {
       setErrorMessage(res.error?.message || 'Registration failed. Please check your inputs.');
     }

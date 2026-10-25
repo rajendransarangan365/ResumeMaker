@@ -9,15 +9,20 @@ function VerifyEmailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialEmail = searchParams.get('email') || '';
+  const initialCode = searchParams.get('code') || '';
+  const initialReason = searchParams.get('reason') || '';
 
   const [email, setEmail] = useState(initialEmail);
   const [isEditingEmail, setIsEditingEmail] = useState(false);
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [otp, setOtp] = useState(
+    initialCode && initialCode.length === 6 ? initialCode.split('') : ['', '', '', '', '', '']
+  );
   const [resendCooldown, setResendCooldown] = useState(60);
   const [expirySeconds, setExpirySeconds] = useState(300);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [deliveryWarning, setDeliveryWarning] = useState(initialReason);
 
   // Countdowns
   useEffect(() => {
@@ -86,11 +91,21 @@ function VerifyEmailContent() {
     if (resendCooldown > 0) return;
     setErrorMessage('');
     setSuccessMessage('');
+    setDeliveryWarning('');
     const res = await api.resendVerification({ email });
     if (res.success) {
       setResendCooldown(60);
       setExpirySeconds(300);
-      setSuccessMessage('A fresh verification code has been dispatched.');
+      const emailDelivery = (res as any).data?.emailDelivery;
+      if (emailDelivery && !emailDelivery.sent) {
+        setDeliveryWarning(emailDelivery.reason || 'SMTP delivery rejected by mail server');
+        if (emailDelivery.fallbackOtp) {
+          setOtp(emailDelivery.fallbackOtp.split(''));
+          setSuccessMessage(`Fresh OTP code generated: ${emailDelivery.fallbackOtp}`);
+        }
+      } else {
+        setSuccessMessage('A fresh verification code has been dispatched to your email.');
+      }
     } else {
       setErrorMessage(res.error?.message || 'Failed to resend code.');
     }
@@ -144,6 +159,21 @@ function VerifyEmailContent() {
             )}
           </div>
         </div>
+
+        {deliveryWarning && (
+          <div className="mb-4 p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-xs">
+            <p className="font-semibold flex items-center gap-1.5 mb-1">
+              <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0" />
+              <span>Email Delivery Notice:</span>
+            </p>
+            <p className="text-amber-700 leading-relaxed mb-2 font-mono text-[11px] bg-amber-100/60 p-1.5 rounded">
+              {deliveryWarning}
+            </p>
+            <p className="text-amber-700 text-[11px] leading-relaxed">
+              If using Gmail SMTP, verify your 16-character Google App Password in Render. For immediate access, your OTP has been retrieved and auto-filled below!
+            </p>
+          </div>
+        )}
 
         {errorMessage && (
           <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-start gap-2">
