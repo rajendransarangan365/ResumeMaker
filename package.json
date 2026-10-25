@@ -9,6 +9,8 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
+    "build:backend": "npm run build --workspace=@ats/shared-types && npm run build --workspace=@ats/resume-schema && npm run build --workspace=@ats/template-registry && npm run build --workspace=@ats/resume-renderer && npm run build --workspace=@ats/api",
+    "build:frontend": "npm run build --workspace=@ats/shared-types && npm run build --workspace=@ats/resume-schema && npm run build --workspace=@ats/template-registry && npm run build --workspace=@ats/resume-renderer && npm run build --workspace=@ats/web",
     "start:api": "node apps/api/dist/server.js",
     "start:web": "npm run start --workspace=@ats/web",
     "dev:api": "npm run dev --workspace=apps/api",
