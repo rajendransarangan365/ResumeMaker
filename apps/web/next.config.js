@@ -8,10 +8,12 @@ const nextConfig = {
     '@ats/resume-renderer',
   ],
   async rewrites() {
+    const rawApiUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const backendUrl = rawApiUrl.replace(/\/api(\/v1)?\/?$/, '');
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:5000/api/:path*',
+        destination: `${backendUrl}/api/:path*`,
       },
     ];
   },
