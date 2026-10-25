@@ -53,11 +53,23 @@ export function LiveDocumentCanvas({
         </button>
         <div className="w-[1px] h-4 bg-studio-200 mx-1" />
         <button
+          onClick={() => {
+            if (typeof window !== 'undefined') {
+              const fitZoom = Math.min(1.0, Math.max(0.35, Number(((window.innerWidth - 32) / widthPx).toFixed(2))));
+              onZoomChange(fitZoom);
+            }
+          }}
+          className="p-1 hover:bg-studio-100 rounded text-studio-700 flex items-center gap-1"
+          title="Fit Canvas to Screen Width"
+        >
+          <Maximize2 className="w-3.5 h-3.5" />
+          <span className="text-[11px] font-semibold">Fit</span>
+        </button>
+        <button
           onClick={() => onZoomChange(1.0)}
           className="p-1 hover:bg-studio-100 rounded text-studio-700 flex items-center gap-1"
           title="Reset Zoom to 100%"
         >
-          <Maximize2 className="w-3.5 h-3.5" />
           <span className="text-[11px]">100%</span>
         </button>
       </div>

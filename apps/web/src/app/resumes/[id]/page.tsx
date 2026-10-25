@@ -67,6 +67,9 @@ export default function ResumeEditorPage({ params }: PageProps) {
     const res = await api.getResume(resumeId);
     if (res.success && res.data) {
       setResumeAndProfile(res.data.resume, res.data.profile);
+    } else if (res.error?.code === 'UNAUTHORIZED' || res.error?.message?.toLowerCase().includes('unauthorized') || res.error?.message?.toLowerCase().includes('authentication')) {
+      router.push(`/login?redirect=/resumes/${resumeId}`);
+      return;
     }
     setLoading(false);
   };
@@ -215,31 +218,43 @@ export default function ResumeEditorPage({ params }: PageProps) {
           </button>
         </div>
 
-        {/* Mobile View Switcher */}
-        <div className="flex sm:hidden items-center bg-studio-100 p-1 rounded-lg">
+        {/* Mobile View Switcher & Action Controls */}
+        <div className="flex sm:hidden items-center gap-1.5 ml-auto">
+          <div className="flex items-center bg-studio-100 p-0.5 rounded-lg">
+            <button
+              onClick={() => setMobileMode('edit')}
+              className={`px-2 py-1 text-[11px] font-semibold rounded ${
+                mobileMode === 'edit' ? 'bg-white shadow-xs text-studio-900' : 'text-studio-500'
+              }`}
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => setMobileMode('preview')}
+              className={`px-2 py-1 text-[11px] font-semibold rounded ${
+                mobileMode === 'preview' ? 'bg-white shadow-xs text-studio-900' : 'text-studio-500'
+              }`}
+            >
+              Preview
+            </button>
+            <button
+              onClick={() => setMobileMode('design')}
+              className={`px-2 py-1 text-[11px] font-semibold rounded ${
+                mobileMode === 'design' ? 'bg-white shadow-xs text-studio-900' : 'text-studio-500'
+              }`}
+            >
+              Design
+            </button>
+          </div>
+
           <button
-            onClick={() => setMobileMode('edit')}
-            className={`px-2.5 py-1 text-xs font-semibold rounded ${
-              mobileMode === 'edit' ? 'bg-white shadow-sm text-studio-900' : 'text-studio-500'
-            }`}
+            onClick={handleSave}
+            disabled={isSaving}
+            className="px-2.5 py-1 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-xs font-bold shadow-xs flex items-center gap-1 disabled:opacity-50"
+            title="Save changes"
           >
-            Edit
-          </button>
-          <button
-            onClick={() => setMobileMode('preview')}
-            className={`px-2.5 py-1 text-xs font-semibold rounded ${
-              mobileMode === 'preview' ? 'bg-white shadow-sm text-studio-900' : 'text-studio-500'
-            }`}
-          >
-            Preview
-          </button>
-          <button
-            onClick={() => setMobileMode('design')}
-            className={`px-2.5 py-1 text-xs font-semibold rounded ${
-              mobileMode === 'design' ? 'bg-white shadow-sm text-studio-900' : 'text-studio-500'
-            }`}
-          >
-            Design
+            <Save className="w-3.5 h-3.5" />
+            <span>{isSaving ? '...' : 'Save'}</span>
           </button>
         </div>
       </div>

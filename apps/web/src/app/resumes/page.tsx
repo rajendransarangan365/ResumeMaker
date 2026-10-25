@@ -12,8 +12,9 @@ import {
   Trash2,
   ExternalLink,
   Search,
+  ArrowLeft,
 } from 'lucide-react';
-import { api } from '@/lib/api';
+import { api, getAuthToken } from '@/lib/api';
 
 export default function ResumesListPage() {
   const router = useRouter();
@@ -22,14 +23,21 @@ export default function ResumesListPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const token = getAuthToken();
+    if (!token) {
+      router.push('/login?redirect=/resumes');
+      return;
+    }
     loadResumes();
-  }, []);
+  }, [router]);
 
   const loadResumes = async () => {
     setLoading(true);
     const res = await api.getResumes();
     if (res.success && res.data) {
-      setResumes(resumes.concat(res.data.resumes || []));
+      setResumes(res.data.resumes || []);
+    } else if (res.error?.code === 'UNAUTHORIZED' || res.error?.message?.toLowerCase().includes('unauthorized')) {
+      router.push('/login?redirect=/resumes');
     }
     setLoading(false);
   };
@@ -58,7 +66,20 @@ export default function ResumesListPage() {
   );
 
   return (
-    <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+      {/* Top Navigation & Back Breadcrumb */}
+      <div className="flex items-center gap-2 text-xs font-medium text-studio-500 mb-4">
+        <Link
+          href="/dashboard"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-studio-200 text-studio-700 hover:text-brand-600 hover:border-brand-300 transition-colors shadow-2xs"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Back to Dashboard</span>
+        </Link>
+        <span className="text-studio-300">/</span>
+        <span className="text-studio-700 font-semibold">Resume Library</span>
+      </div>
+
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-studio-900 tracking-tight flex items-center gap-2">

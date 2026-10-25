@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   Upload,
@@ -11,6 +12,7 @@ import {
   ArrowRight,
   ShieldCheck,
   RefreshCw,
+  ArrowLeft,
 } from 'lucide-react';
 import { api } from '@/lib/api';
 
@@ -70,7 +72,20 @@ export default function ResumeImportPage() {
   };
 
   return (
-    <div className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+      {/* Top Breadcrumb & Back Navigation */}
+      <div className="flex items-center gap-2 mb-4 text-xs font-medium text-studio-500">
+        <Link
+          href="/dashboard"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-studio-200 text-studio-700 hover:text-brand-600 hover:border-brand-300 transition-colors shadow-2xs"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Back to Dashboard</span>
+        </Link>
+        <span className="text-studio-300">/</span>
+        <span className="text-studio-700 font-semibold">Import Resume</span>
+      </div>
+
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-studio-900 tracking-tight flex items-center gap-2">
           <Upload className="w-6 h-6 text-brand-600" />

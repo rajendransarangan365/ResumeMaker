@@ -21,17 +21,7 @@ export default function ForgotPasswordPage() {
     setLoading(false);
 
     if (res.success) {
-      const emailDelivery = (res as any).data?.emailDelivery;
-      let targetUrl = `/verify-reset-otp?email=${encodeURIComponent(email)}`;
-      if (emailDelivery && !emailDelivery.sent) {
-        if (emailDelivery.fallbackOtp) {
-          targetUrl += `&code=${encodeURIComponent(emailDelivery.fallbackOtp)}`;
-        }
-        if (emailDelivery.reason) {
-          targetUrl += `&reason=${encodeURIComponent(emailDelivery.reason)}`;
-        }
-      }
-      router.push(targetUrl);
+      router.push(`/verify-reset-otp?email=${encodeURIComponent(email)}`);
     } else {
       setErrorMessage(res.error?.message || 'Failed to dispatch recovery instructions.');
     }

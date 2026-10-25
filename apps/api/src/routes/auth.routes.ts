@@ -116,7 +116,6 @@ router.post(
           emailDelivery: {
             sent: mailResult.sent,
             reason: mailResult.reason,
-            fallbackOtp: !mailResult.sent ? otp : undefined,
           },
         },
       });
@@ -318,7 +317,6 @@ router.post(
           emailDelivery: {
             sent: mailResult.sent,
             reason: mailResult.reason,
-            fallbackOtp: !mailResult.sent ? otp : undefined,
           },
         },
       });
@@ -478,7 +476,6 @@ router.post(
             emailDelivery: {
               sent: mailResult.sent,
               reason: mailResult.reason,
-              fallbackOtp: !mailResult.sent ? otp : undefined,
             },
           },
         });

@@ -18,7 +18,7 @@ import {
   ArrowRight,
   ShieldCheck,
 } from 'lucide-react';
-import { api } from '@/lib/api';
+import { api, getAuthToken } from '@/lib/api';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -28,8 +28,19 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadDashboardData();
-  }, []);
+    const token = getAuthToken();
+    if (!token) {
+      api.getMe().then((res) => {
+        if (!res.success) {
+          router.push('/login?redirect=/dashboard');
+        } else {
+          loadDashboardData();
+        }
+      });
+    } else {
+      loadDashboardData();
+    }
+  }, [router]);
 
   const loadDashboardData = async () => {
     setLoading(true);
@@ -38,6 +49,11 @@ export default function DashboardPage() {
       api.getProfile(),
       api.getAiUsageSummary(),
     ]);
+
+    if (!resumesRes.success && resumesRes.error?.code === 'UNAUTHORIZED') {
+      router.push('/login?redirect=/dashboard');
+      return;
+    }
 
     if (resumesRes.success && resumesRes.data) {
       setResumes(resumesRes.data.resumes || []);
