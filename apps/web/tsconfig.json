@@ -19,7 +19,12 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@ats/shared-types": ["../../packages/shared-types/src/index.ts"],
+      "@ats/resume-schema": ["../../packages/resume-schema/src/index.ts"],
+      "@ats/template-registry": ["../../packages/template-registry/src/index.ts"],
+      "@ats/resume-renderer/client": ["../../packages/resume-renderer/src/client.ts"],
+      "@ats/resume-renderer": ["../../packages/resume-renderer/src/index.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
