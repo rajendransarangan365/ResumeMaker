@@ -51,6 +51,20 @@ export function createApp(): Application {
   // Global Rate Limiter
   app.use('/api/v1', globalApiLimiter);
 
+  // Root and health status endpoints
+  app.get('/', (_req, res) => {
+    res.json({
+      name: 'ATS Resume Intelligence Studio API',
+      status: 'healthy',
+      version: '1.0.0',
+      health: '/api/v1/health',
+    });
+  });
+
+  app.get('/health', (_req, res) => {
+    res.redirect('/api/v1/health');
+  });
+
   // Mount API Modules
   app.use('/api/v1/health', healthRoutes);
   app.use('/api/v1/auth', authRoutes);
