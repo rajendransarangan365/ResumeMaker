@@ -1,20 +1,26 @@
-const getApiBase = (): string => {
+export const getApiBase = (): string => {
   const envUrl = process.env.NEXT_PUBLIC_API_URL;
   if (envUrl && envUrl.trim() !== '') {
     const trimmed = envUrl.trim().replace(/\/+$/, '');
     return trimmed.endsWith('/api/v1') ? trimmed : `${trimmed}/api/v1`;
   }
+  // When running in browser on Vercel or any production host, route directly to live Render backend
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    if (host !== 'localhost' && host !== '127.0.0.1') {
+      return 'https://resumemaker-api-uswp.onrender.com/api/v1';
+    }
+  }
   return '/api/v1';
 };
-
-const API_BASE = getApiBase();
 
 async function fetcher<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<{ success: boolean; data?: T; error?: { code: string; message: string; details?: any[] } }> {
   try {
-    const res = await fetch(`${API_BASE}${endpoint}`, {
+    const apiBase = getApiBase();
+    const res = await fetch(`${apiBase}${endpoint}`, {
       ...options,
       credentials: 'include',
       headers: {
@@ -66,7 +72,7 @@ export const api = {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      const res = await fetch(`${API_BASE}/documents/upload`, {
+      const res = await fetch(`${getApiBase()}/documents/upload`, {
         method: 'POST',
         credentials: 'include',
         body: formData,
@@ -88,7 +94,7 @@ export const api = {
   // Exports & Layout
   getPageMetrics: (resumeId: string) => fetcher<{ metrics: any }>(`/exports/metrics/${resumeId}`),
   downloadDocx: async (resumeId: string, filename: string) => {
-    const res = await fetch(`${API_BASE}/exports/docx`, {
+    const res = await fetch(`${getApiBase()}/exports/docx`, {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
