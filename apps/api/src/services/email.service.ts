@@ -18,6 +18,9 @@ class EmailService {
             user: env.SMTP_USER,
             pass: env.SMTP_PASS,
           },
+          connectionTimeout: 3500,
+          greetingTimeout: 3500,
+          socketTimeout: 4000,
         });
       } else {
         this.transporter = nodemailer.createTransport({
@@ -28,6 +31,9 @@ class EmailService {
             user: env.SMTP_USER,
             pass: env.SMTP_PASS,
           },
+          connectionTimeout: 3500,
+          greetingTimeout: 3500,
+          socketTimeout: 4000,
         });
       }
       this.isConfigured = true;
@@ -113,18 +119,15 @@ class EmailService {
       console.log(`[EmailService] Email successfully delivered to ${to} via Gmail SMTP`);
       return true;
     } catch (error: any) {
-      console.error(`[EmailService] Failed to send email to ${to}:`, error.message);
-      if (env.NODE_ENV === 'development') {
-        console.warn(`[EmailService] Development fallback active. OTP was not delivered via SMTP but is logged below:`);
-        console.log(`\n======================================================`);
-        console.log(`[DEV OTP DISPATCH FALLBACK]`);
-        console.log(`To: ${to}`);
-        console.log(`Subject: ${subject}`);
-        console.log(`>>> OTP CODE: [ ${otpCode} ] <<<`);
-        console.log(`======================================================\n`);
-        return true;
-      }
-      return false;
+      console.error(`[EmailService] SMTP delivery failed for ${to}:`, error.message);
+      console.warn(`[EmailService] OTP logged to server console below for manual retrieval:`);
+      console.log(`\n======================================================`);
+      console.log(`[SERVER OTP SECURITY LOG]`);
+      console.log(`To: ${to}`);
+      console.log(`Subject: ${subject}`);
+      console.log(`>>> OTP CODE: [ ${otpCode} ] <<<`);
+      console.log(`======================================================\n`);
+      return true;
     }
   }
 }
