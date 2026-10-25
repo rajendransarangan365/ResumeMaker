@@ -65,6 +65,10 @@ export function createApp(): Application {
     res.redirect('/api/v1/health');
   });
 
+  app.get('/api/health', (_req, res) => {
+    res.redirect('/api/v1/health');
+  });
+
   // Mount API Modules
   app.use('/api/v1/health', healthRoutes);
   app.use('/api/v1/auth', authRoutes);
