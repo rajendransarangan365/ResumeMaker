@@ -11,17 +11,27 @@ class EmailService {
 
   private initializeTransporter(): void {
     if (env.SMTP_USER && env.SMTP_PASS) {
-      this.transporter = nodemailer.createTransport({
-        host: env.SMTP_HOST,
-        port: env.SMTP_PORT,
-        secure: env.SMTP_SECURE,
-        auth: {
-          user: env.SMTP_USER,
-          pass: env.SMTP_PASS,
-        },
-      });
+      if (env.SMTP_SERVICE?.toLowerCase() === 'gmail') {
+        this.transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: env.SMTP_USER,
+            pass: env.SMTP_PASS,
+          },
+        });
+      } else {
+        this.transporter = nodemailer.createTransport({
+          host: env.SMTP_HOST,
+          port: env.SMTP_PORT,
+          secure: env.SMTP_SECURE,
+          auth: {
+            user: env.SMTP_USER,
+            pass: env.SMTP_PASS,
+          },
+        });
+      }
       this.isConfigured = true;
-      console.log(`[EmailService] Transporter initialized for ${env.SMTP_HOST}:${env.SMTP_PORT}`);
+      console.log(`[EmailService] Transporter initialized for ${env.SMTP_USER} (${env.SMTP_SERVICE || env.SMTP_HOST})`);
     } else {
       console.warn(
         '[EmailService] SMTP credentials not fully configured. Email OTPs will be logged to server console for local development.'
@@ -100,9 +110,20 @@ class EmailService {
         text,
         html,
       });
+      console.log(`[EmailService] Email successfully delivered to ${to} via Gmail SMTP`);
       return true;
-    } catch (error) {
-      console.error(`[EmailService] Failed to send email to ${to}:`, error);
+    } catch (error: any) {
+      console.error(`[EmailService] Failed to send email to ${to}:`, error.message);
+      if (env.NODE_ENV === 'development') {
+        console.warn(`[EmailService] Development fallback active. OTP was not delivered via SMTP but is logged below:`);
+        console.log(`\n======================================================`);
+        console.log(`[DEV OTP DISPATCH FALLBACK]`);
+        console.log(`To: ${to}`);
+        console.log(`Subject: ${subject}`);
+        console.log(`>>> OTP CODE: [ ${otpCode} ] <<<`);
+        console.log(`======================================================\n`);
+        return true;
+      }
       return false;
     }
   }
