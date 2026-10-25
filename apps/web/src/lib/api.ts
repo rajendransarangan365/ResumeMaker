@@ -1,4 +1,13 @@
-const API_BASE = '/api/v1';
+const getApiBase = (): string => {
+  const envUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (envUrl && envUrl.trim() !== '') {
+    const trimmed = envUrl.trim().replace(/\/+$/, '');
+    return trimmed.endsWith('/api/v1') ? trimmed : `${trimmed}/api/v1`;
+  }
+  return '/api/v1';
+};
+
+const API_BASE = getApiBase();
 
 async function fetcher<T>(
   endpoint: string,

@@ -34,7 +34,7 @@ function setSessionCookie(res: Response, token: string) {
   res.cookie('session_token', token, {
     httpOnly: true,
     secure: env.NODE_ENV === 'production',
-    sameSite: env.NODE_ENV === 'production' ? 'strict' : 'lax',
+    sameSite: env.NODE_ENV === 'production' ? 'none' : 'lax',
     maxAge: env.SESSION_MAX_AGE_SECONDS * 1000,
     path: '/',
   });
