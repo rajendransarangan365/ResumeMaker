@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path';
+import ejs from 'ejs';
 import nodemailer from 'nodemailer';
 import { env } from '../config/env';
 
@@ -46,7 +49,7 @@ class EmailService {
         });
       }
       this.isConfigured = true;
-      console.log(`[EmailService] Transporter initialized for ${env.SMTP_USER} (${env.SMTP_SERVICE || env.SMTP_HOST})`);
+      console.log(`[EmailService] Transporter initialized for ${user} (${env.SMTP_SERVICE || env.SMTP_HOST})`);
     } else {
       console.warn(
         '[EmailService] SMTP credentials not fully configured. Email OTPs will be logged to server console for local development.'
@@ -55,46 +58,76 @@ class EmailService {
     }
   }
 
-  public async sendVerificationOtp(email: string, otp: string): Promise<EmailDeliveryResult> {
-    const subject = `${otp} is your verification code - ATS Resume Studio`;
-    const html = `
-      <div style="font-family: Arial, sans-serif; max-width: 580px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px;">
-        <h2 style="color: #1e293b; margin-bottom: 8px;">Welcome to ATS Resume Intelligence Studio</h2>
-        <p style="color: #475569; font-size: 15px; line-height: 1.5;">Please use the following 6-digit verification code to complete your registration:</p>
-        <div style="text-align: center; margin: 28px 0;">
-          <span style="display: inline-block; font-size: 32px; font-weight: bold; letter-spacing: 6px; color: #2563eb; background: #eff6ff; padding: 12px 24px; border-radius: 6px; border: 1px dashed #93c5fd;">
-            ${otp}
-          </span>
+  private renderEjs(templateName: string, data: Record<string, any>): string {
+    const candidatePaths = [
+      path.resolve(__dirname, `../templates/emails/${templateName}.ejs`),
+      path.resolve(process.cwd(), `src/templates/emails/${templateName}.ejs`),
+      path.resolve(process.cwd(), `apps/api/src/templates/emails/${templateName}.ejs`),
+    ];
+
+    for (const p of candidatePaths) {
+      if (fs.existsSync(p)) {
+        try {
+          const fileContent = fs.readFileSync(p, 'utf-8');
+          return ejs.render(fileContent, data);
+        } catch (err: any) {
+          console.error(`[EmailService] Failed to render EJS template ${p}:`, err.message);
+        }
+      }
+    }
+
+    // High-fidelity inline fallback with individual highlighted digit boxes
+    const isReset = templateName.includes('reset');
+    const borderColor = isReset ? '#dc2626' : '#2563eb';
+    const textColor = isReset ? '#991b1b' : '#1e3a8a';
+    const bgContainer = isReset ? '#fef2f2' : '#eff6ff';
+
+    const digits = data.otp ? String(data.otp).split('') : [];
+    const digitBoxes = digits
+      .map(
+        (d: string) => `
+        <td style="width: 44px; height: 52px; background: #ffffff; border: 2px solid ${borderColor}; border-radius: 8px; text-align: center; vertical-align: middle; font-size: 26px; font-weight: 800; font-family: 'Courier New', Courier, monospace; color: ${textColor}; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          ${d}
+        </td>`
+      )
+      .join('');
+
+    return `
+      <div style="font-family: Arial, sans-serif; max-width: 580px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #ffffff;">
+        <h2 style="color: #0f172a; margin-bottom: 8px;">${data.subject || 'ATS Resume Intelligence Studio'}</h2>
+        <p style="color: #475569; font-size: 15px; line-height: 1.5;">${isReset ? 'Use the following 6-digit recovery code to reset your password:' : 'Welcome! Please use the following 6-digit verification code to activate your account:'}</p>
+        <div style="background: ${bgContainer}; padding: 24px 16px; border-radius: 12px; margin: 24px 0; text-align: center;">
+          <table align="center" border="0" cellpadding="0" cellspacing="6" style="margin: 0 auto;">
+            <tr>${digitBoxes}</tr>
+          </table>
+          <p style="margin-top: 12px; font-size: 12px; color: #64748b; font-weight: 600;">Expires in 5 minutes</p>
         </div>
-        <p style="color: #64748b; font-size: 14px;">This code is valid for <strong>5 minutes</strong>. If you did not request this registration, please safely ignore this email.</p>
-        <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 24px 0;" />
-        <p style="color: #94a3b8; font-size: 12px; text-align: center;">ATS Resume Intelligence Studio • Automated Security Delivery</p>
+        <p style="color: #64748b; font-size: 13px;">If you did not request this, please safely ignore this email.</p>
       </div>
     `;
+  }
 
-    const text = `Your ATS Resume Studio verification code is: ${otp}. It expires in 5 minutes.`;
+  public async sendVerificationOtp(email: string, otp: string, fullName?: string): Promise<EmailDeliveryResult> {
+    const subject = `${otp} is your verification code - ATS Resume Studio`;
+    const html = this.renderEjs('onboarding-otp', {
+      subject,
+      otp,
+      fullName,
+      expiryMinutes: 5,
+    });
+    const text = `Welcome to ATS Resume Intelligence Studio!\nYour 6-digit verification code is: ${otp}\nThis code expires in 5 minutes.`;
 
     return this.sendMail(email, subject, text, html, otp);
   }
 
   public async sendPasswordResetOtp(email: string, otp: string): Promise<EmailDeliveryResult> {
     const subject = `${otp} is your password recovery code - ATS Resume Studio`;
-    const html = `
-      <div style="font-family: Arial, sans-serif; max-width: 580px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px;">
-        <h2 style="color: #1e293b; margin-bottom: 8px;">Password Recovery Request</h2>
-        <p style="color: #475569; font-size: 15px; line-height: 1.5;">We received a request to reset your password. Use the code below to proceed with resetting your credentials:</p>
-        <div style="text-align: center; margin: 28px 0;">
-          <span style="display: inline-block; font-size: 32px; font-weight: bold; letter-spacing: 6px; color: #dc2626; background: #fef2f2; padding: 12px 24px; border-radius: 6px; border: 1px dashed #fca5a5;">
-            ${otp}
-          </span>
-        </div>
-        <p style="color: #64748b; font-size: 14px;">This recovery code is single-use and will expire in <strong>5 minutes</strong>. If you did not request a password reset, your account remains secure and no action is required.</p>
-        <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 24px 0;" />
-        <p style="color: #94a3b8; font-size: 12px; text-align: center;">ATS Resume Intelligence Studio • Automated Security Delivery</p>
-      </div>
-    `;
-
-    const text = `Your ATS Resume Studio password recovery code is: ${otp}. It expires in 5 minutes.`;
+    const html = this.renderEjs('reset-password-otp', {
+      subject,
+      otp,
+      expiryMinutes: 5,
+    });
+    const text = `Your ATS Resume Studio password recovery code is: ${otp}\nThis code expires in 5 minutes.`;
 
     return this.sendMail(email, subject, text, html, otp);
   }

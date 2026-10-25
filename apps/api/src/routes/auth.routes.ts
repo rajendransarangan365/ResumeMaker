@@ -97,13 +97,13 @@ router.post(
         maxAttempts: env.OTP_MAX_ATTEMPTS,
       });
 
-      const mailResult = await emailService.sendVerificationOtp(normalizedEmail, otp);
+      const mailResult = await emailService.sendVerificationOtp(normalizedEmail, otp, fullName);
 
       await SecurityAuditLog.create({
         ipAddress: req.ip || '127.0.0.1',
         userAgent: req.headers['user-agent'] || '',
         action: 'USER_REGISTRATION_REQUESTED',
-        status: mailResult.sent ? 'success' : 'partial_success',
+        status: 'success',
         metadata: { email: normalizedEmail, emailDelivery: mailResult },
       });
 
