@@ -72,7 +72,31 @@ export default function CandidateProfilePage() {
     );
   }
 
-  if (!profile) return null;
+  if (!profile) {
+    return (
+      <div className="flex-1 max-w-md mx-auto my-16 p-8 bg-white border border-studio-200 rounded-2xl shadow-sm text-center">
+        <User className="w-12 h-12 text-brand-600 mx-auto mb-3" />
+        <h2 className="text-xl font-bold text-studio-900 mb-2">Master Candidate Profile</h2>
+        <p className="text-xs text-studio-500 mb-6">
+          Please sign in to access and edit your verified personal details, education, work experience, and 5-part skills.
+        </p>
+        <div className="flex gap-3 justify-center">
+          <button
+            onClick={loadProfile}
+            className="px-4 py-2 border border-studio-300 rounded-lg text-xs font-semibold text-studio-700 hover:bg-studio-50"
+          >
+            Retry Loading
+          </button>
+          <a
+            href="/login"
+            className="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-xs font-semibold"
+          >
+            Sign In
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
