@@ -58,6 +58,7 @@ const EnvironmentSchema = z.object({
 
 const parsedEnv = EnvironmentSchema.safeParse({
   ...process.env,
+  API_PORT: process.env.PORT || process.env.API_PORT || 5000,
   SMTP_USER: process.env.SMTP_USER || process.env.SMTP_MAIL,
   SMTP_PASS: process.env.SMTP_PASS || process.env.SMTP_PASSWORD,
   SMTP_FROM_EMAIL: process.env.SMTP_FROM_EMAIL || process.env.SMTP_MAIL || 'rightsight365@gmail.com',
