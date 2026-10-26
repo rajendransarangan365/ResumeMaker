@@ -3,6 +3,7 @@ import path from 'path';
 import { z } from 'zod';
 
 // Load environment variables from apps/api/.env or root .env
+dotenv.config({ path: path.resolve(process.cwd(), 'apps/api/.env') });
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 dotenv.config({ path: path.resolve(process.cwd(), '../../.env') });
 

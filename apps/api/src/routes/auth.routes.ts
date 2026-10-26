@@ -97,6 +97,7 @@ router.post(
         maxAttempts: env.OTP_MAX_ATTEMPTS,
       });
 
+      console.log(`\n[DEV AUTH] OTP for ${normalizedEmail} is: ${otp}\n`);
       const mailResult = await emailService.sendVerificationOtp(normalizedEmail, otp, fullName);
 
       await SecurityAuditLog.create({
@@ -117,6 +118,7 @@ router.post(
             sent: mailResult.sent,
             reason: mailResult.reason,
           },
+          ...(env.NODE_ENV === 'development' ? { devOtp: otp } : {}),
         },
       });
     } catch (error) {
