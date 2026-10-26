@@ -33,7 +33,7 @@ import {
   Palette,
   Bot,
 } from 'lucide-react';
-import { api } from '@/lib/api';
+import { api, getApiBase } from '@/lib/api';
 import { useResumeEditorStore } from '@/stores/resume-editor.store';
 import { LiveDocumentCanvas } from '@/components/LiveDocumentCanvas';
 import { PageBalanceAlert } from '@/components/PageBalanceAlert';
@@ -162,7 +162,8 @@ export default function ResumeEditorPage({ params }: PageProps) {
   const handleExportPdf = () => {
     if (!resume) return;
     const actualResumeId = resume.id || (resume as any)._id || resumeId;
-    window.open(`/api/v1/exports/preview/${actualResumeId}`, '_blank');
+    const base = getApiBase();
+    window.open(`${base}/exports/preview/${actualResumeId}?print=true`, '_blank');
   };
 
   // Quick or Custom AI Bullet Optimization

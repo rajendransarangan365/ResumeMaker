@@ -166,24 +166,33 @@ export const api = {
   // Exports & Layout
   getPageMetrics: (resumeId: string) => fetcher<{ metrics: any }>(`/exports/metrics/${resumeId}`),
   downloadDocx: async (resumeId: string, filename: string) => {
-    const token = getAuthToken();
-    const authHeaders: Record<string, string> = token ? { Authorization: `Bearer ${token}` } : {};
+    try {
+      const token = getAuthToken();
+      const authHeaders: Record<string, string> = token ? { Authorization: `Bearer ${token}` } : {};
 
-    const res = await fetch(`${getApiBase()}/exports/docx`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json', ...authHeaders },
-      body: JSON.stringify({ resumeId }),
-    });
-    if (!res.ok) throw new Error('Failed to generate DOCX');
-    const blob = await res.blob();
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${filename}.docx`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+      const res = await fetch(`${getApiBase()}/exports/docx`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json', ...authHeaders },
+        body: JSON.stringify({ resumeId }),
+      });
+      if (!res.ok) {
+        const errorJson = await res.json().catch(() => null);
+        throw new Error(errorJson?.error?.message || `Export failed with status ${res.status}`);
+      }
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${(filename || 'Resume').replace(/[^a-zA-Z0-9_-]/g, '_')}.docx`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => window.URL.revokeObjectURL(url), 1000);
+    } catch (err: any) {
+      console.error('Word export error:', err);
+      alert(err.message || 'Could not export Word document. Please ensure you are logged in.');
+    }
   },
 
   // AI Usage
