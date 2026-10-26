@@ -2,6 +2,8 @@ import { Router, Response, NextFunction } from 'express';
 import { requireAuth, AuthenticatedRequest } from '../middleware/auth.middleware';
 import { geminiService } from '../services/gemini.service';
 import { CandidateProfile } from '../models/CandidateProfile';
+import { ResumeVersion } from '../models/ResumeVersion';
+import { getTemplateById } from '@ats/template-registry';
 import { JobDescriptionInputSchema } from '@ats/resume-schema';
 import { validateBody } from '../middleware/validate.middleware';
 import { IRequirementMatch, MatchStatus } from '@ats/shared-types';
@@ -463,6 +465,114 @@ Tools: ${(profile.skills?.computerSkills || []).join(', ')}
       res.status(200).json({
         success: true,
         data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// POST /api/v1/optimization/reconstruct-resume
+router.post(
+  '/reconstruct-resume',
+  requireAuth,
+  async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { jobTitle, companyName, jobDescriptionText, existingResumeId, templateId } = req.body;
+
+      if (!jobTitle || !jobDescriptionText) {
+        res.status(400).json({
+          success: false,
+          error: { code: 'INVALID_INPUT', message: 'Target job title and job description are required.' },
+        });
+        return;
+      }
+
+      // 1. Get or create candidate profile
+      let profile = await CandidateProfile.findOne({ userId: req.user!._id });
+      if (!profile) {
+        profile = await CandidateProfile.create({
+          userId: req.user!._id,
+          profileTitle: 'Master Profile',
+          personalDetails: {
+            fullName: req.user!.fullName,
+            email: req.user!.email,
+            phone: '',
+          },
+        });
+      }
+
+      // 2. Extract keywords from JD to prioritize matching candidate skills
+      const jdTokens = (jobDescriptionText.match(/[a-zA-Z0-9#+.]+/g) || []).map((w: string) => w.toLowerCase());
+      const candidateSkills = profile.skills?.technicalSkills || [];
+
+      // Prioritize skills matching the vacancy
+      const prioritizedSkills = [...candidateSkills].sort((a, b) => {
+        const aMatch = jdTokens.includes(a.toLowerCase());
+        const bMatch = jdTokens.includes(b.toLowerCase());
+        if (aMatch && !bMatch) return -1;
+        if (!aMatch && bMatch) return 1;
+        return 0;
+      });
+
+      // 3. Tailor headline and summary directly to the target vacancy
+      const tailoredHeadline = `${jobTitle}${companyName ? ` | ${companyName}` : ''}`;
+      const matchedSkillPreview = prioritizedSkills.slice(0, 4).join(', ');
+
+      const tailoredSummary = `Results-oriented ${jobTitle} with proven expertise in ${
+        matchedSkillPreview || 'modern software engineering and scalable systems'
+      }. Demonstrated track record of building resilient web architectures, optimizing performance, and collaborating cross-functionally to deliver high-quality business outcomes aligned with ATS requirements.`;
+
+      // Update candidate profile
+      profile.personalDetails.headline = tailoredHeadline;
+      profile.professionalSummary = tailoredSummary;
+      if (prioritizedSkills.length > 0) {
+        profile.skills.technicalSkills = prioritizedSkills;
+      }
+      await profile.save();
+
+      // 4. Create or update resume version
+      const selectedTemplateId = templateId || 'software-developer';
+      const templateDef = getTemplateById(selectedTemplateId);
+      const resumeTitle = `${jobTitle}${companyName ? ` - ${companyName}` : ''} (Tailored)`;
+
+      let targetResume;
+      if (existingResumeId) {
+        targetResume = await ResumeVersion.findOne({ _id: existingResumeId, userId: req.user!._id });
+        if (targetResume) {
+          targetResume.title = resumeTitle;
+          targetResume.targetRole = jobTitle;
+          targetResume.targetCategory = 'Engineering & Tech';
+          targetResume.templateId = selectedTemplateId;
+          targetResume.formatting = { ...templateDef.defaultFormatting, ...targetResume.formatting };
+          await targetResume.save();
+        }
+      }
+
+      if (!targetResume) {
+        targetResume = await ResumeVersion.create({
+          userId: req.user!._id,
+          candidateProfileId: profile._id,
+          title: resumeTitle,
+          targetRole: jobTitle,
+          targetCategory: 'Engineering & Tech',
+          templateId: selectedTemplateId,
+          sectionOrder: templateDef.defaultSectionOrder,
+          sectionVisibility: {},
+          formatting: templateDef.defaultFormatting,
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        message: 'Resume reconstructed and tailored successfully for this job vacancy.',
+        data: {
+          resumeId: targetResume._id,
+          resume: targetResume,
+          profile,
+          tailoredSummary,
+          prioritizedSkills,
+        },
       });
     } catch (error) {
       next(error);

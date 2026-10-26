@@ -148,6 +148,20 @@ export const api = {
       calibratedBullets: { expId: string; original: string; improved: string }[];
       suggestedSkills: { technicalSkills: string[]; jobSkills: string[]; computerSkills: string[] };
     }>('/optimization/calibrate-resume', { method: 'POST', body: JSON.stringify(body) }),
+  reconstructResume: (body: {
+    jobTitle: string;
+    companyName?: string;
+    jobDescriptionText: string;
+    existingResumeId?: string;
+    templateId?: string;
+  }) =>
+    fetcher<{
+      resumeId: string;
+      resume: any;
+      profile: any;
+      tailoredSummary: string;
+      prioritizedSkills: string[];
+    }>('/optimization/reconstruct-resume', { method: 'POST', body: JSON.stringify(body) }),
 
   // Exports & Layout
   getPageMetrics: (resumeId: string) => fetcher<{ metrics: any }>(`/exports/metrics/${resumeId}`),
