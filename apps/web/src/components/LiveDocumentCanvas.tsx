@@ -30,6 +30,14 @@ export function LiveDocumentCanvas({
   const widthPx = Math.round(widthMm * 3.7795);
   const heightPx = Math.round(heightMm * 3.7795);
 
+  // Auto-fit to mobile viewport on mobile load
+  React.useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 640) {
+      const fitZoom = Math.min(1.0, Math.max(0.35, Number(((window.innerWidth - 24) / widthPx).toFixed(2))));
+      onZoomChange(fitZoom);
+    }
+  }, [widthPx]);
+
   return (
     <div className="flex flex-col items-center w-full">
       {/* Zoom Toolbar */}
