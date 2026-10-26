@@ -40,19 +40,19 @@ export function TemplateGalleryModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-studio-950/65 backdrop-blur-sm p-3 sm:p-6 overflow-y-auto">
       <div className="bg-white rounded-2xl max-w-5xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-studio-200 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-studio-200 bg-gradient-to-r from-studio-50 to-white">
-          <div>
-            <h2 className="text-lg sm:text-xl font-bold text-studio-900 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-brand-600" />
-              <span>ATS-Friendly Template Library (15 Templates)</span>
+        <div className="flex items-start sm:items-center justify-between gap-3 px-4 sm:px-6 py-3.5 sm:py-4 border-b border-studio-200 bg-gradient-to-r from-studio-50 to-white">
+          <div className="min-w-0 flex-1">
+            <h2 className="text-base sm:text-lg md:text-xl font-bold text-studio-900 flex items-center gap-2 truncate">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-brand-600 flex-shrink-0" />
+              <span className="truncate">ATS Template Library (15 Templates)</span>
             </h2>
-            <p className="text-xs text-studio-500 mt-0.5">
+            <p className="text-[11px] sm:text-xs text-studio-500 mt-0.5 line-clamp-2">
               Select any design below. Your candidate details, projects, links, and experience map seamlessly without any loss of data.
             </p>
           </div>
           <button
             onClick={onClose}
-            className="touch-target p-2 text-studio-400 hover:text-studio-700 hover:bg-studio-100 rounded-lg transition-colors"
+            className="touch-target p-1.5 sm:p-2 text-studio-400 hover:text-studio-700 hover:bg-studio-100 rounded-lg transition-colors flex-shrink-0"
             title="Close modal"
           >
             <X className="w-5 h-5" />
@@ -60,7 +60,7 @@ export function TemplateGalleryModal({
         </div>
 
         {/* Categories Bar */}
-        <div className="flex items-center gap-2 px-6 py-2.5 border-b border-studio-100 bg-studio-50/80 overflow-x-auto scrollbar-thin">
+        <div className="flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2.5 border-b border-studio-100 bg-studio-50/80 overflow-x-auto scrollbar-thin">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -185,7 +185,7 @@ export function TemplateGalleryModal({
                     </div>
 
                     {/* Top-Right Badge: Font & Layout */}
-                    <div className="absolute top-2 right-2 bg-white/95 backdrop-blur-xs text-[10px] text-studio-700 px-1.5 py-0.5 rounded border border-studio-200 shadow-2xs font-mono">
+                    <div className="absolute top-2 right-2 bg-white/95 backdrop-blur-sm text-[10px] text-studio-700 px-1.5 py-0.5 rounded border border-studio-200 shadow-2xs font-mono">
                       {template.defaultFormatting.fontFamily}
                     </div>
 

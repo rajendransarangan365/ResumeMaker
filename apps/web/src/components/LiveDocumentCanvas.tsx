@@ -30,26 +30,40 @@ export function LiveDocumentCanvas({
   const widthPx = Math.round(widthMm * 3.7795);
   const heightPx = Math.round(heightMm * 3.7795);
 
-  // Auto-fit to mobile viewport on mobile load
+  // Auto-fit to viewport on mobile / resize
   React.useEffect(() => {
-    if (typeof window !== 'undefined' && window.innerWidth < 640) {
-      const fitZoom = Math.min(1.0, Math.max(0.35, Number(((window.innerWidth - 24) / widthPx).toFixed(2))));
-      onZoomChange(fitZoom);
-    }
+    const handleResize = () => {
+      if (typeof window !== 'undefined' && window.innerWidth < 768) {
+        const availableWidth = window.innerWidth - 24;
+        const fitZoom = Math.min(1.0, Math.max(0.3, Number((availableWidth / widthPx).toFixed(2))));
+        onZoomChange(fitZoom);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, [widthPx]);
 
+  const handleFitToWidth = () => {
+    if (typeof window !== 'undefined') {
+      const availableWidth = window.innerWidth < 640 ? window.innerWidth - 24 : Math.min(window.innerWidth - 100, 800);
+      const fitZoom = Math.min(1.2, Math.max(0.3, Number((availableWidth / widthPx).toFixed(2))));
+      onZoomChange(fitZoom);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col items-center w-full min-w-0 max-w-full overflow-hidden">
       {/* Zoom Toolbar */}
-      <div className="flex items-center gap-2 mb-4 bg-white border border-studio-200 shadow-sm rounded-lg px-3 py-1.5 text-xs text-studio-600">
+      <div className="flex items-center gap-1.5 sm:gap-2 mb-3 sm:mb-4 bg-white border border-studio-200 shadow-sm rounded-lg px-2.5 sm:px-3 py-1.5 text-xs text-studio-600 max-w-full overflow-x-auto scrollbar-none">
         <button
-          onClick={() => onZoomChange(Math.max(0.5, Number((zoomLevel - 0.1).toFixed(1))))}
+          onClick={() => onZoomChange(Math.max(0.3, Number((zoomLevel - 0.1).toFixed(1))))}
           className="p-1 hover:bg-studio-100 rounded text-studio-700"
           title="Zoom Out"
         >
-          <ZoomOut className="w-4 h-4" />
+          <ZoomOut className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </button>
-        <span className="font-mono w-12 text-center font-medium">
+        <span className="font-mono w-10 sm:w-12 text-center font-medium text-[11px] sm:text-xs">
           {Math.round(zoomLevel * 100)}%
         </span>
         <button
@@ -57,51 +71,54 @@ export function LiveDocumentCanvas({
           className="p-1 hover:bg-studio-100 rounded text-studio-700"
           title="Zoom In"
         >
-          <ZoomIn className="w-4 h-4" />
+          <ZoomIn className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </button>
-        <div className="w-[1px] h-4 bg-studio-200 mx-1" />
+        <div className="w-[1px] h-4 bg-studio-200 mx-0.5 sm:mx-1" />
         <button
-          onClick={() => {
-            if (typeof window !== 'undefined') {
-              const fitZoom = Math.min(1.0, Math.max(0.35, Number(((window.innerWidth - 32) / widthPx).toFixed(2))));
-              onZoomChange(fitZoom);
-            }
-          }}
+          onClick={handleFitToWidth}
           className="p-1 hover:bg-studio-100 rounded text-studio-700 flex items-center gap-1"
           title="Fit Canvas to Screen Width"
         >
           <Maximize2 className="w-3.5 h-3.5" />
-          <span className="text-[11px] font-semibold">Fit</span>
+          <span className="text-[10px] sm:text-[11px] font-semibold">Fit</span>
         </button>
         <button
           onClick={() => onZoomChange(1.0)}
           className="p-1 hover:bg-studio-100 rounded text-studio-700 flex items-center gap-1"
           title="Reset Zoom to 100%"
         >
-          <span className="text-[11px]">100%</span>
+          <span className="text-[10px] sm:text-[11px]">100%</span>
         </button>
       </div>
 
-      {/* Scaled A4 Container */}
+      {/* Outer Scaled Bounding Box Wrapper (Guarantees zero horizontal bleeding outside viewport) */}
       <div
-        className="transition-transform duration-150 origin-top shadow-xl rounded-md bg-white overflow-hidden border border-studio-300"
+        className="relative flex justify-center max-w-full overflow-hidden shadow-xl rounded-md bg-white border border-studio-300"
         style={{
-          width: `${widthPx}px`,
-          minHeight: `${heightPx}px`,
-          transform: `scale(${zoomLevel})`,
-          marginBottom: `${(zoomLevel - 1) * (heightPx / 2)}px`,
+          width: `${Math.round(widthPx * zoomLevel)}px`,
+          height: `${Math.round(heightPx * zoomLevel)}px`,
+          maxWidth: '100%',
         }}
       >
-        <iframe
-          srcDoc={htmlContent}
-          title="Resume Live Preview"
-          className="w-full border-0 pointer-events-auto"
+        <div
+          className="origin-top-left overflow-hidden pointer-events-auto"
           style={{
             width: `${widthPx}px`,
-            minHeight: `${heightPx}px`,
-            height: '100%',
+            height: `${heightPx}px`,
+            transform: `scale(${zoomLevel})`,
+            transformOrigin: 'top left',
           }}
-        />
+        >
+          <iframe
+            srcDoc={htmlContent}
+            title="Resume Live Preview"
+            className="w-full h-full border-0 pointer-events-auto bg-white"
+            style={{
+              width: `${widthPx}px`,
+              height: `${heightPx}px`,
+            }}
+          />
+        </div>
       </div>
     </div>
   );

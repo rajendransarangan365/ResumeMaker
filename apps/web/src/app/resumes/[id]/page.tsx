@@ -1386,7 +1386,7 @@ export default function ResumeEditorPage({ params }: PageProps) {
         </div>
 
         {/* Center Pane: Live Document Preview (Always visible on all screens!) */}
-        <div className="resume-editor__canvas flex flex-1 flex-col items-center justify-start overflow-y-auto p-2 sm:p-6 pb-24 sm:pb-6">
+        <div className="resume-editor__canvas">
           <div className="w-full max-w-3xl mb-3 sm:mb-4">
             <PageBalanceAlert metrics={pageMetrics} />
           </div>
@@ -1413,7 +1413,7 @@ export default function ResumeEditorPage({ params }: PageProps) {
       {/* ------------------------------------------------------------------- */}
       {/* Word Mobile Bottom Ribbon (Fixed at bottom on phones, like Word app) */}
       {/* ------------------------------------------------------------------- */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-studio-200 px-3 py-2 flex items-center justify-around shadow-lg">
+      <div className="mobile-ribbon sm:hidden px-3 py-2 flex items-center justify-around">
         <button
           onClick={() => setMobileSheet('content')}
           className={`flex flex-col items-center gap-0.5 text-[10px] font-semibold transition-colors ${
@@ -1473,7 +1473,7 @@ export default function ResumeEditorPage({ params }: PageProps) {
       {/* Word Mobile Slide-Up Bottom Sheet (Content Drawer) */}
       {/* ------------------------------------------------------------------- */}
       {mobileSheet === 'content' && (
-        <div className="fixed inset-0 bg-studio-950/50 backdrop-blur-xs z-50 flex flex-col justify-end sm:hidden animate-in fade-in duration-150">
+        <div className="fixed inset-0 bg-studio-950/50 backdrop-blur-sm z-50 flex flex-col justify-end sm:hidden animate-in fade-in duration-150">
           <div className="bg-white rounded-t-2xl shadow-2xl border-t border-studio-200 max-h-[85vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom duration-200">
             {/* Grab handle & Header */}
             <div className="pt-2 pb-2.5 px-4 border-b border-studio-100 flex items-center justify-between bg-studio-50/70">
@@ -1500,7 +1500,7 @@ export default function ResumeEditorPage({ params }: PageProps) {
       {/* Word Mobile Slide-Up Bottom Sheet (Format / Design Drawer) */}
       {/* ------------------------------------------------------------------- */}
       {mobileSheet === 'format' && (
-        <div className="fixed inset-0 bg-studio-950/50 backdrop-blur-xs z-50 flex flex-col justify-end sm:hidden animate-in fade-in duration-150">
+        <div className="fixed inset-0 bg-studio-950/50 backdrop-blur-sm z-50 flex flex-col justify-end sm:hidden animate-in fade-in duration-150">
           <div className="bg-white rounded-t-2xl shadow-2xl border-t border-studio-200 max-h-[85vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom duration-200">
             <div className="pt-2 pb-2.5 px-4 border-b border-studio-100 flex items-center justify-between bg-studio-50/70">
               <div className="flex items-center gap-2">
@@ -1525,7 +1525,7 @@ export default function ResumeEditorPage({ params }: PageProps) {
       {/* Word Mobile Slide-Up Bottom Sheet (Export Drawer) */}
       {/* ------------------------------------------------------------------- */}
       {mobileSheet === 'export' && (
-        <div className="fixed inset-0 bg-studio-950/50 backdrop-blur-xs z-50 flex flex-col justify-end sm:hidden animate-in fade-in duration-150">
+        <div className="fixed inset-0 bg-studio-950/50 backdrop-blur-sm z-50 flex flex-col justify-end sm:hidden animate-in fade-in duration-150">
           <div className="bg-white rounded-t-2xl shadow-2xl border-t border-studio-200 max-h-[50vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom duration-200">
             <div className="pt-2 pb-2.5 px-4 border-b border-studio-100 flex items-center justify-between bg-studio-50/70">
               <div className="flex items-center gap-2">

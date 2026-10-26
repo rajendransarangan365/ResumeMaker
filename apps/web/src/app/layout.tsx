@@ -117,7 +117,9 @@ export const viewport: Viewport = {
   ],
   width: 'device-width',
   initialScale: 1,
+  minimumScale: 1,
   maximumScale: 5,
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({
@@ -142,7 +144,7 @@ export default function RootLayout({
         <meta name="twitter:image:alt" content="ATS Resume Intelligence Studio" />
         <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
       </head>
-      <body className="min-h-dvh flex flex-col bg-studio-50 text-studio-900">
+      <body className="min-h-dvh flex flex-col bg-studio-50 text-studio-900 overflow-x-hidden">
         <OfflineBanner />
         <Navbar />
         <main className="flex-1 flex flex-col">{children}</main>

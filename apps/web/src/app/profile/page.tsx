@@ -134,7 +134,7 @@ export default function CandidateProfilePage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <button
             onClick={handleCareerGapCheck}
             className="px-3.5 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg text-xs font-semibold flex items-center gap-1.5 border border-amber-200 transition-colors"
@@ -172,9 +172,46 @@ export default function CandidateProfilePage() {
 
       {/* Profile Sections Layout */}
       <div className="flex flex-col md:flex-row gap-8">
-        {/* Navigation Sidebar */}
+        {/* Navigation: Horizontal scrollable tabs on mobile, vertical sidebar on md+ */}
         <div className="w-full md:w-64 flex-shrink-0">
-          <div className="bg-white rounded-xl border border-studio-200 p-2 shadow-sm space-y-1">
+          {/* Mobile: Horizontal scrollable tab bar */}
+          <div className="md:hidden flex gap-1.5 overflow-x-auto pb-2 scrollbar-none">
+            {[
+              { id: 'personal', label: 'Personal', icon: User },
+              { id: 'summary', label: 'Summary', icon: Briefcase },
+              { id: 'experience', label: 'Experience', count: profile.workExperience?.length, icon: Briefcase },
+              { id: 'education', label: 'Education', count: profile.education?.length, icon: GraduationCap },
+              { id: 'projects', label: 'Projects', count: profile.projects?.length, icon: FolderGit2 },
+              { id: 'skills', label: 'Skills', icon: Wrench },
+              { id: 'certifications', label: 'Certs', count: profile.certifications?.length, icon: Award },
+              { id: 'declaration', label: 'Declaration', icon: CheckCircle },
+            ].map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-semibold whitespace-nowrap border transition-colors ${
+                    isActive
+                      ? 'bg-brand-600 text-white border-brand-600 shadow-sm'
+                      : 'text-studio-600 bg-white border-studio-200 hover:border-brand-300'
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  <span>{tab.label}</span>
+                  {tab.count !== undefined && (
+                    <span className={`text-[10px] px-1 rounded-full font-mono ${
+                      isActive ? 'bg-white/30 text-white' : 'bg-studio-100 text-studio-600'
+                    }`}>{tab.count}</span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Desktop: Vertical sidebar */}
+          <div className="hidden md:block bg-white rounded-xl border border-studio-200 p-2 shadow-sm space-y-1">
             {[
               { id: 'personal', label: 'Personal Details', icon: User },
               { id: 'summary', label: 'Professional Summary', icon: Briefcase },
@@ -213,7 +250,7 @@ export default function CandidateProfilePage() {
         </div>
 
         {/* Section Detail Form */}
-        <div className="flex-1 bg-white rounded-xl border border-studio-200 p-6 shadow-sm">
+        <div className="flex-1 min-w-0 bg-white rounded-xl border border-studio-200 p-4 sm:p-6 shadow-sm">
           {/* Personal Details */}
           {activeTab === 'personal' && (
             <div className="space-y-4">

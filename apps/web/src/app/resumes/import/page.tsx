@@ -170,14 +170,14 @@ export default function ResumeImportPage() {
       {/* Stage 3: Review Interface */}
       {stage === 'review' && parsedData && (
         <div className="space-y-6">
-          <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-xl flex items-center justify-between">
+          <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex items-center gap-2 text-xs">
               <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0" />
               <span>Extraction complete! Review the extracted data before applying it to your master profile.</span>
             </div>
             <button
               onClick={handleApplyToProfile}
-              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm flex items-center gap-1.5 transition-colors"
+              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm flex items-center gap-1.5 transition-colors flex-shrink-0 w-full sm:w-auto justify-center"
             >
               <span>Confirm & Save to Profile</span>
               <ArrowRight className="w-3.5 h-3.5" />

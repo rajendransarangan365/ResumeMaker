@@ -97,8 +97,8 @@ export function Navbar() {
 
   if (isInnerResumeEditor) {
     return (
-      <header className="hidden md:block sticky top-0 z-40 w-full border-b border-studio-200/90 bg-white/95 backdrop-blur-md transition-all">
-        <div className="mx-auto flex h-13 max-w-7xl items-center justify-between px-4 sm:px-6">
+      <header className="hidden md:block sticky top-0 z-40 w-full border-b border-studio-200/90 bg-white/95 backdrop-blur-md transition-all overflow-hidden">
+        <div className="mx-auto flex h-13 max-w-7xl items-center justify-between px-4 sm:px-6 min-w-0">
           <Link href="/dashboard" className="flex items-center gap-2 font-bold text-studio-900 group">
             <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-gradient-to-tr from-brand-600 to-indigo-500 text-white shadow-xs group-hover:scale-105 transition-transform">
               <Sparkles className="w-4 h-4" />
@@ -159,18 +159,18 @@ export function Navbar() {
     : 'U';
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-studio-200/90 bg-white/95 backdrop-blur-md shadow-2xs">
-      <div className="mx-auto flex h-14 sm:h-16 max-w-7xl items-center justify-between px-3 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-40 w-full border-b border-studio-200/90 bg-white/95 backdrop-blur-md shadow-2xs overflow-hidden">
+      <div className="mx-auto flex h-14 sm:h-16 max-w-7xl items-center justify-between px-3 sm:px-6 lg:px-8 min-w-0 gap-2">
         {/* Brand Logo */}
-        <Link href={currentUser ? '/dashboard' : '/'} className="flex items-center gap-2.5 group">
+        <Link href={currentUser ? '/dashboard' : '/'} className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
           <div className="flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-600 via-brand-500 to-indigo-600 text-white shadow-sm group-hover:shadow transition-all group-hover:scale-105">
             <Sparkles className="w-4 h-4" />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm sm:text-base font-bold tracking-tight text-studio-900 leading-tight">
+            <span className="text-sm sm:text-base font-bold tracking-tight text-studio-900 leading-tight whitespace-nowrap">
               ATS Resume Studio
             </span>
-            <span className="text-[10px] text-studio-400 font-medium hidden sm:block">
+            <span className="text-[10px] text-studio-400 font-medium hidden sm:block whitespace-nowrap">
               Intelligent ATS Optimizer
             </span>
           </div>
@@ -340,7 +340,7 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && !isAuthPage && (
-        <div className="lg:hidden border-b border-studio-200 bg-white px-4 pt-3 pb-5 space-y-2 shadow-xl animate-in slide-in-from-top-2 duration-150">
+        <div className="lg:hidden border-b border-studio-200 bg-white px-4 pt-3 pb-5 space-y-2 shadow-xl animate-in slide-in-from-top-2 duration-150 max-h-[80dvh] overflow-y-auto overflow-x-hidden">
           {currentUser ? (
             <>
               <div className="flex items-center gap-3 p-3 bg-studio-50 rounded-xl mb-3 border border-studio-100">
