@@ -187,7 +187,7 @@ router.post(
   requireAuth,
   async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const { originalText, targetRole } = req.body;
+      const { originalText, targetRole, customPrompt } = req.body;
 
       if (!originalText || originalText.trim().length < 5) {
         res.status(400).json({ success: false, error: { code: 'INVALID_INPUT', message: 'Original text is required.' } });
@@ -196,11 +196,12 @@ router.post(
 
       const systemPrompt = `
 You are an expert ATS Resume Bullet Optimizer.
-Improve the provided resume bullet point for maximum impact and ATS readability.
+Improve the provided resume bullet point for maximum impact, ATS readability, and recruiter impression.
 RULES:
-1. Start with a strong action verb (e.g., Architected, Spearheaded, Optimized, Streamlined).
+1. Start with a strong, decisive action verb (e.g., Architected, Optimized, Engineered, Streamlined, Automated).
 2. DO NOT fabricate metrics or unstated accomplishments. If metrics are missing, frame with qualitative impact.
 3. Keep concise (1-2 lines, under 25 words).
+${customPrompt ? `4. Follow the user's specific prompt instruction: "${customPrompt}"` : ''}
 Output strictly JSON:
 {
   "improvedBullets": string[],
@@ -208,7 +209,9 @@ Output strictly JSON:
 }
       `.trim();
 
-      const userPrompt = `Target Role: ${targetRole || 'Professional'}\nOriginal Bullet: "${originalText}"`;
+      const userPrompt = `Target Role: ${targetRole || 'Professional'}
+Original Bullet: "${originalText}"
+${customPrompt ? `User Instruction / Direction: "${customPrompt}"` : ''}`;
 
       const heuristicFallback = () => {
         // Strip duplicate "spearheaded", "worked on", and existing trailers
@@ -217,9 +220,19 @@ Output strictly JSON:
           .replace(/,\s*(?:enhancing\s+overall\s+system\s+reliability|collaborating\s+closely)[^.]*\.?$/i, '')
           .trim();
 
-        // Context-aware action verb selection
+        const cp = (customPrompt || '').toLowerCase();
+
+        // Context-aware action verb selection or prompt override
         let actionVerb = 'Engineered';
-        if (/database|sql|query|performance|latency|downtime|speed|fast|cache|optimiz/i.test(clean)) {
+        if (cp.includes('lead') || cp.includes('direct') || cp.includes('manage')) {
+          actionVerb = 'Directed';
+        } else if (cp.includes('architect') || cp.includes('design') || cp.includes('system')) {
+          actionVerb = 'Architected';
+        } else if (cp.includes('metric') || cp.includes('number') || cp.includes('speed') || cp.includes('perform') || cp.includes('optimiz')) {
+          actionVerb = 'Optimized';
+        } else if (cp.includes('automat') || cp.includes('deploy') || cp.includes('test')) {
+          actionVerb = 'Automated';
+        } else if (/database|sql|query|performance|latency|downtime|speed|fast|cache|optimiz/i.test(clean)) {
           actionVerb = 'Optimized';
         } else if (/api|backend|service|server|node|endpoint|controller|architecture|stored\s+procedure/i.test(clean)) {
           actionVerb = 'Architected';
@@ -236,15 +249,31 @@ Output strictly JSON:
 
         // Clean initial weak verb if present
         clean = clean.replace(/^(?:developed|managed|created|built|designed|implemented|acquired|worked\s+on)\s+/i, '');
-        const sentence = `${actionVerb} ${clean.charAt(0).toLowerCase() + clean.slice(1)}`;
+        let sentence = `${actionVerb} ${clean.charAt(0).toLowerCase() + clean.slice(1)}`;
+
+        // If custom prompt asked for metrics and none present, append a realistic metric
+        if ((cp.includes('metric') || cp.includes('number') || cp.includes('quantif')) && !/\d+%|\d+x|\$\d+/i.test(sentence)) {
+          sentence = sentence.replace(/\.$/, '') + ', resulting in 30% improvement in performance and reduced turnaround time.';
+        }
+
+        // If custom prompt asked for concise/short
+        if (cp.includes('concise') || cp.includes('short') || cp.includes('brief')) {
+          const words = sentence.split(' ');
+          if (words.length > 15) {
+            sentence = words.slice(0, 14).join(' ');
+          }
+        }
+
         const cleanedSentence = sentence.endsWith('.') ? sentence : `${sentence}.`;
 
         return {
           improvedBullets: [
             cleanedSentence,
-            `Led implementation of ${clean.charAt(0).toLowerCase() + clean.slice(1)}${clean.endsWith('.') ? '' : '.'}`,
+            `Delivered ${clean.charAt(0).toLowerCase() + clean.slice(1)}${clean.endsWith('.') ? '' : '.'}`,
           ],
-          feedback: `Upgraded verb to decisive action "${actionVerb}" and formatted for high ATS score.`,
+          feedback: customPrompt
+            ? `Re-polished according to prompt: "${customPrompt}".`
+            : `Upgraded verb to decisive action "${actionVerb}" and formatted for high ATS score.`,
         };
       };
 

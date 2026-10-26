@@ -76,7 +76,7 @@ export interface IEducation {
   includeInResume: boolean;
 }
 
-export type EmploymentType = 'Full-time' | 'Part-time' | 'Contract' | 'Freelance' | 'Internship' | 'Apprenticeship';
+export type EmploymentType = 'Full-time' | 'Part-time' | 'Contract' | 'Freelance' | 'Internship' | 'Apprenticeship' | 'Business / Founder';
 
 export interface IWorkExperience {
   id: string;
@@ -107,6 +107,7 @@ export interface IProject {
   responsibilities?: string[];
   technologies: string[];
   url?: string;
+  githubUrl?: string;
   includeInResume: boolean;
 }
 

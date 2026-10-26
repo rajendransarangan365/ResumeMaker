@@ -77,8 +77,11 @@ export const useResumeEditorStore = create<ResumeEditorState>((set, get) => ({
     const updatedResume = {
       ...resume,
       templateId,
-      sectionOrder: templateDef.defaultSectionOrder,
-      formatting: { ...templateDef.defaultFormatting, ...resume.formatting },
+      sectionOrder: [...templateDef.defaultSectionOrder],
+      formatting: {
+        ...resume.formatting,
+        ...templateDef.defaultFormatting,
+      },
     };
     const metrics = profile ? calculatePageMetrics(profile, updatedResume.formatting) : null;
     set({ resume: updatedResume, pageMetrics: metrics, isDirty: true });

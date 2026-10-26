@@ -20,6 +20,9 @@ import {
   Plus,
   Trash2,
   Wand2,
+  RotateCcw,
+  Undo2,
+  MessageSquare,
   Briefcase,
   GraduationCap,
   FolderGit2,
@@ -49,6 +52,9 @@ export default function ResumeEditorPage({ params }: PageProps) {
   const [saveFeedback, setSaveFeedback] = useState<string | null>(null);
   const [optimizingBulletId, setOptimizingBulletId] = useState<string | null>(null);
   const [optimizingSummary, setOptimizingSummary] = useState(false);
+  const [bulletHistory, setBulletHistory] = useState<Record<string, string[]>>({});
+  const [activePromptBulletId, setActivePromptBulletId] = useState<string | null>(null);
+  const [customPromptText, setCustomPromptText] = useState<string>('');
 
   // Accordion open/collapse states for sections
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
@@ -154,15 +160,28 @@ export default function ResumeEditorPage({ params }: PageProps) {
     window.open(`/api/v1/exports/preview/${actualResumeId}`, '_blank');
   };
 
-  // Quick AI Bullet Optimization
-  const handleOptimizeBullet = async (expId: string, bulletIdx: number, originalText: string) => {
+  // Quick or Custom AI Bullet Optimization
+  const handleOptimizeBullet = async (
+    expId: string,
+    bulletIdx: number,
+    originalText: string,
+    promptInstruction?: string
+  ) => {
     if (!originalText || originalText.trim().length < 5) return;
     const key = `${expId}-${bulletIdx}`;
     setOptimizingBulletId(key);
+
+    // Save previous state to bulletHistory stack for instant Undo
+    setBulletHistory((prev) => ({
+      ...prev,
+      [key]: [...(prev[key] || []), originalText],
+    }));
+
     try {
       const res = await api.optimizeBullet({
         originalText,
         targetRole: profile?.personalDetails?.headline || 'Software Engineer',
+        customPrompt: promptInstruction || customPromptText || undefined,
       });
       if (res.success && res.data?.improvedBullets && res.data.improvedBullets.length > 0) {
         const exp = profile?.workExperience.find((e: any) => e.id === expId);
@@ -171,11 +190,35 @@ export default function ResumeEditorPage({ params }: PageProps) {
           updated[bulletIdx] = res.data.improvedBullets[0];
           updateWorkExperience(expId, { responsibilities: updated });
         }
+        if (activePromptBulletId === key) {
+          setActivePromptBulletId(null);
+          setCustomPromptText('');
+        }
       }
     } catch (err) {
       console.error('Failed to optimize bullet:', err);
     } finally {
       setOptimizingBulletId(null);
+    }
+  };
+
+  // Undo AI Bullet Polish
+  const handleUndoBullet = (expId: string, bulletIdx: number) => {
+    const key = `${expId}-${bulletIdx}`;
+    const history = bulletHistory[key] || [];
+    if (history.length === 0) return;
+
+    const previousText = history[history.length - 1];
+    setBulletHistory((prev) => ({
+      ...prev,
+      [key]: prev[key].slice(0, -1),
+    }));
+
+    const exp = profile?.workExperience.find((e: any) => e.id === expId);
+    if (exp) {
+      const updated = [...exp.responsibilities];
+      updated[bulletIdx] = previousText;
+      updateWorkExperience(expId, { responsibilities: updated });
     }
   };
 
@@ -462,6 +505,29 @@ export default function ResumeEditorPage({ params }: PageProps) {
                       />
                     </div>
                   </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="text-[11px] font-semibold text-studio-600 block mb-0.5">LinkedIn Profile URL</label>
+                      <input
+                        type="url"
+                        placeholder="linkedin.com/in/username"
+                        value={profile.personalDetails.linkedinUrl || ''}
+                        onChange={(e) => updateProfileDetails({ linkedinUrl: e.target.value })}
+                        className="w-full border rounded-lg px-2.5 py-1.5 text-xs text-studio-900 focus:ring-1 focus:ring-brand-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[11px] font-semibold text-studio-600 block mb-0.5">GitHub Profile URL</label>
+                      <input
+                        type="url"
+                        placeholder="github.com/username"
+                        value={profile.personalDetails.githubUrl || ''}
+                        onChange={(e) => updateProfileDetails({ githubUrl: e.target.value })}
+                        className="w-full border rounded-lg px-2.5 py-1.5 text-xs text-studio-900 focus:ring-1 focus:ring-brand-500"
+                      />
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -574,19 +640,38 @@ export default function ResumeEditorPage({ params }: PageProps) {
                       </div>
 
                       <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div className="col-span-2">
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">
+                            Employment & Experience Type
+                          </label>
+                          <select
+                            value={exp.employmentType || 'Full-time'}
+                            onChange={(e) => updateWorkExperience(exp.id, { employmentType: e.target.value as any })}
+                            className="w-full border rounded px-2 py-1 bg-white text-xs text-studio-900 font-medium"
+                          >
+                            <option value="Full-time">Full-time (Standard Role)</option>
+                            <option value="Freelance">Freelance / Client Projects</option>
+                            <option value="Business / Founder">Business / Founder / Operations</option>
+                            <option value="Contract">Contract / Consulting</option>
+                            <option value="Part-time">Part-time</option>
+                            <option value="Internship">Internship / Trainee</option>
+                          </select>
+                        </div>
                         <div>
                           <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Job Title</label>
                           <input
                             type="text"
+                            placeholder="e.g. Full Stack Developer or Business Lead"
                             value={exp.jobTitle || ''}
                             onChange={(e) => updateWorkExperience(exp.id, { jobTitle: e.target.value })}
                             className="w-full border rounded px-2 py-1 bg-white text-xs"
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Employer / Company</label>
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Employer / Client / Business</label>
                           <input
                             type="text"
+                            placeholder="e.g. Freelance / Self-Employed or Company"
                             value={exp.employer || ''}
                             onChange={(e) => updateWorkExperience(exp.id, { employer: e.target.value })}
                             className="w-full border rounded px-2 py-1 bg-white text-xs"
@@ -653,44 +738,156 @@ export default function ResumeEditorPage({ params }: PageProps) {
                         </div>
 
                         {(exp.responsibilities || []).map((b: string, bIdx: number) => {
-                          const isOptimizingThis = optimizingBulletId === `${exp.id}-${bIdx}`;
+                          const bulletKey = `${exp.id}-${bIdx}`;
+                          const isOptimizingThis = optimizingBulletId === bulletKey;
+                          const hasUndoHistory = (bulletHistory[bulletKey] || []).length > 0;
+                          const isPromptOpen = activePromptBulletId === bulletKey;
+
                           return (
-                            <div key={bIdx} className="flex items-start gap-1.5">
-                              <span className="text-studio-400 text-xs mt-1">•</span>
-                              <textarea
-                                rows={2}
-                                value={b}
-                                onChange={(e) => {
-                                  const updated = [...exp.responsibilities];
-                                  updated[bIdx] = e.target.value;
-                                  updateWorkExperience(exp.id, { responsibilities: updated });
-                                }}
-                                className="flex-1 border rounded p-1.5 text-xs bg-white text-studio-900 leading-snug"
-                              />
-                              <div className="flex flex-col gap-1 mt-0.5">
-                                <button
-                                  type="button"
-                                  onClick={() => handleOptimizeBullet(exp.id, bIdx, b)}
-                                  disabled={isOptimizingThis}
-                                  className="p-1 text-violet-600 hover:bg-violet-50 rounded"
-                                  title="AI Polish this bullet"
-                                >
-                                  <Sparkles
-                                    className={`w-3.5 h-3.5 ${isOptimizingThis ? 'animate-spin text-amber-500' : ''}`}
-                                  />
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    const updated = exp.responsibilities.filter((_: any, i: number) => i !== bIdx);
+                            <div key={bIdx} className="space-y-1.5">
+                              <div className="flex items-start gap-1.5">
+                                <span className="text-studio-400 text-xs mt-1">•</span>
+                                <textarea
+                                  rows={2}
+                                  value={b}
+                                  onChange={(e) => {
+                                    const updated = [...exp.responsibilities];
+                                    updated[bIdx] = e.target.value;
                                     updateWorkExperience(exp.id, { responsibilities: updated });
                                   }}
-                                  className="p-1 text-studio-400 hover:text-red-500 rounded"
-                                  title="Delete bullet"
-                                >
-                                  <Trash2 className="w-3.5 h-3.5" />
-                                </button>
+                                  className="flex-1 border rounded p-1.5 text-xs bg-white text-studio-900 leading-snug focus:ring-1 focus:ring-brand-500"
+                                />
+                                <div className="flex flex-col gap-1 mt-0.5">
+                                  {/* Quick AI Polish */}
+                                  <button
+                                    type="button"
+                                    onClick={() => handleOptimizeBullet(exp.id, bIdx, b)}
+                                    disabled={isOptimizingThis}
+                                    className="p-1 text-violet-600 hover:bg-violet-50 rounded transition-colors"
+                                    title="Quick AI Polish"
+                                  >
+                                    <Sparkles
+                                      className={`w-3.5 h-3.5 ${isOptimizingThis ? 'animate-spin text-amber-500' : ''}`}
+                                    />
+                                  </button>
+                                  {/* Custom Prompt Polish Drawer */}
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      setActivePromptBulletId(isPromptOpen ? null : bulletKey)
+                                    }
+                                    className={`p-1 rounded transition-colors ${
+                                      isPromptOpen
+                                        ? 'bg-violet-100 text-violet-700 font-bold'
+                                        : 'text-studio-500 hover:bg-studio-100'
+                                    }`}
+                                    title="Re-polish with custom prompt or metrics"
+                                  >
+                                    <MessageSquare className="w-3.5 h-3.5" />
+                                  </button>
+                                  {/* Undo Polish Button */}
+                                  {hasUndoHistory && (
+                                    <button
+                                      type="button"
+                                      onClick={() => handleUndoBullet(exp.id, bIdx)}
+                                      className="p-1 text-amber-600 hover:bg-amber-50 rounded transition-colors"
+                                      title="Undo last AI polish"
+                                    >
+                                      <RotateCcw className="w-3.5 h-3.5" />
+                                    </button>
+                                  )}
+                                  {/* Delete Bullet */}
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const updated = exp.responsibilities.filter((_: any, i: number) => i !== bIdx);
+                                      updateWorkExperience(exp.id, { responsibilities: updated });
+                                    }}
+                                    className="p-1 text-studio-400 hover:text-red-500 rounded transition-colors"
+                                    title="Delete bullet"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
                               </div>
+
+                              {/* Suggestion & Re-prompting Drawer */}
+                              {isPromptOpen && (
+                                <div className="ml-3 p-2.5 rounded-lg border border-violet-200 bg-violet-50/80 space-y-2 animate-in fade-in duration-150">
+                                  <div className="flex items-center justify-between text-[11px] font-bold text-violet-900">
+                                    <span className="flex items-center gap-1.5">
+                                      <Wand2 className="w-3 h-3 text-violet-600" />
+                                      <span>Re-Polish with Suggestions or Custom Prompt</span>
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={() => setActivePromptBulletId(null)}
+                                      className="text-studio-400 hover:text-studio-700 text-xs px-1"
+                                    >
+                                      ✕
+                                    </button>
+                                  </div>
+
+                                  {/* Quick Suggestion Chips */}
+                                  <div className="flex flex-wrap gap-1">
+                                    {[
+                                      'Add quantifiable metrics & results',
+                                      'Make punchy & concise',
+                                      'Highlight technical stack & architecture',
+                                      'Focus on freelance client turnaround',
+                                      'Show business ownership & operations',
+                                    ].map((chip) => (
+                                      <button
+                                        key={chip}
+                                        type="button"
+                                        onClick={() => {
+                                          setCustomPromptText(chip);
+                                          handleOptimizeBullet(exp.id, bIdx, b, chip);
+                                        }}
+                                        className="px-2 py-0.5 bg-white border border-violet-200 hover:border-violet-400 rounded-full text-[10px] text-violet-700 hover:bg-violet-100/50 transition-colors"
+                                      >
+                                        + {chip}
+                                      </button>
+                                    ))}
+                                  </div>
+
+                                  {/* Custom Prompt Box */}
+                                  <div className="flex gap-1.5 pt-0.5">
+                                    <input
+                                      type="text"
+                                      placeholder="e.g. Focus on ASP.NET & React, add 25% performance improvement..."
+                                      value={customPromptText}
+                                      onChange={(e) => setCustomPromptText(e.target.value)}
+                                      onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                          e.preventDefault();
+                                          handleOptimizeBullet(exp.id, bIdx, b, customPromptText);
+                                        }
+                                      }}
+                                      className="flex-1 border border-violet-200 rounded px-2 py-1 text-xs bg-white text-studio-900 focus:ring-1 focus:ring-violet-500"
+                                    />
+                                    <button
+                                      type="button"
+                                      onClick={() => handleOptimizeBullet(exp.id, bIdx, b, customPromptText)}
+                                      disabled={isOptimizingThis}
+                                      className="px-3 py-1 bg-violet-600 hover:bg-violet-700 text-white rounded text-xs font-bold disabled:opacity-50 flex items-center gap-1 shadow-xs"
+                                    >
+                                      {isOptimizingThis ? 'Polishing...' : 'Polish'}
+                                    </button>
+                                    {hasUndoHistory && (
+                                      <button
+                                        type="button"
+                                        onClick={() => handleUndoBullet(exp.id, bIdx)}
+                                        className="px-2.5 py-1 bg-amber-100 hover:bg-amber-200 text-amber-800 rounded text-xs font-semibold flex items-center gap-1 transition-colors"
+                                        title="Undo last polish"
+                                      >
+                                        <RotateCcw className="w-3 h-3" />
+                                        <span>Undo</span>
+                                      </button>
+                                    )}
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           );
                         })}
@@ -849,9 +1046,11 @@ export default function ResumeEditorPage({ params }: PageProps) {
                     addProject({
                       id: `proj-${Date.now()}`,
                       name: 'New Project',
+                      category: 'Professional',
                       technologies: ['React', 'Node.js'],
                       description: 'Engineered full-stack responsive web application.',
                       url: '',
+                      githubUrl: '',
                       includeInResume: true,
                     })
                   }
@@ -916,15 +1115,27 @@ export default function ResumeEditorPage({ params }: PageProps) {
                             className="w-full border rounded px-2 py-1 bg-white text-xs"
                           />
                         </div>
-                        <div>
-                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Project URL / GitHub</label>
-                          <input
-                            type="url"
-                            placeholder="https://github.com/..."
-                            value={proj.url || ''}
-                            onChange={(e) => updateProject(proj.id, { url: e.target.value })}
-                            className="w-full border rounded px-2 py-1 bg-white text-xs"
-                          />
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Live Demo URL</label>
+                            <input
+                              type="url"
+                              placeholder="https://my-app.vercel.app"
+                              value={proj.url || ''}
+                              onChange={(e) => updateProject(proj.id, { url: e.target.value })}
+                              className="w-full border rounded px-2 py-1 bg-white text-xs"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">GitHub Repository URL</label>
+                            <input
+                              type="url"
+                              placeholder="https://github.com/username/project"
+                              value={proj.githubUrl || ''}
+                              onChange={(e) => updateProject(proj.id, { githubUrl: e.target.value })}
+                              className="w-full border rounded px-2 py-1 bg-white text-xs"
+                            />
+                          </div>
                         </div>
                         <div>
                           <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Description & Highlights</label>
