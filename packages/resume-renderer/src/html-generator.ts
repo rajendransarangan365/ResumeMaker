@@ -338,11 +338,12 @@ export function generateResumeHtml(
     ` : `
     .resume-page {
       background: #ffffff;
-      width: ${widthMm}mm;
+      width: 100% !important;
+      max-width: 100% !important;
       min-height: ${heightMm}mm;
       padding: ${formatting.marginsMm}mm;
-      margin: 0 auto;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      margin: 0 !important;
+      box-sizing: border-box !important;
     }
     `}
     @media print {
@@ -364,25 +365,6 @@ export function generateResumeHtml(
   </style>
 </head>
 <body>
-  ${!options?.embedded ? `
-  <!-- Print & PDF Download Action Bar (Hidden when printing or saving as PDF) -->
-  <div class="no-print" style="position: sticky; top: 0; z-index: 100; background: #0f172a; color: #ffffff; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-    <div style="display: flex; align-items: center; gap: 10px;">
-      <span style="font-weight: 700; font-size: 14px; letter-spacing: -0.01em;">ATS Resume Studio — PDF Ready</span>
-      <span style="background: #1e293b; color: #94a3b8; font-size: 11px; padding: 2px 8px; rounded: 4px; border: 1px solid #334155;">100% Selectable ATS Vector</span>
-    </div>
-    <div style="display: flex; align-items: center; gap: 10px;">
-      <button onclick="window.print()" style="background: #2563eb; hover: #1d4ed8; color: #ffffff; border: none; border-radius: 8px; padding: 8px 18px; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 6px rgba(37,99,235,0.4);">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-        Save / Print as PDF
-      </button>
-      <button onclick="window.close()" style="background: transparent; color: #cbd5e1; border: 1px solid #475569; border-radius: 8px; padding: 8px 14px; font-size: 12px; cursor: pointer;">
-        Close
-      </button>
-    </div>
-  </div>
-  ` : ''}
-
   <main class="resume-page resume-template resume-template--${template.id}">
     ${bodyContent}
   </main>

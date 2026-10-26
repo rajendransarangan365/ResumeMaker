@@ -120,25 +120,25 @@
   min-width: 0;
 }
 .resume-editor__sidebar {
-  @apply w-full md:w-96 lg:w-[420px] flex-shrink-0 border-r border-studio-200 bg-white overflow-y-auto overflow-x-hidden p-4;
+  @apply w-full md:w-80 lg:w-[350px] flex-shrink-0 border-r border-studio-200 bg-white overflow-y-auto overflow-x-hidden p-4;
   min-width: 0;
 }
 .resume-editor__canvas {
   @apply flex-1 flex flex-col items-center justify-start overflow-y-auto overflow-x-hidden bg-studio-100;
-  padding: 0.5rem;
+  padding: 0.75rem;
   padding-bottom: 5rem; /* space for mobile bottom ribbon */
   min-width: 0;
 }
 
 @media (min-width: 640px) {
   .resume-editor__canvas {
-    padding: 2rem;
+    padding: 1.25rem;
     padding-bottom: 2rem;
   }
 }
 
 .resume-editor__panel {
-  @apply hidden xl:block w-80 flex-shrink-0 border-l border-studio-200 bg-white overflow-y-auto overflow-x-hidden p-4;
+  @apply hidden 2xl:block w-72 flex-shrink-0 border-l border-studio-200 bg-white overflow-y-auto overflow-x-hidden p-4;
   min-width: 0;
 }
 .resume-editor__section {

@@ -47,6 +47,38 @@ export function LiveDocumentCanvas({
     return generateResumeHtml(profile, resume, { embedded: true, mobileReflow: false });
   }, [profile, resume]);
 
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  // Auto-fit document zoom to available canvas width on mount and on sidebar resize
+  useEffect(() => {
+    const autoFit = () => {
+      if (!containerRef.current) return;
+      const available = containerRef.current.clientWidth - 32;
+      if (available > 100) {
+        const optimalZoom = Math.min(1.0, Math.max(0.35, Number((available / widthPx).toFixed(2))));
+        onZoomChange(optimalZoom);
+      }
+    };
+
+    // Run after layout stabilizes
+    const timer = setTimeout(autoFit, 80);
+
+    let observer: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== 'undefined' && containerRef.current) {
+      observer = new ResizeObserver(() => {
+        autoFit();
+      });
+      observer.observe(containerRef.current);
+    }
+
+    window.addEventListener('resize', autoFit);
+    return () => {
+      clearTimeout(timer);
+      if (observer) observer.disconnect();
+      window.removeEventListener('resize', autoFit);
+    };
+  }, [widthPx]);
+
   // Default to mobile-flow on small screens, page-layout on desktop
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -59,9 +91,9 @@ export function LiveDocumentCanvas({
   }, []);
 
   const handleFitToWidth = () => {
-    if (typeof window !== 'undefined') {
-      const containerWidth = window.innerWidth < 640 ? window.innerWidth - 32 : Math.min(window.innerWidth - 80, 800);
-      const fitZoom = Math.min(1.2, Math.max(0.4, Number((containerWidth / widthPx).toFixed(2))));
+    if (containerRef.current) {
+      const available = containerRef.current.clientWidth - 32;
+      const fitZoom = Math.min(1.2, Math.max(0.35, Number((available / widthPx).toFixed(2))));
       onZoomChange(fitZoom);
     }
   };
@@ -70,7 +102,7 @@ export function LiveDocumentCanvas({
   const scaledH = Math.round(heightPx * zoomLevel);
 
   return (
-    <div className="flex flex-col items-center w-full min-w-0 max-w-full">
+    <div ref={containerRef} className="flex flex-col items-center w-full min-w-0 max-w-full">
       {/* Top Toolbar: View Mode Switcher + Zoom Controls */}
       <div className="w-full max-w-3xl flex flex-wrap items-center justify-between gap-2 mb-3 sm:mb-4 px-1">
         {/* Word Mobile View vs Page Layout Toggle */}
