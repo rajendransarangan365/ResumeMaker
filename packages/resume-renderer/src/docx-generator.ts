@@ -187,7 +187,7 @@ export async function generateDocxBuffer(
       }
 
       case 'experience': {
-        const activeExp = profile.workExperience.filter((e) => e.includeInResume);
+        const activeExp = profile.workExperience.filter((e) => e.includeInResume !== false);
         if (activeExp.length > 0) {
           addSectionHeading('Work Experience');
           for (const exp of activeExp) {
@@ -231,7 +231,7 @@ export async function generateDocxBuffer(
       }
 
       case 'education': {
-        const activeEdu = profile.education.filter((e) => e.includeInResume);
+        const activeEdu = profile.education.filter((e) => e.includeInResume !== false);
         if (activeEdu.length > 0) {
           addSectionHeading('Education');
           for (const edu of activeEdu) {
@@ -258,7 +258,7 @@ export async function generateDocxBuffer(
       }
 
       case 'projects': {
-        const activeProj = profile.projects.filter((p) => p.includeInResume);
+        const activeProj = profile.projects.filter((p) => p.includeInResume !== false);
         if (activeProj.length > 0) {
           addSectionHeading('Projects');
           for (const proj of activeProj) {

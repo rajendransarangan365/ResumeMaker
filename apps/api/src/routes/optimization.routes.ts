@@ -236,4 +236,160 @@ Output strictly JSON:
   }
 );
 
+// POST /api/v1/optimization/calibrate-resume
+router.post(
+  '/calibrate-resume',
+  requireAuth,
+  async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { profile, targetRole } = req.body;
+
+      if (!profile) {
+        res.status(400).json({ success: false, error: { code: 'INVALID_INPUT', message: 'Profile data is required.' } });
+        return;
+      }
+
+      const role = targetRole || profile.personalDetails?.headline || 'Software Engineer';
+
+      const systemPrompt = `
+You are an elite ATS Resume Calibration Specialist.
+Analyze the candidate resume and output an authoritative calibration assessment to maximize ATS pass-rate and interview invitations.
+RULES:
+1. Do not fabricate unstated employers or credentials.
+2. Upgrade weak verbs (worked on, helped, contributed to, handled) to strong action verbs (Architected, Engineered, Spearheaded, Optimized, Streamlined).
+3. Frame bullets with clear action and business/technical outcome.
+4. Provide a calibrated professional summary that hooks technical recruiters within 6 seconds.
+Output strictly JSON matching this structure:
+{
+  "overallScore": number (0-100),
+  "scores": {
+    "impact": number (0-100),
+    "verbs": number (0-100),
+    "skills": number (0-100),
+    "readability": number (0-100)
+  },
+  "recommendations": string[],
+  "calibratedSummary": string,
+  "calibratedBullets": [
+    {
+      "expId": string,
+      "original": string,
+      "improved": string
+    }
+  ],
+  "suggestedSkills": {
+    "technicalSkills": string[],
+    "jobSkills": string[],
+    "computerSkills": string[]
+  }
+}
+      `.trim();
+
+      const candidateText = `
+Role Target: ${role}
+Candidate Name: ${profile.personalDetails?.fullName || ''}
+Current Summary: ${profile.professionalSummary || ''}
+Work Experience:
+${(profile.workExperience || [])
+  .map((e: any) => `Job: ${e.jobTitle} at ${e.employer} (${e.startDate}-${e.endDate})\nBullets:\n${(e.responsibilities || []).map((r: string) => `- [${e.id}] ${r}`).join('\n')}`)
+  .join('\n\n')}
+Technical Skills: ${(profile.skills?.technicalSkills || []).join(', ')}
+Core Competencies: ${(profile.skills?.jobSkills || []).join(', ')}
+Tools: ${(profile.skills?.computerSkills || []).join(', ')}
+      `.trim();
+
+      const heuristicFallback = () => {
+        // Heuristic calibration engine
+        const exps = profile.workExperience || [];
+        let totalBullets = 0;
+        let actionVerbCount = 0;
+        let metricCount = 0;
+        const calibratedBullets: { expId: string; original: string; improved: string }[] = [];
+
+        const strongVerbs = /^(architected|engineered|spearheaded|optimized|streamlined|delivered|implemented|developed|designed|built|accelerated|automated|enhanced)/i;
+        const metricRegex = /\b(\d+%|\d+x|\$\d+|\d+\+?\s*(users|clients|requests|ms|seconds|hours|queries|endpoints|features))/i;
+
+        for (const exp of exps) {
+          const resps = exp.responsibilities || [];
+          for (const b of resps) {
+            totalBullets++;
+            if (strongVerbs.test(b.trim())) actionVerbCount++;
+            if (metricRegex.test(b)) metricCount++;
+
+            // Upgrade weak initial phrases
+            let upgraded = b.trim();
+            if (/^(worked on|helped with|contributed to|involved in|assisted in)\s*/i.test(upgraded)) {
+              upgraded = upgraded.replace(/^(worked on|helped with|contributed to|involved in|assisted in)\s*/i, '');
+              upgraded = `Engineered ${upgraded.charAt(0).toLowerCase() + upgraded.slice(1)}, ensuring high reliability and code quality`;
+            } else if (/^(developed|implemented|built)\s*/i.test(upgraded)) {
+              upgraded = upgraded.replace(/\.$/, '') + ', optimizing runtime performance and user experience.';
+            } else if (!strongVerbs.test(upgraded)) {
+              upgraded = `Spearheaded ${upgraded.charAt(0).toLowerCase() + upgraded.slice(1)}`;
+            }
+
+            if (upgraded !== b) {
+              calibratedBullets.push({
+                expId: exp.id,
+                original: b,
+                improved: upgraded,
+              });
+            }
+          }
+        }
+
+        const verbScore = totalBullets > 0 ? Math.min(100, Math.round((actionVerbCount / totalBullets) * 100) + 25) : 75;
+        const impactScore = totalBullets > 0 ? Math.min(100, Math.round((metricCount / totalBullets) * 100) + 40) : 70;
+        const skillCount = (profile.skills?.technicalSkills?.length || 0);
+        const skillScore = Math.min(100, skillCount * 7 + 30);
+        const readabilityScore = profile.professionalSummary && profile.professionalSummary.length > 80 ? 90 : 70;
+        const overallScore = Math.round((verbScore + impactScore + skillScore + readabilityScore) / 4);
+
+        const recommendations: string[] = [];
+        if (impactScore < 80) recommendations.push('Quantify key achievements with measurable performance numbers (e.g. latency, query speed, user volume).');
+        if (verbScore < 85) recommendations.push('Start every bullet point with a decisive action verb (Architected, Engineered, Streamlined).');
+        if (skillCount < 8) recommendations.push('Expand your technical skills list to include key frameworks, APIs, and cloud toolchains.');
+        recommendations.push('Align your professional summary directly with your target role to capture immediate recruiter interest.');
+
+        const calibratedSummary = `Results-oriented ${role} with proven expertise in ${
+          (profile.skills?.technicalSkills || ['React', 'Node.js', 'TypeScript']).slice(0, 4).join(', ')
+        }. Demonstrated track record of building robust, scalable applications, optimizing database performance, and delivering responsive user interfaces aligned with modern engineering standards.`;
+
+        return {
+          overallScore,
+          scores: {
+            impact: impactScore,
+            verbs: verbScore,
+            skills: skillScore,
+            readability: readabilityScore,
+          },
+          recommendations,
+          calibratedSummary,
+          calibratedBullets: calibratedBullets.slice(0, 8),
+          suggestedSkills: {
+            technicalSkills: Array.from(new Set([...(profile.skills?.technicalSkills || []), 'REST APIs', 'TypeScript', 'Responsive Design'])),
+            jobSkills: Array.from(new Set([...(profile.skills?.jobSkills || []), 'Agile SDLC', 'Code Review', 'Cross-Functional Collaboration'])),
+            computerSkills: Array.from(new Set([...(profile.skills?.computerSkills || []), 'Git', 'Visual Studio Code', 'Postman'])),
+          },
+        };
+      };
+
+      const result = await geminiService.executeStructuredPrompt(
+        req.user!._id.toString(),
+        'bullet_optimization',
+        systemPrompt,
+        candidateText,
+        heuristicFallback
+      );
+
+      res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export const optimizationRoutes = router;
+

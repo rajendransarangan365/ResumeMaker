@@ -104,7 +104,7 @@ export function generateResumeHtml(
       }
 
       case 'experience': {
-        const activeExp = profile.workExperience.filter((e) => e.includeInResume);
+        const activeExp = profile.workExperience.filter((e) => e.includeInResume !== false);
         if (activeExp.length > 0) {
           bodyContent += `
             <section class="resume-template__section" style="margin-bottom: 1.1rem;">
@@ -145,7 +145,7 @@ export function generateResumeHtml(
       }
 
       case 'education': {
-        const activeEdu = profile.education.filter((e) => e.includeInResume);
+        const activeEdu = profile.education.filter((e) => e.includeInResume !== false);
         if (activeEdu.length > 0) {
           bodyContent += `
             <section class="resume-template__section" style="margin-bottom: 1.1rem;">
@@ -180,7 +180,7 @@ export function generateResumeHtml(
       }
 
       case 'projects': {
-        const activeProj = profile.projects.filter((p) => p.includeInResume);
+        const activeProj = profile.projects.filter((p) => p.includeInResume !== false);
         if (activeProj.length > 0) {
           bodyContent += `
             <section class="resume-template__section" style="margin-bottom: 1.1rem;">

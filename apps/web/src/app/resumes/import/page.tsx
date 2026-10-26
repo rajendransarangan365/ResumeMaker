@@ -260,6 +260,110 @@ export default function ResumeImportPage() {
             </div>
           )}
 
+          {/* Extracted Work Experience */}
+          {parsedData.workExperience && parsedData.workExperience.length > 0 && (
+            <div className="bg-white rounded-xl border border-studio-200 p-5 shadow-sm space-y-3">
+              <div className="flex items-center justify-between border-b pb-2">
+                <h3 className="font-bold text-sm text-studio-900 flex items-center gap-2">
+                  <span>Extracted Work Experience ({parsedData.workExperience.length})</span>
+                </h3>
+              </div>
+              <div className="space-y-3">
+                {parsedData.workExperience.map((exp: any, idx: number) => (
+                  <div key={idx} className="p-3 rounded-lg border border-studio-100 bg-studio-50/50 space-y-2">
+                    <div className="flex justify-between items-baseline flex-wrap">
+                      <span className="font-bold text-xs text-studio-900">
+                        {exp.jobTitle} <span className="font-normal text-studio-600">at {exp.employer}</span>
+                      </span>
+                      <span className="text-[11px] text-studio-500 font-mono">
+                        {exp.startDate} – {exp.isCurrent ? 'Present' : exp.endDate}
+                      </span>
+                    </div>
+                    {exp.responsibilities && exp.responsibilities.length > 0 && (
+                      <ul className="list-disc list-inside text-xs text-studio-700 space-y-1">
+                        {exp.responsibilities.map((r: string, rIdx: number) => (
+                          <li key={rIdx}>{r}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Extracted Education */}
+          {parsedData.education && parsedData.education.length > 0 && (
+            <div className="bg-white rounded-xl border border-studio-200 p-5 shadow-sm space-y-3">
+              <h3 className="font-bold text-sm text-studio-900 border-b pb-2">
+                Extracted Education ({parsedData.education.length})
+              </h3>
+              <div className="space-y-2">
+                {parsedData.education.map((edu: any, idx: number) => (
+                  <div key={idx} className="p-3 rounded-lg border border-studio-100 bg-studio-50/50 flex justify-between items-start text-xs">
+                    <div>
+                      <div className="font-bold text-studio-900">
+                        {edu.qualification} {edu.specialization ? `in ${edu.specialization}` : ''}
+                      </div>
+                      <div className="text-studio-600">{edu.institution}</div>
+                      {edu.gradePercentageCgpa && (
+                        <div className="text-studio-500 text-[11px]">{edu.gradePercentageCgpa}</div>
+                      )}
+                    </div>
+                    <div className="text-studio-500 font-mono text-[11px]">{edu.endDate}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Extracted Skills */}
+          {parsedData.skills && (
+            <div className="bg-white rounded-xl border border-studio-200 p-5 shadow-sm space-y-3">
+              <h3 className="font-bold text-sm text-studio-900 border-b pb-2">Extracted Skills</h3>
+              <div className="space-y-2 text-xs">
+                {parsedData.skills.technicalSkills?.length > 0 && (
+                  <div>
+                    <strong className="text-studio-800">Technical Skills:</strong>{' '}
+                    <span className="text-studio-600">{parsedData.skills.technicalSkills.join(', ')}</span>
+                  </div>
+                )}
+                {parsedData.skills.jobSkills?.length > 0 && (
+                  <div>
+                    <strong className="text-studio-800">Core Competencies:</strong>{' '}
+                    <span className="text-studio-600">{parsedData.skills.jobSkills.join(', ')}</span>
+                  </div>
+                )}
+                {parsedData.skills.computerSkills?.length > 0 && (
+                  <div>
+                    <strong className="text-studio-800">Tools & Platforms:</strong>{' '}
+                    <span className="text-studio-600">{parsedData.skills.computerSkills.join(', ')}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Extracted Projects */}
+          {parsedData.projects && parsedData.projects.length > 0 && (
+            <div className="bg-white rounded-xl border border-studio-200 p-5 shadow-sm space-y-3">
+              <h3 className="font-bold text-sm text-studio-900 border-b pb-2">
+                Extracted Projects ({parsedData.projects.length})
+              </h3>
+              <div className="space-y-2">
+                {parsedData.projects.map((proj: any, idx: number) => (
+                  <div key={idx} className="p-3 rounded-lg border border-studio-100 bg-studio-50/50 text-xs space-y-1">
+                    <div className="font-bold text-studio-900">{proj.name}</div>
+                    {proj.technologies?.length > 0 && (
+                      <div className="text-studio-500 text-[11px]">[{proj.technologies.join(', ')}]</div>
+                    )}
+                    <div className="text-studio-700">{proj.description}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Uncategorized Information Buffer */}
           {parsedData.uncategorizedInformation && parsedData.uncategorizedInformation.length > 0 && (
             <div className="bg-amber-50/60 rounded-xl border border-amber-200 p-5 space-y-2">

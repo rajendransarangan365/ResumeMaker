@@ -43,7 +43,7 @@ export function calculatePageMetrics(
   }
 
   // Work Experience
-  const activeExp = profile.workExperience.filter((e) => e.includeInResume);
+  const activeExp = profile.workExperience.filter((e) => e.includeInResume !== false);
   if (activeExp.length > 0) {
     estimatedHeight += 35; // Section Header
     for (const exp of activeExp) {
@@ -54,7 +54,7 @@ export function calculatePageMetrics(
   }
 
   // Education
-  const activeEdu = profile.education.filter((e) => e.includeInResume);
+  const activeEdu = profile.education.filter((e) => e.includeInResume !== false);
   if (activeEdu.length > 0) {
     estimatedHeight += 35;
     for (const edu of activeEdu) {
@@ -63,7 +63,7 @@ export function calculatePageMetrics(
   }
 
   // Projects
-  const activeProj = profile.projects.filter((p) => p.includeInResume);
+  const activeProj = profile.projects.filter((p) => p.includeInResume !== false);
   if (activeProj.length > 0) {
     estimatedHeight += 35;
     for (const proj of activeProj) {
@@ -86,7 +86,7 @@ export function calculatePageMetrics(
   }
 
   // Certifications
-  const activeCert = profile.certifications.filter((c) => c.includeInResume);
+  const activeCert = profile.certifications.filter((c) => c.includeInResume !== false);
   if (activeCert.length > 0) {
     estimatedHeight += 35 + activeCert.length * 20;
   }

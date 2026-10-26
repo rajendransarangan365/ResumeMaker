@@ -111,7 +111,16 @@ export class GeminiService {
         return JSON.parse(text) as T;
       } catch (err: any) {
         console.error(`[GeminiService] Attempt ${attempt} failed:`, err.message);
-        if (attempt === maxRetries) {
+        
+        // Fatal non-retryable errors: API key invalid, model not found, auth error
+        const isNonRetryable =
+          err.status === 400 ||
+          err.status === 401 ||
+          err.status === 403 ||
+          err.status === 404 ||
+          (err.message && (err.message.includes('API key not valid') || err.message.includes('not found') || err.message.includes('API_KEY_INVALID')));
+
+        if (attempt === maxRetries || isNonRetryable) {
           errorCategory = err.status === 429 ? 'RATE_LIMIT_EXCEEDED' : 'API_ERROR';
           await this.logUsage(
             userId,

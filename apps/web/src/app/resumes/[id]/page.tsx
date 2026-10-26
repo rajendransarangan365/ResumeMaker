@@ -17,12 +17,21 @@ import {
   Maximize2,
   ChevronRight,
   ChevronDown,
+  Plus,
+  Trash2,
+  Wand2,
+  Briefcase,
+  GraduationCap,
+  FolderGit2,
+  Wrench,
+  Award,
 } from 'lucide-react';
 import { api } from '@/lib/api';
 import { useResumeEditorStore } from '@/stores/resume-editor.store';
 import { LiveDocumentCanvas } from '@/components/LiveDocumentCanvas';
 import { PageBalanceAlert } from '@/components/PageBalanceAlert';
 import { TemplateGalleryModal } from '@/components/TemplateGalleryModal';
+import { AiResumeCalibratorModal } from '@/components/AiResumeCalibratorModal';
 import { saveLocalDraft } from '@/lib/offline-storage';
 import { TEMPLATE_LIST, getTemplateById } from '@ats/template-registry';
 
@@ -36,7 +45,24 @@ export default function ResumeEditorPage({ params }: PageProps) {
 
   const [loading, setLoading] = useState(true);
   const [templateModalOpen, setTemplateModalOpen] = useState(false);
+  const [calibratorModalOpen, setCalibratorModalOpen] = useState(false);
   const [saveFeedback, setSaveFeedback] = useState<string | null>(null);
+  const [optimizingBulletId, setOptimizingBulletId] = useState<string | null>(null);
+  const [optimizingSummary, setOptimizingSummary] = useState(false);
+
+  // Accordion open/collapse states for sections
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
+    personal: true,
+    summary: true,
+    experience: true,
+    education: true,
+    projects: true,
+    skills: true,
+  });
+
+  const toggleSection = (sec: string) => {
+    setExpandedSections((prev) => ({ ...prev, [sec]: !prev[sec] }));
+  };
 
   const {
     resume,
@@ -55,6 +81,16 @@ export default function ResumeEditorPage({ params }: PageProps) {
     updateFormatting,
     updateProfileDetails,
     updateProfessionalSummary,
+    addWorkExperience,
+    updateWorkExperience,
+    removeWorkExperience,
+    addEducation,
+    updateEducation,
+    removeEducation,
+    addProject,
+    updateProject,
+    removeProject,
+    updateSkills,
     recalculateMetrics,
   } = useResumeEditorStore();
 
@@ -67,7 +103,11 @@ export default function ResumeEditorPage({ params }: PageProps) {
     const res = await api.getResume(resumeId);
     if (res.success && res.data) {
       setResumeAndProfile(res.data.resume, res.data.profile);
-    } else if (res.error?.code === 'UNAUTHORIZED' || res.error?.message?.toLowerCase().includes('unauthorized') || res.error?.message?.toLowerCase().includes('authentication')) {
+    } else if (
+      res.error?.code === 'UNAUTHORIZED' ||
+      res.error?.message?.toLowerCase().includes('unauthorized') ||
+      res.error?.message?.toLowerCase().includes('authentication')
+    ) {
       router.push(`/login?redirect=/resumes/${resumeId}`);
       return;
     }
@@ -111,8 +151,51 @@ export default function ResumeEditorPage({ params }: PageProps) {
   const handleExportPdf = () => {
     if (!resume) return;
     const actualResumeId = resume.id || (resume as any)._id || resumeId;
-    // Open printable HTML stream in new window for direct native PDF print
     window.open(`/api/v1/exports/preview/${actualResumeId}`, '_blank');
+  };
+
+  // Quick AI Bullet Optimization
+  const handleOptimizeBullet = async (expId: string, bulletIdx: number, originalText: string) => {
+    if (!originalText || originalText.trim().length < 5) return;
+    const key = `${expId}-${bulletIdx}`;
+    setOptimizingBulletId(key);
+    try {
+      const res = await api.optimizeBullet({
+        originalText,
+        targetRole: profile?.personalDetails?.headline || 'Software Engineer',
+      });
+      if (res.success && res.data?.improvedBullets && res.data.improvedBullets.length > 0) {
+        const exp = profile?.workExperience.find((e: any) => e.id === expId);
+        if (exp) {
+          const updated = [...exp.responsibilities];
+          updated[bulletIdx] = res.data.improvedBullets[0];
+          updateWorkExperience(expId, { responsibilities: updated });
+        }
+      }
+    } catch (err) {
+      console.error('Failed to optimize bullet:', err);
+    } finally {
+      setOptimizingBulletId(null);
+    }
+  };
+
+  // Quick AI Summary Polish
+  const handlePolishSummary = async () => {
+    if (!profile) return;
+    setOptimizingSummary(true);
+    try {
+      const res = await api.calibrateResume({
+        profile,
+        targetRole: profile.personalDetails?.headline || 'Software Engineer',
+      });
+      if (res.success && res.data?.calibratedSummary) {
+        updateProfessionalSummary(res.data.calibratedSummary);
+      }
+    } catch (err) {
+      console.error('Failed to polish summary:', err);
+    } finally {
+      setOptimizingSummary(false);
+    }
   };
 
   if (loading) {
@@ -182,6 +265,16 @@ export default function ResumeEditorPage({ params }: PageProps) {
             </span>
           )}
 
+          {/* AI Calibrate Resume Button */}
+          <button
+            onClick={() => setCalibratorModalOpen(true)}
+            className="px-3.5 py-1.5 bg-gradient-to-r from-violet-600 to-brand-600 hover:from-violet-700 hover:to-brand-700 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all"
+            title="Calibrate action verbs, ATS scores, and bullet impact"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
+            <span>AI Calibrate Resume</span>
+          </button>
+
           <button
             onClick={() => setTemplateModalOpen(true)}
             className="px-3 py-1.5 bg-white border border-studio-200 hover:bg-studio-50 text-studio-700 rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-sm"
@@ -220,6 +313,14 @@ export default function ResumeEditorPage({ params }: PageProps) {
 
         {/* Mobile View Switcher & Action Controls */}
         <div className="flex sm:hidden items-center gap-1.5 ml-auto">
+          <button
+            onClick={() => setCalibratorModalOpen(true)}
+            className="p-1.5 bg-violet-600 text-white rounded-lg"
+            title="AI Calibrate"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+          </button>
+
           <div className="flex items-center bg-studio-100 p-0.5 rounded-lg">
             <button
               onClick={() => setMobileMode('edit')}
@@ -261,108 +362,656 @@ export default function ResumeEditorPage({ params }: PageProps) {
 
       {/* 3-Pane Workspace */}
       <div className="resume-editor__workspace">
-        {/* Left Pane: Content Sections (Hidden on mobile if not 'edit' mode) */}
+        {/* Left Pane: Interactive Content Sections */}
         <div
           className={`resume-editor__sidebar ${
             mobileMode !== 'edit' ? 'hidden sm:block' : 'w-full sm:w-96'
           }`}
         >
           <div className="space-y-4">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-studio-400 mb-2">
-              Resume Content Sections
-            </h2>
-
-            {/* Personal Details Section */}
-            <div className="rounded-lg border border-studio-200 bg-white p-3.5 shadow-sm space-y-2">
-              <span className="font-bold text-xs text-studio-800 block">Personal Details</span>
-              <input
-                type="text"
-                placeholder="Full Name"
-                value={profile.personalDetails.fullName || ''}
-                onChange={(e) => updateProfileDetails({ fullName: e.target.value })}
-                className="w-full border rounded px-2 py-1 text-xs"
-              />
-              <input
-                type="text"
-                placeholder="Professional Headline"
-                value={profile.personalDetails.headline || ''}
-                onChange={(e) => updateProfileDetails({ headline: e.target.value })}
-                className="w-full border rounded px-2 py-1 text-xs"
-              />
-              <div className="grid grid-cols-2 gap-2">
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={profile.personalDetails.email || ''}
-                  onChange={(e) => updateProfileDetails({ email: e.target.value })}
-                  className="w-full border rounded px-2 py-1 text-xs"
-                />
-                <input
-                  type="text"
-                  placeholder="Phone"
-                  value={profile.personalDetails.phone || ''}
-                  onChange={(e) => updateProfileDetails({ phone: e.target.value })}
-                  className="w-full border rounded px-2 py-1 text-xs"
-                />
-              </div>
+            <div className="flex items-center justify-between">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-studio-400">
+                Resume Content Sections
+              </h2>
+              <button
+                onClick={() => setCalibratorModalOpen(true)}
+                className="text-[11px] font-bold text-violet-600 hover:text-violet-700 flex items-center gap-1"
+              >
+                <Sparkles className="w-3 h-3 text-amber-500" />
+                <span>AI Calibrate</span>
+              </button>
             </div>
 
-            {/* Summary Section */}
-            <div className="rounded-lg border border-studio-200 bg-white p-3.5 shadow-sm space-y-2">
-              <span className="font-bold text-xs text-studio-800 block">Professional Summary</span>
-              <textarea
-                rows={4}
-                value={profile.professionalSummary || ''}
-                onChange={(e) => updateProfessionalSummary(e.target.value)}
-                placeholder="Executive summary..."
-                className="w-full border rounded p-2 text-xs leading-relaxed"
-              />
-            </div>
+            {/* 1. Personal Details Section */}
+            <div className="rounded-xl border border-studio-200 bg-white shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('personal')}
+                className="w-full flex items-center justify-between p-3.5 bg-studio-50/50 hover:bg-studio-50 text-left border-b border-studio-100"
+              >
+                <span className="font-bold text-xs text-studio-800">Personal Details</span>
+                {expandedSections.personal ? (
+                  <ChevronDown className="w-4 h-4 text-studio-400" />
+                ) : (
+                  <ChevronRight className="w-4 h-4 text-studio-400" />
+                )}
+              </button>
 
-            {/* Work Experience Section */}
-            <div className="rounded-lg border border-studio-200 bg-white p-3.5 shadow-sm space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-xs text-studio-800">
-                  Work Experience ({profile.workExperience.length})
-                </span>
-              </div>
-              <p className="text-[11px] text-studio-500">
-                To add or modify detailed roles, update your Master Profile or edit entries directly.
-              </p>
-              {profile.workExperience.map((exp: any, i: number) => (
-                <div key={exp.id || i} className="p-2 border rounded bg-studio-50/50 text-xs">
-                  <div className="font-semibold text-studio-900">{exp.jobTitle}</div>
-                  <div className="text-studio-500 text-[11px]">{exp.employer} ({exp.startDate} - {exp.endDate})</div>
+              {expandedSections.personal && (
+                <div className="p-3.5 space-y-2">
+                  <div>
+                    <label className="text-[11px] font-semibold text-studio-600 block mb-0.5">Full Name</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Sarangan Rajendran"
+                      value={profile.personalDetails.fullName || ''}
+                      onChange={(e) => updateProfileDetails({ fullName: e.target.value })}
+                      className="w-full border rounded-lg px-2.5 py-1.5 text-xs text-studio-900 focus:ring-1 focus:ring-brand-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[11px] font-semibold text-studio-600 block mb-0.5">Professional Headline</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. React Developer | MERN Stack Developer"
+                      value={profile.personalDetails.headline || ''}
+                      onChange={(e) => updateProfileDetails({ headline: e.target.value })}
+                      className="w-full border rounded-lg px-2.5 py-1.5 text-xs text-studio-900 focus:ring-1 focus:ring-brand-500"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="text-[11px] font-semibold text-studio-600 block mb-0.5">Email</label>
+                      <input
+                        type="email"
+                        placeholder="email@domain.com"
+                        value={profile.personalDetails.email || ''}
+                        onChange={(e) => updateProfileDetails({ email: e.target.value })}
+                        className="w-full border rounded-lg px-2.5 py-1.5 text-xs text-studio-900 focus:ring-1 focus:ring-brand-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[11px] font-semibold text-studio-600 block mb-0.5">Phone</label>
+                      <input
+                        type="text"
+                        placeholder="+91 9629991655"
+                        value={profile.personalDetails.phone || ''}
+                        onChange={(e) => updateProfileDetails({ phone: e.target.value })}
+                        className="w-full border rounded-lg px-2.5 py-1.5 text-xs text-studio-900 focus:ring-1 focus:ring-brand-500"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="text-[11px] font-semibold text-studio-600 block mb-0.5">City / Location</label>
+                      <input
+                        type="text"
+                        placeholder="Chennai / Pudukkottai"
+                        value={profile.personalDetails.city || ''}
+                        onChange={(e) => updateProfileDetails({ city: e.target.value })}
+                        className="w-full border rounded-lg px-2.5 py-1.5 text-xs text-studio-900 focus:ring-1 focus:ring-brand-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[11px] font-semibold text-studio-600 block mb-0.5">Country</label>
+                      <input
+                        type="text"
+                        placeholder="India"
+                        value={profile.personalDetails.country || ''}
+                        onChange={(e) => updateProfileDetails({ country: e.target.value })}
+                        className="w-full border rounded-lg px-2.5 py-1.5 text-xs text-studio-900 focus:ring-1 focus:ring-brand-500"
+                      />
+                    </div>
+                  </div>
                 </div>
-              ))}
+              )}
             </div>
 
-            {/* Education Section */}
-            <div className="rounded-lg border border-studio-200 bg-white p-3.5 shadow-sm space-y-2">
-              <span className="font-bold text-xs text-studio-800">
-                Education ({profile.education.length})
-              </span>
-              {profile.education.map((edu: any, i: number) => (
-                <div key={edu.id || i} className="p-2 border rounded bg-studio-50/50 text-xs">
-                  <div className="font-semibold text-studio-900">{edu.qualification}</div>
-                  <div className="text-studio-500 text-[11px]">{edu.institution} ({edu.endDate})</div>
+            {/* 2. Professional Summary Section */}
+            <div className="rounded-xl border border-studio-200 bg-white shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('summary')}
+                className="w-full flex items-center justify-between p-3.5 bg-studio-50/50 hover:bg-studio-50 text-left border-b border-studio-100"
+              >
+                <span className="font-bold text-xs text-studio-800">Professional Summary</span>
+                {expandedSections.summary ? (
+                  <ChevronDown className="w-4 h-4 text-studio-400" />
+                ) : (
+                  <ChevronRight className="w-4 h-4 text-studio-400" />
+                )}
+              </button>
+
+              {expandedSections.summary && (
+                <div className="p-3.5 space-y-2">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-[11px] text-studio-500">
+                      {(profile.professionalSummary || '').length} characters
+                    </span>
+                    <button
+                      onClick={handlePolishSummary}
+                      disabled={optimizingSummary}
+                      className="text-[11px] font-bold text-violet-600 hover:text-violet-700 flex items-center gap-1 disabled:opacity-50"
+                      title="AI Polish Summary"
+                    >
+                      <Wand2 className="w-3 h-3 text-amber-500" />
+                      <span>{optimizingSummary ? 'Polishing...' : 'AI Polish'}</span>
+                    </button>
+                  </div>
+                  <textarea
+                    rows={4}
+                    value={profile.professionalSummary || ''}
+                    onChange={(e) => updateProfessionalSummary(e.target.value)}
+                    placeholder="Concise overview of your technical stack and accomplishments..."
+                    className="w-full border rounded-lg p-2.5 text-xs leading-relaxed text-studio-900 focus:ring-1 focus:ring-brand-500"
+                  />
                 </div>
-              ))}
+              )}
             </div>
 
-            {/* Skills Section */}
-            <div className="rounded-lg border border-studio-200 bg-white p-3.5 shadow-sm space-y-2">
-              <span className="font-bold text-xs text-studio-800">Technical Skills</span>
-              <input
-                type="text"
-                value={profile.skills.technicalSkills.join(', ')}
-                onChange={(e) =>
-                  useResumeEditorStore.getState().updateSkills({
-                    technicalSkills: e.target.value.split(',').map((s) => s.trim()).filter(Boolean),
-                  })
-                }
-                className="w-full border rounded px-2 py-1 text-xs"
-              />
+            {/* 3. Work Experience Section (FULL ADD/EDIT/REMOVE MULTIPLE) */}
+            <div className="rounded-xl border border-studio-200 bg-white shadow-sm overflow-hidden">
+              <div className="w-full flex items-center justify-between p-3.5 bg-studio-50/50 border-b border-studio-100">
+                <button
+                  onClick={() => toggleSection('experience')}
+                  className="flex items-center gap-2 text-left"
+                >
+                  <Briefcase className="w-4 h-4 text-brand-600" />
+                  <span className="font-bold text-xs text-studio-800">
+                    Work Experience ({profile.workExperience?.length || 0})
+                  </span>
+                  {expandedSections.experience ? (
+                    <ChevronDown className="w-3.5 h-3.5 text-studio-400" />
+                  ) : (
+                    <ChevronRight className="w-3.5 h-3.5 text-studio-400" />
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    addWorkExperience({
+                      id: `exp-${Date.now()}`,
+                      jobTitle: 'Software Engineer',
+                      employer: 'Company Name',
+                      startDate: '2023',
+                      endDate: 'Present',
+                      isCurrent: true,
+                      responsibilities: ['Spearheaded development of scalable features.'],
+                      technologies: [],
+                      includeInResume: true,
+                    })
+                  }
+                  className="px-2.5 py-1 bg-brand-50 text-brand-700 hover:bg-brand-100 rounded-md text-[11px] font-bold flex items-center gap-1 transition-colors"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add Role</span>
+                </button>
+              </div>
+
+              {expandedSections.experience && (
+                <div className="p-3.5 space-y-4">
+                  {profile.workExperience.length === 0 && (
+                    <p className="text-xs text-studio-400 text-center py-2">
+                      No experience entries yet. Click &ldquo;Add Role&rdquo; above.
+                    </p>
+                  )}
+
+                  {profile.workExperience.map((exp: any, index: number) => (
+                    <div
+                      key={exp.id || index}
+                      className="p-3 rounded-xl border border-studio-200 bg-studio-50/40 space-y-3 relative group"
+                    >
+                      <div className="flex items-center justify-between border-b pb-1.5">
+                        <span className="font-bold text-xs text-studio-800">
+                          #{index + 1} {exp.jobTitle || 'Role'}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => removeWorkExperience(exp.id)}
+                          className="text-studio-400 hover:text-red-600 p-1 rounded transition-colors"
+                          title="Remove experience"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div>
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Job Title</label>
+                          <input
+                            type="text"
+                            value={exp.jobTitle || ''}
+                            onChange={(e) => updateWorkExperience(exp.id, { jobTitle: e.target.value })}
+                            className="w-full border rounded px-2 py-1 bg-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Employer / Company</label>
+                          <input
+                            type="text"
+                            value={exp.employer || ''}
+                            onChange={(e) => updateWorkExperience(exp.id, { employer: e.target.value })}
+                            className="w-full border rounded px-2 py-1 bg-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Start Date</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Jun 2022"
+                            value={exp.startDate || ''}
+                            onChange={(e) => updateWorkExperience(exp.id, { startDate: e.target.value })}
+                            className="w-full border rounded px-2 py-1 bg-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">End Date</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Present"
+                            value={exp.isCurrent ? 'Present' : exp.endDate || ''}
+                            disabled={exp.isCurrent}
+                            onChange={(e) => updateWorkExperience(exp.id, { endDate: e.target.value })}
+                            className="w-full border rounded px-2 py-1 bg-white text-xs disabled:bg-studio-100"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id={`current-${exp.id}`}
+                          checked={exp.isCurrent || false}
+                          onChange={(e) =>
+                            updateWorkExperience(exp.id, {
+                              isCurrent: e.target.checked,
+                              endDate: e.target.checked ? 'Present' : exp.endDate,
+                            })
+                          }
+                          className="rounded text-brand-600"
+                        />
+                        <label htmlFor={`current-${exp.id}`} className="text-[11px] text-studio-700 font-medium">
+                          I currently work here
+                        </label>
+                      </div>
+
+                      {/* Bullet points editing */}
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <label className="text-[11px] font-bold text-studio-700">
+                            Bullet Points ({exp.responsibilities?.length || 0})
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const updated = [...(exp.responsibilities || []), ''];
+                              updateWorkExperience(exp.id, { responsibilities: updated });
+                            }}
+                            className="text-[10px] text-brand-600 hover:text-brand-700 font-bold flex items-center gap-0.5"
+                          >
+                            <Plus className="w-3 h-3" />
+                            <span>Add Bullet</span>
+                          </button>
+                        </div>
+
+                        {(exp.responsibilities || []).map((b: string, bIdx: number) => {
+                          const isOptimizingThis = optimizingBulletId === `${exp.id}-${bIdx}`;
+                          return (
+                            <div key={bIdx} className="flex items-start gap-1.5">
+                              <span className="text-studio-400 text-xs mt-1">•</span>
+                              <textarea
+                                rows={2}
+                                value={b}
+                                onChange={(e) => {
+                                  const updated = [...exp.responsibilities];
+                                  updated[bIdx] = e.target.value;
+                                  updateWorkExperience(exp.id, { responsibilities: updated });
+                                }}
+                                className="flex-1 border rounded p-1.5 text-xs bg-white text-studio-900 leading-snug"
+                              />
+                              <div className="flex flex-col gap-1 mt-0.5">
+                                <button
+                                  type="button"
+                                  onClick={() => handleOptimizeBullet(exp.id, bIdx, b)}
+                                  disabled={isOptimizingThis}
+                                  className="p-1 text-violet-600 hover:bg-violet-50 rounded"
+                                  title="AI Polish this bullet"
+                                >
+                                  <Sparkles
+                                    className={`w-3.5 h-3.5 ${isOptimizingThis ? 'animate-spin text-amber-500' : ''}`}
+                                  />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const updated = exp.responsibilities.filter((_: any, i: number) => i !== bIdx);
+                                    updateWorkExperience(exp.id, { responsibilities: updated });
+                                  }}
+                                  className="p-1 text-studio-400 hover:text-red-500 rounded"
+                                  title="Delete bullet"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* 4. Education Section (FULL ADD/EDIT/REMOVE MULTIPLE) */}
+            <div className="rounded-xl border border-studio-200 bg-white shadow-sm overflow-hidden">
+              <div className="w-full flex items-center justify-between p-3.5 bg-studio-50/50 border-b border-studio-100">
+                <button
+                  onClick={() => toggleSection('education')}
+                  className="flex items-center gap-2 text-left"
+                >
+                  <GraduationCap className="w-4 h-4 text-emerald-600" />
+                  <span className="font-bold text-xs text-studio-800">
+                    Education ({profile.education?.length || 0})
+                  </span>
+                  {expandedSections.education ? (
+                    <ChevronDown className="w-3.5 h-3.5 text-studio-400" />
+                  ) : (
+                    <ChevronRight className="w-3.5 h-3.5 text-studio-400" />
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    addEducation({
+                      id: `edu-${Date.now()}`,
+                      qualification: 'Bachelor of Engineering',
+                      specialization: 'Computer Science',
+                      institution: 'College / University',
+                      startDate: '2016',
+                      endDate: '2020',
+                      gradePercentageCgpa: '7.5 CGPA',
+                      includeInResume: true,
+                    })
+                  }
+                  className="px-2.5 py-1 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-md text-[11px] font-bold flex items-center gap-1 transition-colors"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add Degree</span>
+                </button>
+              </div>
+
+              {expandedSections.education && (
+                <div className="p-3.5 space-y-4">
+                  {profile.education.length === 0 && (
+                    <p className="text-xs text-studio-400 text-center py-2">
+                      No education entries yet. Click &ldquo;Add Degree&rdquo; above.
+                    </p>
+                  )}
+
+                  {profile.education.map((edu: any, index: number) => (
+                    <div
+                      key={edu.id || index}
+                      className="p-3 rounded-xl border border-studio-200 bg-studio-50/40 space-y-3 relative group"
+                    >
+                      <div className="flex items-center justify-between border-b pb-1.5">
+                        <span className="font-bold text-xs text-studio-800">
+                          #{index + 1} {edu.qualification || 'Degree'}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => removeEducation(edu.id)}
+                          className="text-studio-400 hover:text-red-600 p-1 rounded transition-colors"
+                          title="Remove degree"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div className="col-span-2">
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">
+                            Degree / Qualification
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Bachelor of Engineering in Computer Science"
+                            value={edu.qualification || ''}
+                            onChange={(e) => updateEducation(edu.id, { qualification: e.target.value })}
+                            className="w-full border rounded px-2 py-1 bg-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Specialization</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Computer Science"
+                            value={edu.specialization || ''}
+                            onChange={(e) => updateEducation(edu.id, { specialization: e.target.value })}
+                            className="w-full border rounded px-2 py-1 bg-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Institution / College</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Shanmuganathan Engineering College"
+                            value={edu.institution || ''}
+                            onChange={(e) => updateEducation(edu.id, { institution: e.target.value })}
+                            className="w-full border rounded px-2 py-1 bg-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Graduation Year / Dates</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. 2016 – 2020"
+                            value={edu.endDate || ''}
+                            onChange={(e) => updateEducation(edu.id, { endDate: e.target.value })}
+                            className="w-full border rounded px-2 py-1 bg-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Grade / Percentage / CGPA</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. GPA: 7.23 or 75%"
+                            value={edu.gradePercentageCgpa || ''}
+                            onChange={(e) => updateEducation(edu.id, { gradePercentageCgpa: e.target.value })}
+                            className="w-full border rounded px-2 py-1 bg-white text-xs"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* 5. Projects Section (FULL ADD/EDIT/REMOVE MULTIPLE) */}
+            <div className="rounded-xl border border-studio-200 bg-white shadow-sm overflow-hidden">
+              <div className="w-full flex items-center justify-between p-3.5 bg-studio-50/50 border-b border-studio-100">
+                <button
+                  onClick={() => toggleSection('projects')}
+                  className="flex items-center gap-2 text-left"
+                >
+                  <FolderGit2 className="w-4 h-4 text-blue-600" />
+                  <span className="font-bold text-xs text-studio-800">
+                    Projects ({profile.projects?.length || 0})
+                  </span>
+                  {expandedSections.projects ? (
+                    <ChevronDown className="w-3.5 h-3.5 text-studio-400" />
+                  ) : (
+                    <ChevronRight className="w-3.5 h-3.5 text-studio-400" />
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    addProject({
+                      id: `proj-${Date.now()}`,
+                      name: 'New Project',
+                      technologies: ['React', 'Node.js'],
+                      description: 'Engineered full-stack responsive web application.',
+                      url: '',
+                      includeInResume: true,
+                    })
+                  }
+                  className="px-2.5 py-1 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-md text-[11px] font-bold flex items-center gap-1 transition-colors"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add Project</span>
+                </button>
+              </div>
+
+              {expandedSections.projects && (
+                <div className="p-3.5 space-y-4">
+                  {profile.projects.length === 0 && (
+                    <p className="text-xs text-studio-400 text-center py-2">
+                      No project entries yet. Click &ldquo;Add Project&rdquo; above.
+                    </p>
+                  )}
+
+                  {profile.projects.map((proj: any, index: number) => (
+                    <div
+                      key={proj.id || index}
+                      className="p-3 rounded-xl border border-studio-200 bg-studio-50/40 space-y-3 relative group"
+                    >
+                      <div className="flex items-center justify-between border-b pb-1.5">
+                        <span className="font-bold text-xs text-studio-800">
+                          #{index + 1} {proj.name || 'Project'}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => removeProject(proj.id)}
+                          className="text-studio-400 hover:text-red-600 p-1 rounded transition-colors"
+                          title="Remove project"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+
+                      <div className="space-y-2 text-xs">
+                        <div>
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Project Name</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. ATS Resume Intelligence Studio"
+                            value={proj.name || ''}
+                            onChange={(e) => updateProject(proj.id, { name: e.target.value })}
+                            className="w-full border rounded px-2 py-1 bg-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">
+                            Technologies (comma-separated)
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="e.g. React.js, Node.js, MongoDB"
+                            value={(proj.technologies || []).join(', ')}
+                            onChange={(e) =>
+                              updateProject(proj.id, {
+                                technologies: e.target.value.split(',').map((s) => s.trim()).filter(Boolean),
+                              })
+                            }
+                            className="w-full border rounded px-2 py-1 bg-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Project URL / GitHub</label>
+                          <input
+                            type="url"
+                            placeholder="https://github.com/..."
+                            value={proj.url || ''}
+                            onChange={(e) => updateProject(proj.id, { url: e.target.value })}
+                            className="w-full border rounded px-2 py-1 bg-white text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-semibold text-studio-500 block mb-0.5">Description & Highlights</label>
+                          <textarea
+                            rows={3}
+                            placeholder="Architected responsive UI, integrated REST APIs, improved performance by 20%..."
+                            value={proj.description || ''}
+                            onChange={(e) => updateProject(proj.id, { description: e.target.value })}
+                            className="w-full border rounded p-1.5 bg-white text-xs leading-snug"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* 6. Skills Section */}
+            <div className="rounded-xl border border-studio-200 bg-white shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('skills')}
+                className="w-full flex items-center justify-between p-3.5 bg-studio-50/50 hover:bg-studio-50 text-left border-b border-studio-100"
+              >
+                <div className="flex items-center gap-2">
+                  <Wrench className="w-4 h-4 text-violet-600" />
+                  <span className="font-bold text-xs text-studio-800">Skills (3 Categories)</span>
+                </div>
+                {expandedSections.skills ? (
+                  <ChevronDown className="w-4 h-4 text-studio-400" />
+                ) : (
+                  <ChevronRight className="w-4 h-4 text-studio-400" />
+                )}
+              </button>
+
+              {expandedSections.skills && (
+                <div className="p-3.5 space-y-3">
+                  <div>
+                    <label className="text-[11px] font-semibold text-studio-700 block mb-1">
+                      Technical Skills (comma-separated)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="JavaScript, TypeScript, React, Node.js, SQL"
+                      value={(profile.skills.technicalSkills || []).join(', ')}
+                      onChange={(e) =>
+                        updateSkills({
+                          technicalSkills: e.target.value.split(',').map((s) => s.trim()).filter(Boolean),
+                        })
+                      }
+                      className="w-full border rounded-lg px-2.5 py-1.5 text-xs text-studio-900 focus:ring-1 focus:ring-brand-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[11px] font-semibold text-studio-700 block mb-1">
+                      Core Competencies & Job Skills
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Agile SDLC, Code Review, Problem Solving, Team Collaboration"
+                      value={(profile.skills.jobSkills || []).join(', ')}
+                      onChange={(e) =>
+                        updateSkills({
+                          jobSkills: e.target.value.split(',').map((s) => s.trim()).filter(Boolean),
+                        })
+                      }
+                      className="w-full border rounded-lg px-2.5 py-1.5 text-xs text-studio-900 focus:ring-1 focus:ring-brand-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[11px] font-semibold text-studio-700 block mb-1">
+                      Tools & Platforms / Computer Skills
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Git, VS Code, Figma, Docker, Postman"
+                      value={(profile.skills.computerSkills || []).join(', ')}
+                      onChange={(e) =>
+                        updateSkills({
+                          computerSkills: e.target.value.split(',').map((s) => s.trim()).filter(Boolean),
+                        })
+                      }
+                      className="w-full border rounded-lg px-2.5 py-1.5 text-xs text-studio-900 focus:ring-1 focus:ring-brand-500"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -491,6 +1140,14 @@ export default function ResumeEditorPage({ params }: PageProps) {
 
             <div className="pt-4 border-t border-studio-200 space-y-2">
               <button
+                onClick={() => setCalibratorModalOpen(true)}
+                className="w-full py-2.5 px-3 bg-gradient-to-r from-violet-600 to-brand-600 hover:from-violet-700 hover:to-brand-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all"
+              >
+                <Sparkles className="w-4 h-4 text-amber-300" />
+                <span>AI Calibrate Resume</span>
+              </button>
+
+              <button
                 onClick={handleExportDocx}
                 className="w-full py-2.5 px-3 bg-white border border-studio-300 hover:bg-studio-50 text-studio-800 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 shadow-sm"
               >
@@ -515,6 +1172,12 @@ export default function ResumeEditorPage({ params }: PageProps) {
         isOpen={templateModalOpen}
         onClose={() => setTemplateModalOpen(false)}
         onSelectTemplate={(newId) => setTemplateId(newId)}
+      />
+
+      {/* AI Resume Calibrator Modal */}
+      <AiResumeCalibratorModal
+        isOpen={calibratorModalOpen}
+        onClose={() => setCalibratorModalOpen(false)}
       />
     </div>
   );

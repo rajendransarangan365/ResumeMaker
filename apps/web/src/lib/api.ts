@@ -139,6 +139,15 @@ export const api = {
   analyzeJd: (body: any) => fetcher<{ analysis: any }>('/optimization/analyze-jd', { method: 'POST', body: JSON.stringify(body) }),
   matchJd: (body: any) => fetcher<{ matches: any[]; keywordCoveragePercentage: number; tailoredSummarySuggestion: string }>('/optimization/match-jd', { method: 'POST', body: JSON.stringify(body) }),
   optimizeBullet: (body: any) => fetcher<{ improvedBullets: string[]; feedback: string }>('/optimization/optimize-bullet', { method: 'POST', body: JSON.stringify(body) }),
+  calibrateResume: (body: { profile: any; targetRole?: string }) =>
+    fetcher<{
+      overallScore: number;
+      scores: { impact: number; verbs: number; skills: number; readability: number };
+      recommendations: string[];
+      calibratedSummary: string;
+      calibratedBullets: { expId: string; original: string; improved: string }[];
+      suggestedSkills: { technicalSkills: string[]; jobSkills: string[]; computerSkills: string[] };
+    }>('/optimization/calibrate-resume', { method: 'POST', body: JSON.stringify(body) }),
 
   // Exports & Layout
   getPageMetrics: (resumeId: string) => fetcher<{ metrics: any }>(`/exports/metrics/${resumeId}`),
