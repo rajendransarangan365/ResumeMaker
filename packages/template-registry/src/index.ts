@@ -97,7 +97,7 @@ export const ATS_TEMPLATES: Record<TemplateId, ITemplateDefinition> = {
     description: 'Focuses on academic foundation, coursework, academic projects, and certifications for entry-level applicants.',
     category: 'Entry Level',
     isAtsCompliant: true,
-    defaultSectionOrder: ['summary', 'education', 'projects', 'skills', 'certifications', 'declaration'],
+    defaultSectionOrder: ['summary', 'education', 'projects', 'skills', 'experience', 'certifications', 'declaration'],
     defaultFormatting: {
       pageSize: 'A4',
       fontFamily: 'Inter',
@@ -292,10 +292,38 @@ export function mapCandidateToTemplate(
   effectiveFormatting: typeof ATS_TEMPLATES['classic-professional']['defaultFormatting'];
 } {
   const template = getTemplateById(resumeVersion.templateId || 'classic-professional');
-  const effectiveSectionOrder =
+  const baseOrder =
     resumeVersion.sectionOrder && resumeVersion.sectionOrder.length > 0
-      ? resumeVersion.sectionOrder
-      : template.defaultSectionOrder;
+      ? [...resumeVersion.sectionOrder]
+      : [...template.defaultSectionOrder];
+
+  // Guarantee ZERO data loss:
+  // If the candidate profile has data in a section, ensure that section is present in effectiveSectionOrder
+  if (profile.workExperience && profile.workExperience.length > 0 && !baseOrder.includes('experience')) {
+    baseOrder.push('experience');
+  }
+  if (profile.education && profile.education.length > 0 && !baseOrder.includes('education')) {
+    baseOrder.push('education');
+  }
+  if (profile.projects && profile.projects.length > 0 && !baseOrder.includes('projects')) {
+    baseOrder.push('projects');
+  }
+  if (
+    profile.skills &&
+    (profile.skills.technicalSkills?.length > 0 ||
+      profile.skills.jobSkills?.length > 0 ||
+      profile.skills.computerSkills?.length > 0 ||
+      profile.skills.languages?.length > 0) &&
+    !baseOrder.includes('skills')
+  ) {
+    baseOrder.push('skills');
+  }
+  if (profile.certifications && profile.certifications.length > 0 && !baseOrder.includes('certifications')) {
+    baseOrder.push('certifications');
+  }
+  if (profile.businessExperience && profile.businessExperience.length > 0 && !baseOrder.includes('businessExperience')) {
+    baseOrder.push('businessExperience');
+  }
 
   const effectiveFormatting = {
     ...template.defaultFormatting,
@@ -304,7 +332,7 @@ export function mapCandidateToTemplate(
 
   return {
     template,
-    effectiveSectionOrder,
+    effectiveSectionOrder: baseOrder,
     effectiveFormatting,
   };
 }

@@ -516,7 +516,23 @@ router.post(
       });
 
       // 3. Tailor headline and summary directly to the target vacancy
-      const tailoredHeadline = `${jobTitle}${companyName ? ` | ${companyName}` : ''}`;
+      // IMPORTANT: The target hiring company belongs ONLY in the resume title/application tracker,
+      // NEVER in the candidate's personal resume headline.
+      const currentHeadline = profile.personalDetails.headline || '';
+      // Clean any accidental company name from existing headline
+      let cleanedHeadline = currentHeadline;
+      if (companyName && cleanedHeadline.toLowerCase().includes(companyName.toLowerCase())) {
+        cleanedHeadline = cleanedHeadline
+          .replace(new RegExp(`\\s*\\|\\s*${companyName}.*`, 'i'), '')
+          .replace(new RegExp(`\\s*-\\s*${companyName}.*`, 'i'), '')
+          .trim();
+      }
+      
+      const existingSpecialization = cleanedHeadline.split('|')[1]?.trim();
+      const tailoredHeadline = existingSpecialization
+        ? `${jobTitle} | ${existingSpecialization}`
+        : jobTitle;
+
       const matchedSkillPreview = prioritizedSkills.slice(0, 4).join(', ');
 
       const tailoredSummary = `Results-oriented ${jobTitle} with proven expertise in ${

@@ -74,10 +74,41 @@ export const useResumeEditorStore = create<ResumeEditorState>((set, get) => ({
     const { resume, profile } = get();
     if (!resume) return;
     const templateDef = getTemplateById(templateId);
+    
+    // Compute effective section order preserving candidate data
+    let targetSectionOrder = [...templateDef.defaultSectionOrder];
+    if (profile) {
+      if (profile.workExperience && profile.workExperience.length > 0 && !targetSectionOrder.includes('experience')) {
+        targetSectionOrder.push('experience');
+      }
+      if (profile.education && profile.education.length > 0 && !targetSectionOrder.includes('education')) {
+        targetSectionOrder.push('education');
+      }
+      if (profile.projects && profile.projects.length > 0 && !targetSectionOrder.includes('projects')) {
+        targetSectionOrder.push('projects');
+      }
+      if (
+        profile.skills &&
+        (profile.skills.technicalSkills?.length > 0 ||
+          profile.skills.jobSkills?.length > 0 ||
+          profile.skills.computerSkills?.length > 0 ||
+          profile.skills.languages?.length > 0) &&
+        !targetSectionOrder.includes('skills')
+      ) {
+        targetSectionOrder.push('skills');
+      }
+      if (profile.certifications && profile.certifications.length > 0 && !targetSectionOrder.includes('certifications')) {
+        targetSectionOrder.push('certifications');
+      }
+      if (profile.businessExperience && profile.businessExperience.length > 0 && !targetSectionOrder.includes('businessExperience')) {
+        targetSectionOrder.push('businessExperience');
+      }
+    }
+
     const updatedResume = {
       ...resume,
       templateId,
-      sectionOrder: [...templateDef.defaultSectionOrder],
+      sectionOrder: targetSectionOrder,
       formatting: {
         ...resume.formatting,
         ...templateDef.defaultFormatting,

@@ -16,10 +16,38 @@ export function generateResumeHtml(
   const heightMm = isA4 ? 297 : 279.4;
   const p = profile.personalDetails;
 
-  const sectionOrder =
-    resumeVersion.sectionOrder && resumeVersion.sectionOrder.length > 0
+  const sectionOrder = [
+    ...(resumeVersion.sectionOrder && resumeVersion.sectionOrder.length > 0
       ? resumeVersion.sectionOrder
-      : template.defaultSectionOrder;
+      : template.defaultSectionOrder),
+  ];
+
+  // Guarantee ZERO data loss: ensure any populated candidate sections are rendered
+  if (profile.workExperience && profile.workExperience.length > 0 && !sectionOrder.includes('experience')) {
+    sectionOrder.push('experience');
+  }
+  if (profile.education && profile.education.length > 0 && !sectionOrder.includes('education')) {
+    sectionOrder.push('education');
+  }
+  if (profile.projects && profile.projects.length > 0 && !sectionOrder.includes('projects')) {
+    sectionOrder.push('projects');
+  }
+  if (
+    profile.skills &&
+    (profile.skills.technicalSkills?.length > 0 ||
+      profile.skills.jobSkills?.length > 0 ||
+      profile.skills.computerSkills?.length > 0 ||
+      profile.skills.languages?.length > 0) &&
+    !sectionOrder.includes('skills')
+  ) {
+    sectionOrder.push('skills');
+  }
+  if (profile.certifications && profile.certifications.length > 0 && !sectionOrder.includes('certifications')) {
+    sectionOrder.push('certifications');
+  }
+  if (profile.businessExperience && profile.businessExperience.length > 0 && !sectionOrder.includes('businessExperience')) {
+    sectionOrder.push('businessExperience');
+  }
 
   let bodyContent = '';
 
