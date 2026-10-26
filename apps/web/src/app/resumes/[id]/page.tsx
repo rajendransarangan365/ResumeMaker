@@ -166,6 +166,16 @@ export default function ResumeEditorPage({ params }: PageProps) {
     window.open(`${base}/exports/preview/${actualResumeId}?print=true`, '_blank');
   };
 
+  const handleAutoFitToA4 = () => {
+    if (!resume) return;
+    const cur = resume.formatting;
+    updateFormatting({
+      marginsMm: Math.min(cur.marginsMm || 15, 12),
+      lineSpacing: Math.min(cur.lineSpacing || 1.25, 1.2),
+      fontSizePt: Math.min(cur.fontSizePt || 10, 9.5),
+    });
+  };
+
   // Quick or Custom AI Bullet Optimization
   const handleOptimizeBullet = async (
     expId: string,
@@ -1388,7 +1398,7 @@ export default function ResumeEditorPage({ params }: PageProps) {
         {/* Center Pane: Live Document Preview (Always visible on all screens!) */}
         <div className="resume-editor__canvas">
           <div className="w-full max-w-3xl mb-3 sm:mb-4">
-            <PageBalanceAlert metrics={pageMetrics} />
+            <PageBalanceAlert metrics={pageMetrics} onAutoFit={handleAutoFitToA4} />
           </div>
 
           <LiveDocumentCanvas
@@ -1396,6 +1406,7 @@ export default function ResumeEditorPage({ params }: PageProps) {
             resume={resume}
             zoomLevel={zoomLevel}
             onZoomChange={setZoomLevel}
+            onAutoFitToSinglePage={handleAutoFitToA4}
           />
         </div>
 

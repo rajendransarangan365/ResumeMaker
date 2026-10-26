@@ -8,7 +8,7 @@ const nextConfig = {
     '@ats/resume-renderer',
   ],
   async rewrites() {
-    const rawApiUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'https://resumemaker-api-uswp.onrender.com';
+    const rawApiUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
     const backendUrl = rawApiUrl.replace(/\/api(\/v1)?\/?$/, '');
     return [
       {

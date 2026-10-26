@@ -57,13 +57,13 @@ export function generateResumeHtml(
   const isSplit = template.headerStyle === 'split-accent';
 
   bodyContent += `
-    <header class="resume-template__header ${isCentered ? 'text-center' : ''} ${isSplit ? 'resume-template__header--split' : ''}" style="margin-bottom: 1.25rem;">
-      <h1 class="resume-template__name" style="font-size: 1.75rem; font-weight: 700; color: ${formatting.accentColor}; margin: 0; line-height: 1.2;">
+    <header class="resume-template__header ${isCentered ? 'text-center' : ''} ${isSplit ? 'resume-template__header--split' : ''}" style="margin-bottom: 1rem;">
+      <h1 class="resume-template__name" style="font-size: 1.75rem; font-weight: 700; color: ${formatting.accentColor}; margin: 0; line-height: 1.2; break-after: avoid; page-break-after: avoid;">
         ${p.fullName || 'Candidate Name'}
       </h1>
       ${
         p.headline
-          ? `<p class="resume-template__headline" style="font-size: 1rem; color: #475569; margin: 0.25rem 0 0.5rem 0; font-weight: 500;">${p.headline}</p>`
+          ? `<p class="resume-template__headline" style="font-size: 1rem; color: #475569; margin: 0.25rem 0 0.5rem 0; font-weight: 500; break-after: avoid; page-break-after: avoid;">${p.headline}</p>`
           : ''
       }
       <div class="resume-template__contact" style="font-size: 0.85rem; color: #64748b; margin-top: 0.35rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; ${
@@ -84,8 +84,8 @@ export function generateResumeHtml(
       case 'summary': {
         if (profile.professionalSummary && profile.professionalSummary.trim().length > 0) {
           bodyContent += `
-            <section class="resume-template__section" style="margin-bottom: 1.1rem;">
-              <h2 class="resume-template__section-title" style="font-size: 1rem; text-transform: uppercase; font-weight: 700; color: ${formatting.accentColor}; border-bottom: 1.5px solid ${formatting.accentColor}33; padding-bottom: 0.2rem; margin: 0 0 0.45rem 0; letter-spacing: 0.05em;">
+            <section class="resume-template__section" style="margin-bottom: 0.82rem; break-inside: auto;">
+              <h2 class="resume-template__section-title" style="font-size: 1rem; text-transform: uppercase; font-weight: 700; color: ${formatting.accentColor}; border-bottom: 1.5px solid ${formatting.accentColor}33; padding-bottom: 0.2rem; margin: 0 0 0.4rem 0; letter-spacing: 0.05em; break-after: avoid; page-break-after: avoid;">
                 Professional Summary
               </h2>
               <p class="resume-template__summary-text" style="margin: 0; line-height: ${formatting.lineSpacing}; color: #1e293b;">
@@ -105,24 +105,24 @@ export function generateResumeHtml(
 
         if (hasSkills) {
           bodyContent += `
-            <section class="resume-template__section" style="margin-bottom: 1.1rem;">
-              <h2 class="resume-template__section-title" style="font-size: 1rem; text-transform: uppercase; font-weight: 700; color: ${formatting.accentColor}; border-bottom: 1.5px solid ${formatting.accentColor}33; padding-bottom: 0.2rem; margin: 0 0 0.45rem 0; letter-spacing: 0.05em;">
+            <section class="resume-template__section" style="margin-bottom: 0.82rem; break-inside: auto;">
+              <h2 class="resume-template__section-title" style="font-size: 1rem; text-transform: uppercase; font-weight: 700; color: ${formatting.accentColor}; border-bottom: 1.5px solid ${formatting.accentColor}33; padding-bottom: 0.2rem; margin: 0 0 0.4rem 0; letter-spacing: 0.05em; break-after: avoid; page-break-after: avoid;">
                 Skills
               </h2>
-              <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+              <div style="display: flex; flex-direction: column; gap: 0.22rem;">
                 ${
                   profile.skills.technicalSkills.length > 0
-                    ? `<p style="margin: 0; line-height: 1.4;"><strong style="color: #0f172a;">Technical Skills:</strong> <span style="color: #334155;">${profile.skills.technicalSkills.join(', ')}</span></p>`
+                    ? `<p style="margin: 0; line-height: 1.35;"><strong style="color: #0f172a;">Technical Skills:</strong> <span style="color: #334155;">${profile.skills.technicalSkills.join(', ')}</span></p>`
                     : ''
                 }
                 ${
                   profile.skills.jobSkills.length > 0
-                    ? `<p style="margin: 0; line-height: 1.4;"><strong style="color: #0f172a;">Core Competencies:</strong> <span style="color: #334155;">${profile.skills.jobSkills.join(', ')}</span></p>`
+                    ? `<p style="margin: 0; line-height: 1.35;"><strong style="color: #0f172a;">Core Competencies:</strong> <span style="color: #334155;">${profile.skills.jobSkills.join(', ')}</span></p>`
                     : ''
                 }
                 ${
                   profile.skills.computerSkills.length > 0
-                    ? `<p style="margin: 0; line-height: 1.4;"><strong style="color: #0f172a;">Tools & Platforms:</strong> <span style="color: #334155;">${profile.skills.computerSkills.join(', ')}</span></p>`
+                    ? `<p style="margin: 0; line-height: 1.35;"><strong style="color: #0f172a;">Tools & Platforms:</strong> <span style="color: #334155;">${profile.skills.computerSkills.join(', ')}</span></p>`
                     : ''
                 }
               </div>
@@ -136,17 +136,17 @@ export function generateResumeHtml(
         const activeExp = profile.workExperience.filter((e) => e.includeInResume !== false);
         if (activeExp.length > 0) {
           bodyContent += `
-            <section class="resume-template__section" style="margin-bottom: 1.1rem;">
-              <h2 class="resume-template__section-title" style="font-size: 1rem; text-transform: uppercase; font-weight: 700; color: ${formatting.accentColor}; border-bottom: 1.5px solid ${formatting.accentColor}33; padding-bottom: 0.2rem; margin: 0 0 0.5rem 0; letter-spacing: 0.05em;">
+            <section class="resume-template__section" style="margin-bottom: 0.82rem; break-inside: auto;">
+              <h2 class="resume-template__section-title" style="font-size: 1rem; text-transform: uppercase; font-weight: 700; color: ${formatting.accentColor}; border-bottom: 1.5px solid ${formatting.accentColor}33; padding-bottom: 0.2rem; margin: 0 0 0.45rem 0; letter-spacing: 0.05em; break-after: avoid; page-break-after: avoid;">
                 Work Experience
               </h2>
-              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <div style="display: flex; flex-direction: column; gap: 0.65rem;">
                 ${activeExp
                   .map(
                     (exp) => `
-                  <div class="resume-template__item">
+                  <div class="resume-template__item" style="break-inside: avoid; page-break-inside: avoid;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
-                      <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0; color: #0f172a;">
+                      <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0; color: #0f172a; break-after: avoid; page-break-after: avoid;">
                         ${exp.jobTitle} <span style="font-weight: 400; color: #475569;">| ${exp.employer}</span>
                         ${exp.employmentType && exp.employmentType !== 'Full-time' ? `<span style="font-size: 0.78rem; font-weight: 600; padding: 0.1rem 0.45rem; border-radius: 4px; background: #f1f5f9; color: #475569; margin-left: 0.4rem; border: 1px solid #e2e8f0;">${exp.employmentType}</span>` : ''}
                       </h3>
@@ -157,8 +157,8 @@ export function generateResumeHtml(
                     ${
                       exp.responsibilities && exp.responsibilities.length > 0
                         ? `
-                      <ul style="margin: 0.35rem 0 0 1.25rem; padding: 0; list-style-type: disc; color: #334155; line-height: ${formatting.lineSpacing};">
-                        ${exp.responsibilities.map((r) => `<li style="margin-bottom: 0.2rem;">${r}</li>`).join('')}
+                      <ul style="margin: 0.3rem 0 0 1.25rem; padding: 0; list-style-type: disc; color: #334155; line-height: ${formatting.lineSpacing};">
+                        ${exp.responsibilities.map((r) => `<li style="margin-bottom: 0.18rem; break-inside: avoid; page-break-inside: avoid;">${r}</li>`).join('')}
                       </ul>
                     `
                         : ''
@@ -178,17 +178,17 @@ export function generateResumeHtml(
         const activeEdu = profile.education.filter((e) => e.includeInResume !== false);
         if (activeEdu.length > 0) {
           bodyContent += `
-            <section class="resume-template__section" style="margin-bottom: 1.1rem;">
-              <h2 class="resume-template__section-title" style="font-size: 1rem; text-transform: uppercase; font-weight: 700; color: ${formatting.accentColor}; border-bottom: 1.5px solid ${formatting.accentColor}33; padding-bottom: 0.2rem; margin: 0 0 0.5rem 0; letter-spacing: 0.05em;">
+            <section class="resume-template__section" style="margin-bottom: 0.82rem; break-inside: auto;">
+              <h2 class="resume-template__section-title" style="font-size: 1rem; text-transform: uppercase; font-weight: 700; color: ${formatting.accentColor}; border-bottom: 1.5px solid ${formatting.accentColor}33; padding-bottom: 0.2rem; margin: 0 0 0.45rem 0; letter-spacing: 0.05em; break-after: avoid; page-break-after: avoid;">
                 Education
               </h2>
-              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <div style="display: flex; flex-direction: column; gap: 0.45rem;">
                 ${activeEdu
                   .map(
                     (edu) => `
-                  <div class="resume-template__item">
+                  <div class="resume-template__item" style="break-inside: avoid; page-break-inside: avoid;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
-                      <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0; color: #0f172a;">
+                      <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0; color: #0f172a; break-after: avoid; page-break-after: avoid;">
                         ${edu.qualification}${edu.specialization ? ` in ${edu.specialization}` : ''}
                       </h3>
                       <span style="font-size: 0.85rem; color: #64748b; font-style: italic;">
@@ -213,20 +213,20 @@ export function generateResumeHtml(
         const activeProj = profile.projects.filter((p) => p.includeInResume !== false);
         if (activeProj.length > 0) {
           bodyContent += `
-            <section class="resume-template__section" style="margin-bottom: 1.1rem;">
-              <h2 class="resume-template__section-title" style="font-size: 1rem; text-transform: uppercase; font-weight: 700; color: ${formatting.accentColor}; border-bottom: 1.5px solid ${formatting.accentColor}33; padding-bottom: 0.2rem; margin: 0 0 0.5rem 0; letter-spacing: 0.05em;">
+            <section class="resume-template__section" style="margin-bottom: 0.82rem; break-inside: auto;">
+              <h2 class="resume-template__section-title" style="font-size: 1rem; text-transform: uppercase; font-weight: 700; color: ${formatting.accentColor}; border-bottom: 1.5px solid ${formatting.accentColor}33; padding-bottom: 0.2rem; margin: 0 0 0.45rem 0; letter-spacing: 0.05em; break-after: avoid; page-break-after: avoid;">
                 Projects
               </h2>
-              <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                 ${activeProj
                   .map(
                     (proj) => {
                       const gitUrl = (proj as any).githubUrl || (proj.url && proj.url.includes('github') ? proj.url : '');
                       const liveUrl = proj.url && !proj.url.includes('github') ? proj.url : '';
                       return `
-                  <div class="resume-template__item">
+                  <div class="resume-template__item" style="break-inside: avoid; page-break-inside: avoid;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.25rem;">
-                      <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0; color: #0f172a;">
+                      <h3 style="font-size: 0.95rem; font-weight: 600; margin: 0; color: #0f172a; break-after: avoid; page-break-after: avoid;">
                         ${proj.name}
                         ${
                           proj.technologies && proj.technologies.length > 0
@@ -258,15 +258,15 @@ export function generateResumeHtml(
         const activeCert = profile.certifications.filter((c) => c.includeInResume);
         if (activeCert.length > 0) {
           bodyContent += `
-            <section class="resume-template__section" style="margin-bottom: 1.1rem;">
-              <h2 class="resume-template__section-title" style="font-size: 1rem; text-transform: uppercase; font-weight: 700; color: ${formatting.accentColor}; border-bottom: 1.5px solid ${formatting.accentColor}33; padding-bottom: 0.2rem; margin: 0 0 0.5rem 0; letter-spacing: 0.05em;">
+            <section class="resume-template__section" style="margin-bottom: 0.82rem; break-inside: auto;">
+              <h2 class="resume-template__section-title" style="font-size: 1rem; text-transform: uppercase; font-weight: 700; color: ${formatting.accentColor}; border-bottom: 1.5px solid ${formatting.accentColor}33; padding-bottom: 0.2rem; margin: 0 0 0.45rem 0; letter-spacing: 0.05em; break-after: avoid; page-break-after: avoid;">
                 Certifications
               </h2>
-              <ul style="margin: 0.35rem 0 0 1.25rem; padding: 0; list-style-type: disc; color: #334155; line-height: 1.4;">
+              <ul style="margin: 0.3rem 0 0 1.25rem; padding: 0; list-style-type: disc; color: #334155; line-height: 1.35;">
                 ${activeCert
                   .map(
                     (cert) => `
-                  <li style="margin-bottom: 0.2rem;">
+                  <li style="margin-bottom: 0.18rem; break-inside: avoid; page-break-inside: avoid;">
                     <strong>${cert.title}</strong> — ${cert.issuer} ${cert.issueDate ? `(${cert.issueDate})` : ''}
                   </li>
                 `
@@ -282,11 +282,11 @@ export function generateResumeHtml(
       case 'declaration': {
         if (profile.declaration.enabled && profile.declaration.text) {
           bodyContent += `
-            <section class="resume-template__section" style="margin-top: 1.5rem;">
-              <h2 class="resume-template__section-title" style="font-size: 0.95rem; text-transform: uppercase; font-weight: 700; color: ${formatting.accentColor}; border-bottom: 1px solid #cbd5e1; padding-bottom: 0.2rem; margin: 0 0 0.4rem 0;">
+            <section class="resume-template__section" style="margin-top: 1.25rem; break-inside: avoid; page-break-inside: avoid;">
+              <h2 class="resume-template__section-title" style="font-size: 0.95rem; text-transform: uppercase; font-weight: 700; color: ${formatting.accentColor}; border-bottom: 1px solid #cbd5e1; padding-bottom: 0.2rem; margin: 0 0 0.35rem 0; break-after: avoid; page-break-after: avoid;">
                 Declaration
               </h2>
-              <p style="font-size: 0.85rem; font-style: italic; color: #475569; margin: 0; line-height: 1.4;">
+              <p style="font-size: 0.85rem; font-style: italic; color: #475569; margin: 0; line-height: 1.35;">
                 ${profile.declaration.text}
               </p>
             </section>
@@ -324,6 +324,14 @@ export function generateResumeHtml(
       font-size: ${formatting.fontSizePt}pt;
       color: #0f172a;
     }
+    .resume-template__section-title {
+      break-after: avoid !important;
+      page-break-after: avoid !important;
+    }
+    .resume-template__item, .resume-template__entry, li {
+      break-inside: avoid !important;
+      page-break-inside: avoid !important;
+    }
     ${options?.mobileReflow ? `
     .resume-page {
       background: #ffffff;
@@ -347,8 +355,16 @@ export function generateResumeHtml(
     }
     `}
     @media print {
-      body {
-        background: transparent !important;
+      @page {
+        size: ${formatting.pageSize === 'A4' ? 'A4' : 'letter'};
+        margin: 0;
+      }
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
       .no-print {
         display: none !important;
@@ -357,9 +373,24 @@ export function generateResumeHtml(
         margin: 0 !important;
         box-shadow: none !important;
         width: 100% !important;
-        min-height: 100% !important;
+        min-height: auto !important;
         padding: ${formatting.marginsMm}mm !important;
-        page-break-after: always;
+        box-sizing: border-box !important;
+        page-break-after: auto !important;
+        break-after: auto !important;
+      }
+      h1, h2, h3, h4, .resume-template__section-title, .resume-template__name {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .resume-template__item, .resume-template__entry, li {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .resume-template__section {
+        margin-bottom: 0.8rem !important;
       }
     }
   </style>

@@ -17,6 +17,7 @@ interface LiveDocumentCanvasProps {
   resume: IResumeVersion;
   zoomLevel: number;
   onZoomChange: (newZoom: number) => void;
+  onAutoFitToSinglePage?: () => void;
 }
 
 export function LiveDocumentCanvas({
@@ -24,6 +25,7 @@ export function LiveDocumentCanvas({
   resume,
   zoomLevel,
   onZoomChange,
+  onAutoFitToSinglePage,
 }: LiveDocumentCanvasProps) {
   // View mode: 'mobile-flow' (Word Mobile style full-width readable text) or 'page-layout' (A4 print layout)
   const [viewMode, setViewMode] = useState<'mobile-flow' | 'page-layout'>('mobile-flow');
@@ -36,6 +38,9 @@ export function LiveDocumentCanvas({
   // Approx pixel dimensions at 96 DPI
   const widthPx = Math.round(widthMm * 3.7795); // ~794px
   const heightPx = Math.round(heightMm * 3.7795); // ~1123px
+
+  // Track true measured height of A4 print content
+  const [docContentHeight, setDocContentHeight] = useState<number>(heightPx);
 
   // Generate HTML for Mobile Flow (Word Mobile app style)
   const htmlMobileContent = useMemo(() => {
@@ -98,12 +103,17 @@ export function LiveDocumentCanvas({
     }
   };
 
+  const isSpilling = docContentHeight > heightPx + 8;
+  const overflowPx = Math.max(0, docContentHeight - heightPx);
+  const pageCount = isSpilling ? Math.ceil(docContentHeight / heightPx) : 1;
+  const effectivePrintH = Math.max(heightPx * pageCount, docContentHeight);
+
   const scaledW = Math.round(widthPx * zoomLevel);
-  const scaledH = Math.round(heightPx * zoomLevel);
+  const scaledPrintH = Math.round(effectivePrintH * zoomLevel);
 
   return (
     <div ref={containerRef} className="flex flex-col items-center w-full min-w-0 max-w-full">
-      {/* Top Toolbar: View Mode Switcher + Zoom Controls */}
+      {/* Top Toolbar: View Mode Switcher + Zoom Controls + A4 Page Balance Status */}
       <div className="w-full max-w-3xl flex flex-wrap items-center justify-between gap-2 mb-3 sm:mb-4 px-1">
         {/* Word Mobile View vs Page Layout Toggle */}
         <div className="inline-flex items-center rounded-lg bg-studio-200/70 p-1 text-xs">
@@ -133,43 +143,68 @@ export function LiveDocumentCanvas({
           </button>
         </div>
 
-        {/* Zoom Controls (Active in Page Layout mode) */}
+        {/* Zoom Controls + Page Balance Status (Active in Page Layout mode) */}
         {viewMode === 'page-layout' ? (
-          <div className="flex items-center gap-1 bg-white border border-studio-200 shadow-xs rounded-lg px-2 py-1 text-xs text-studio-600">
-            <button
-              onClick={() => onZoomChange(Math.max(0.35, Number((zoomLevel - 0.1).toFixed(2))))}
-              className="p-1 hover:bg-studio-100 rounded text-studio-700"
-              title="Zoom Out"
-            >
-              <ZoomOut className="w-3.5 h-3.5" />
-            </button>
-            <span className="font-mono w-10 text-center font-semibold text-[11px]">
-              {Math.round(zoomLevel * 100)}%
-            </span>
-            <button
-              onClick={() => onZoomChange(Math.min(1.5, Number((zoomLevel + 0.1).toFixed(2))))}
-              className="p-1 hover:bg-studio-100 rounded text-studio-700"
-              title="Zoom In"
-            >
-              <ZoomIn className="w-3.5 h-3.5" />
-            </button>
-            <div className="w-[1px] h-3.5 bg-studio-200 mx-0.5" />
-            <button
-              onClick={handleFitToWidth}
-              className="p-1 hover:bg-studio-100 rounded text-studio-700 flex items-center gap-1"
-              title="Fit to Screen"
-            >
-              <Maximize2 className="w-3 h-3" />
-              <span className="text-[10px] font-semibold">Fit</span>
-            </button>
-            <button
-              onClick={() => onZoomChange(1.0)}
-              className="p-1 hover:bg-studio-100 rounded text-studio-700 flex items-center gap-0.5"
-              title="Reset 100%"
-            >
-              <RotateCcw className="w-3 h-3" />
-              <span className="text-[10px]">100%</span>
-            </button>
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* Page Balance Status Badge */}
+            {isSpilling ? (
+              <div className="inline-flex items-center gap-1.5">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 shadow-2xs">
+                  <span>⚠️ 2 Pages (+{overflowPx}px over A4)</span>
+                </span>
+                {onAutoFitToSinglePage && (
+                  <button
+                    type="button"
+                    onClick={onAutoFitToSinglePage}
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-bold bg-brand-600 hover:bg-brand-700 text-white shadow-xs transition-colors"
+                    title="Automatically adjust margins and spacing to fit onto 1 A4 page"
+                  >
+                    <span>⚡ Auto-Fit to 1 Page</span>
+                  </button>
+                )}
+              </div>
+            ) : (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span>✓ Fits Cleanly on 1 A4 Page</span>
+              </span>
+            )}
+
+            <div className="flex items-center gap-1 bg-white border border-studio-200 shadow-xs rounded-lg px-2 py-1 text-xs text-studio-600">
+              <button
+                onClick={() => onZoomChange(Math.max(0.35, Number((zoomLevel - 0.1).toFixed(2))))}
+                className="p-1 hover:bg-studio-100 rounded text-studio-700"
+                title="Zoom Out"
+              >
+                <ZoomOut className="w-3.5 h-3.5" />
+              </button>
+              <span className="font-mono w-10 text-center font-semibold text-[11px]">
+                {Math.round(zoomLevel * 100)}%
+              </span>
+              <button
+                onClick={() => onZoomChange(Math.min(1.5, Number((zoomLevel + 0.1).toFixed(2))))}
+                className="p-1 hover:bg-studio-100 rounded text-studio-700"
+                title="Zoom In"
+              >
+                <ZoomIn className="w-3.5 h-3.5" />
+              </button>
+              <div className="w-[1px] h-3.5 bg-studio-200 mx-0.5" />
+              <button
+                onClick={handleFitToWidth}
+                className="p-1 hover:bg-studio-100 rounded text-studio-700 flex items-center gap-1"
+                title="Fit to Screen"
+              >
+                <Maximize2 className="w-3 h-3" />
+                <span className="text-[10px] font-semibold">Fit</span>
+              </button>
+              <button
+                onClick={() => onZoomChange(1.0)}
+                className="p-1 hover:bg-studio-100 rounded text-studio-700 flex items-center gap-0.5"
+                title="Reset 100%"
+              >
+                <RotateCcw className="w-3 h-3" />
+                <span className="text-[10px]">100%</span>
+              </button>
+            </div>
           </div>
         ) : (
           <span className="text-[11px] text-studio-500 font-medium">
@@ -205,20 +240,36 @@ export function LiveDocumentCanvas({
           />
         </div>
       ) : (
-        /* View Mode 2: A4 Scaled Page Layout (Exact Dimensions, No Right-Side Void) */
-        <div className="w-full flex justify-center overflow-x-auto pb-4">
+        /* View Mode 2: A4 Scaled Page Layout with Multi-Page Cutoff Support */
+        <div className="w-full flex justify-center overflow-x-auto pb-6">
           <div
-            className="relative overflow-hidden shadow-2xl rounded-md bg-white border border-studio-300 flex-shrink-0 transition-all"
+            className="relative shadow-2xl rounded-md bg-white border border-studio-300 flex-shrink-0 transition-all"
             style={{
               width: `${scaledW}px`,
-              height: `${scaledH}px`,
+              height: `${scaledPrintH}px`,
               margin: '0 auto',
             }}
           >
+            {/* Visual A4 Page 1 / Page 2 Cutoff Divider */}
+            {isSpilling && (
+              <div
+                className="absolute left-0 right-0 z-20 pointer-events-none flex items-center justify-center"
+                style={{
+                  top: `${Math.round(heightPx * zoomLevel)}px`,
+                  transform: 'translateY(-50%)',
+                }}
+              >
+                <div className="w-full border-b-2 border-dashed border-rose-500 shadow-xs" />
+                <span className="absolute px-3 py-0.5 rounded-full text-[10px] font-bold bg-rose-600 text-white shadow-md uppercase tracking-wider flex items-center gap-1 pointer-events-auto">
+                  <span>Page 1 / Page 2 A4 Print Cutoff (+{overflowPx}px overflow)</span>
+                </span>
+              </div>
+            )}
+
             <div
               style={{
                 width: `${widthPx}px`,
-                height: `${heightPx}px`,
+                height: `${effectivePrintH}px`,
                 transform: `scale(${zoomLevel})`,
                 transformOrigin: 'top left',
               }}
@@ -229,7 +280,21 @@ export function LiveDocumentCanvas({
                 className="w-full h-full border-0 pointer-events-auto bg-white"
                 style={{
                   width: `${widthPx}px`,
-                  height: `${heightPx}px`,
+                  height: `${effectivePrintH}px`,
+                }}
+                onLoad={(e) => {
+                  try {
+                    const doc = e.currentTarget.contentWindow?.document;
+                    if (doc) {
+                      const pageEl = (doc.querySelector('.resume-page') as HTMLElement) || doc.body;
+                      const h = Math.max(pageEl.scrollHeight, doc.documentElement.scrollHeight);
+                      if (h > 100) {
+                        setDocContentHeight(h);
+                      }
+                    }
+                  } catch (err) {
+                    // Ignore cross-origin error if any
+                  }
                 }}
               />
             </div>

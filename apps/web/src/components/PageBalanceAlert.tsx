@@ -6,24 +6,26 @@ import { IPageLayoutMetrics } from '@ats/resume-renderer/client';
 
 interface PageBalanceAlertProps {
   metrics: IPageLayoutMetrics | null;
+  onAutoFit?: () => void;
 }
 
-export function PageBalanceAlert({ metrics }: PageBalanceAlertProps) {
+export function PageBalanceAlert({ metrics, onAutoFit }: PageBalanceAlertProps) {
   if (!metrics) return null;
 
   const hasWarnings = metrics.warnings && metrics.warnings.length > 0;
+  const isMultiPage = metrics.estimatedPages > 1;
 
   return (
     <div
       className={`rounded-lg p-3 text-xs sm:text-sm border transition-all ${
-        hasWarnings
+        hasWarnings || isMultiPage
           ? 'bg-amber-50 border-amber-200 text-amber-900'
           : 'bg-emerald-50 border-emerald-200 text-emerald-900'
       }`}
     >
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-2">
-          {hasWarnings ? (
+          {hasWarnings || isMultiPage ? (
             <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0" />
           ) : (
             <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
@@ -33,9 +35,20 @@ export function PageBalanceAlert({ metrics }: PageBalanceAlertProps) {
             {metrics.estimatedPages > 1 ? 's' : ''}
           </span>
         </div>
-        <span className="text-xs text-studio-500 font-mono">
-          Content Height: ~{metrics.contentHeightPx}px (Limit: {metrics.pageHeightPx}px/page)
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="text-xs text-studio-500 font-mono">
+            Height: ~{metrics.contentHeightPx}px (Limit: {metrics.pageHeightPx}px/page)
+          </span>
+          {(hasWarnings || isMultiPage) && onAutoFit && (
+            <button
+              type="button"
+              onClick={onAutoFit}
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-bold bg-brand-600 hover:bg-brand-700 text-white shadow-xs transition-colors"
+            >
+              ⚡ Auto-Fit 1 Page
+            </button>
+          )}
+        </div>
       </div>
 
       {hasWarnings && (

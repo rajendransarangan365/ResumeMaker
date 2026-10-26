@@ -33,43 +33,44 @@ export function calculatePageMetrics(
   const warnings: string[] = [];
   const suggestions: string[] = [];
 
-  // Header height
-  estimatedHeight += 120; // Name, contact row, headline
+  // Header height (Name, title, contact row)
+  const p = profile.personalDetails || {};
+  estimatedHeight += p.headline ? 90 : 70;
 
   // Summary height
   if (profile.professionalSummary && profile.professionalSummary.trim().length > 0) {
-    const lines = Math.ceil(profile.professionalSummary.length / 85);
-    estimatedHeight += 35 + lines * (formatting.fontSizePt * 1.5);
+    const lines = Math.ceil(profile.professionalSummary.length / 90);
+    estimatedHeight += 24 + lines * (formatting.fontSizePt * formatting.lineSpacing * 1.3);
   }
 
   // Work Experience
   const activeExp = profile.workExperience.filter((e) => e.includeInResume !== false);
   if (activeExp.length > 0) {
-    estimatedHeight += 35; // Section Header
+    estimatedHeight += 24; // Section Header
     for (const exp of activeExp) {
-      estimatedHeight += 45; // Employer, role, dates
-      const bulletLines = exp.responsibilities.reduce((acc, r) => acc + Math.ceil(r.length / 80), 0);
-      estimatedHeight += bulletLines * (formatting.fontSizePt * 1.4) + 12;
+      estimatedHeight += 28; // Employer, role, dates
+      const bulletLines = exp.responsibilities.reduce((acc, r) => acc + Math.ceil(r.length / 85), 0);
+      estimatedHeight += bulletLines * (formatting.fontSizePt * formatting.lineSpacing * 1.3) + 6;
     }
   }
 
   // Education
   const activeEdu = profile.education.filter((e) => e.includeInResume !== false);
   if (activeEdu.length > 0) {
-    estimatedHeight += 35;
+    estimatedHeight += 24;
     for (const edu of activeEdu) {
-      estimatedHeight += 40;
+      estimatedHeight += 28;
     }
   }
 
   // Projects
   const activeProj = profile.projects.filter((p) => p.includeInResume !== false);
   if (activeProj.length > 0) {
-    estimatedHeight += 35;
+    estimatedHeight += 24;
     for (const proj of activeProj) {
-      estimatedHeight += 35;
-      const descLines = Math.ceil((proj.description || '').length / 85);
-      estimatedHeight += descLines * (formatting.fontSizePt * 1.4) + 10;
+      estimatedHeight += 24;
+      const descLines = Math.ceil((proj.description || '').length / 90);
+      estimatedHeight += descLines * (formatting.fontSizePt * formatting.lineSpacing * 1.3) + 6;
     }
   }
 
@@ -79,21 +80,21 @@ export function calculatePageMetrics(
     profile.skills.jobSkills.length > 0 ||
     profile.skills.computerSkills.length > 0;
   if (hasSkills) {
-    estimatedHeight += 35;
-    if (profile.skills.technicalSkills.length > 0) estimatedHeight += 25;
-    if (profile.skills.jobSkills.length > 0) estimatedHeight += 25;
-    if (profile.skills.computerSkills.length > 0) estimatedHeight += 25;
+    estimatedHeight += 24;
+    if (profile.skills.technicalSkills.length > 0) estimatedHeight += 20;
+    if (profile.skills.jobSkills.length > 0) estimatedHeight += 20;
+    if (profile.skills.computerSkills.length > 0) estimatedHeight += 20;
   }
 
   // Certifications
   const activeCert = profile.certifications.filter((c) => c.includeInResume !== false);
   if (activeCert.length > 0) {
-    estimatedHeight += 35 + activeCert.length * 20;
+    estimatedHeight += 24 + activeCert.length * 18;
   }
 
   // Declaration
   if (profile.declaration.enabled) {
-    estimatedHeight += 60;
+    estimatedHeight += 45;
   }
 
   const estimatedPages = Math.max(1, Math.ceil(estimatedHeight / usableHeightPx));
