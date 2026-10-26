@@ -1,4 +1,8 @@
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   FileText,
   Sparkles,
@@ -8,9 +12,26 @@ import {
   Layout,
   CheckCircle,
   Download,
+  ArrowRight,
+  Plus,
 } from 'lucide-react';
+import { getAuthToken } from '@/lib/api';
 
 export default function LandingPage() {
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const token = getAuthToken();
+    if (token) {
+      setIsAuthenticated(true);
+      // Automatically redirect logged-in user to their dashboard
+      router.replace('/dashboard');
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, [router]);
+
   return (
     <div className="flex flex-col flex-1">
       {/* Hero Section */}
@@ -30,19 +51,39 @@ export default function LandingPage() {
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/register"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-base shadow-md transition-all hover:shadow-lg flex items-center justify-center gap-2"
-            >
-              <span>Get Started Free</span>
-              <Sparkles className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/login"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-white hover:bg-studio-100 text-studio-800 font-semibold text-base border border-studio-200 transition-colors flex items-center justify-center"
-            >
-              Sign In to Studio
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-base shadow-md transition-all hover:shadow-lg flex items-center justify-center gap-2"
+                >
+                  <span>Go to Dashboard</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/resumes"
+                  className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-white hover:bg-studio-100 text-studio-800 font-semibold text-base border border-studio-200 transition-colors flex items-center justify-center gap-2"
+                >
+                  <span>My Resumes</span>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/register"
+                  className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-base shadow-md transition-all hover:shadow-lg flex items-center justify-center gap-2"
+                >
+                  <span>Get Started Free</span>
+                  <Sparkles className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/login"
+                  className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-white hover:bg-studio-100 text-studio-800 font-semibold text-base border border-studio-200 transition-colors flex items-center justify-center"
+                >
+                  Sign In to Studio
+                </Link>
+              </>
+            )}
           </div>
 
           <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm font-medium text-studio-500">
