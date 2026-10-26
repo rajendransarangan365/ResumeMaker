@@ -39,7 +39,13 @@ export default function CandidateProfilePage() {
     setLoading(true);
     const res = await api.getProfile();
     if (res.success && res.data?.profile) {
-      setProfile(res.data.profile);
+      const p = res.data.profile;
+      if (!p.projects) p.projects = [];
+      if (!p.workExperience) p.workExperience = [];
+      if (!p.education) p.education = [];
+      if (!p.certifications) p.certifications = [];
+      if (!p.skills) p.skills = { technicalSkills: [], jobSkills: [], computerSkills: [] };
+      setProfile(p);
     }
     setLoading(false);
   };
@@ -592,6 +598,215 @@ export default function CandidateProfilePage() {
             </div>
           )}
 
+          {/* Projects */}
+          {activeTab === 'projects' && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between border-b pb-2">
+                <div>
+                  <h2 className="text-base font-bold text-studio-900">Projects & Technical Builds</h2>
+                  <p className="text-xs text-studio-500 mt-0.5">
+                    Highlight key engineering projects, open source tools, and applications you have designed and shipped.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setProfile({
+                      ...profile,
+                      projects: [
+                        {
+                          id: Math.random().toString(36).substring(2, 9),
+                          name: 'New Project',
+                          category: 'Professional',
+                          client: '',
+                          role: '',
+                          description: 'Architected and built a full-stack application improving user workflows and system throughput.',
+                          technologies: ['React', 'Node.js', 'MongoDB'],
+                          url: '',
+                          startDate: '',
+                          endDate: '',
+                          includeInResume: true,
+                        },
+                        ...(profile.projects || []),
+                      ],
+                    })
+                  }
+                  className="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add Project</span>
+                </button>
+              </div>
+
+              {(!profile.projects || profile.projects.length === 0) ? (
+                <div className="p-8 border-2 border-dashed border-studio-200 rounded-xl text-center space-y-3 bg-studio-50/50">
+                  <FolderGit2 className="w-10 h-10 text-studio-400 mx-auto" />
+                  <div>
+                    <h3 className="text-sm font-bold text-studio-800">No Projects Added Yet</h3>
+                    <p className="text-xs text-studio-500 max-w-sm mx-auto mt-1">
+                      Add projects to showcase your practical engineering capabilities, architecture skills, and business impact to recruiters.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setProfile({
+                        ...profile,
+                        projects: [
+                          {
+                            id: Math.random().toString(36).substring(2, 9),
+                            name: '',
+                            category: 'Professional',
+                            client: '',
+                            role: '',
+                            description: '',
+                            technologies: [],
+                            url: '',
+                            startDate: '',
+                            endDate: '',
+                            includeInResume: true,
+                          },
+                        ],
+                      })
+                    }
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-xs font-semibold shadow-xs"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Add Your First Project</span>
+                  </button>
+                </div>
+              ) : (
+                profile.projects.map((proj: any, index: number) => (
+                  <div key={proj.id || index} className="p-4 rounded-xl border border-studio-200 bg-studio-50/50 space-y-3 shadow-2xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-sm text-studio-900">Project #{index + 1}</span>
+                        {proj.category && (
+                          <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-studio-200 text-studio-700">
+                            {proj.category}
+                          </span>
+                        )}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setProfile({
+                            ...profile,
+                            projects: profile.projects.filter((_: any, i: number) => i !== index),
+                          })
+                        }
+                        className="text-red-500 hover:text-red-700 text-xs flex items-center gap-1 font-semibold transition-colors"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>Remove</span>
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                      <div>
+                        <label className="block font-semibold mb-1 text-studio-700">Project Name *</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Pimworks.io (Product Information Management)"
+                          value={proj.name || ''}
+                          onChange={(e) => {
+                            const updated = [...profile.projects];
+                            updated[index].name = e.target.value;
+                            setProfile({ ...profile, projects: updated });
+                          }}
+                          className="w-full border rounded-lg px-3 py-1.5 bg-white text-sm focus:ring-1 focus:ring-brand-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-semibold mb-1 text-studio-700">Project URL / Live Demo</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. https://github.com/user/project or https://pimworks.io"
+                          value={proj.url || ''}
+                          onChange={(e) => {
+                            const updated = [...profile.projects];
+                            updated[index].url = e.target.value;
+                            setProfile({ ...profile, projects: updated });
+                          }}
+                          className="w-full border rounded-lg px-3 py-1.5 bg-white text-sm focus:ring-1 focus:ring-brand-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-semibold mb-1 text-studio-700">Category</label>
+                        <select
+                          value={proj.category || 'Professional'}
+                          onChange={(e) => {
+                            const updated = [...profile.projects];
+                            updated[index].category = e.target.value;
+                            setProfile({ ...profile, projects: updated });
+                          }}
+                          className="w-full border rounded-lg px-3 py-1.5 bg-white text-sm focus:ring-1 focus:ring-brand-500"
+                        >
+                          <option value="Professional">Professional / Commercial</option>
+                          <option value="Personal">Personal / Side Project</option>
+                          <option value="Academic">Academic / Capstone</option>
+                          <option value="Open Source">Open Source</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block font-semibold mb-1 text-studio-700">Role / Client (Optional)</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Lead Full-Stack Engineer / Client Name"
+                          value={proj.role || proj.client || ''}
+                          onChange={(e) => {
+                            const updated = [...profile.projects];
+                            updated[index].role = e.target.value;
+                            updated[index].client = e.target.value;
+                            setProfile({ ...profile, projects: updated });
+                          }}
+                          className="w-full border rounded-lg px-3 py-1.5 bg-white text-sm focus:ring-1 focus:ring-brand-500"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block font-semibold text-xs mb-1 text-studio-700">
+                        Technologies / Tech Stack (comma separated)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. React, Node.js, Express, MongoDB, Tailwind CSS"
+                        value={Array.isArray(proj.technologies) ? proj.technologies.join(', ') : (proj.technologies || '')}
+                        onChange={(e) => {
+                          const updated = [...profile.projects];
+                          updated[index].technologies = e.target.value
+                            .split(',')
+                            .map((t: string) => t.trim())
+                            .filter(Boolean);
+                          setProfile({ ...profile, projects: updated });
+                        }}
+                        className="w-full border rounded-lg px-3 py-1.5 bg-white text-sm focus:ring-1 focus:ring-brand-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-semibold text-xs mb-1 text-studio-700">
+                        Description & Technical Accomplishments
+                      </label>
+                      <textarea
+                        rows={3}
+                        placeholder="Outline the core objective, architectural decisions, challenges solved, and measurable impact..."
+                        value={proj.description || ''}
+                        onChange={(e) => {
+                          const updated = [...profile.projects];
+                          updated[index].description = e.target.value;
+                          setProfile({ ...profile, projects: updated });
+                        }}
+                        className="w-full border rounded-lg p-2.5 text-xs bg-white focus:ring-1 focus:ring-brand-500 leading-relaxed font-sans"
+                      />
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+
           {/* Skills (5-Part) */}
           {activeTab === 'skills' && (
             <div className="space-y-5">
@@ -659,6 +874,159 @@ export default function CandidateProfilePage() {
                   className="w-full border rounded-lg px-3 py-2 text-sm"
                 />
               </div>
+            </div>
+          )}
+
+          {/* Certifications */}
+          {activeTab === 'certifications' && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between border-b pb-2">
+                <div>
+                  <h2 className="text-base font-bold text-studio-900">Licenses & Certifications</h2>
+                  <p className="text-xs text-studio-500 mt-0.5">
+                    Credentials, online specializations, and verified industry achievements.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setProfile({
+                      ...profile,
+                      certifications: [
+                        {
+                          id: Math.random().toString(36).substring(2, 9),
+                          title: 'New Certification',
+                          issuer: 'Coursera',
+                          issueDate: '2023',
+                          credentialId: '',
+                          credentialUrl: '',
+                          includeInResume: true,
+                        },
+                        ...(profile.certifications || []),
+                      ],
+                    })
+                  }
+                  className="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add Certification</span>
+                </button>
+              </div>
+
+              {(!profile.certifications || profile.certifications.length === 0) ? (
+                <div className="p-8 border-2 border-dashed border-studio-200 rounded-xl text-center space-y-3 bg-studio-50/50">
+                  <Award className="w-10 h-10 text-studio-400 mx-auto" />
+                  <div>
+                    <h3 className="text-sm font-bold text-studio-800">No Certifications Added Yet</h3>
+                    <p className="text-xs text-studio-500 max-w-sm mx-auto mt-1">
+                      Add verified professional credentials, online certifications, or licenses to boost your ATS credibility.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setProfile({
+                        ...profile,
+                        certifications: [
+                          {
+                            id: Math.random().toString(36).substring(2, 9),
+                            title: '',
+                            issuer: '',
+                            issueDate: '',
+                            credentialId: '',
+                            credentialUrl: '',
+                            includeInResume: true,
+                          },
+                        ],
+                      })
+                    }
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-xs font-semibold shadow-xs"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Add Certification</span>
+                  </button>
+                </div>
+              ) : (
+                profile.certifications.map((cert: any, index: number) => (
+                  <div key={cert.id || index} className="p-4 rounded-xl border border-studio-200 bg-studio-50/50 space-y-3 shadow-2xs">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-sm text-studio-900">Certification #{index + 1}</span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setProfile({
+                            ...profile,
+                            certifications: profile.certifications.filter((_: any, i: number) => i !== index),
+                          })
+                        }
+                        className="text-red-500 hover:text-red-700 text-xs flex items-center gap-1 font-semibold transition-colors"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>Remove</span>
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                      <div>
+                        <label className="block font-semibold mb-1 text-studio-700">Certification Title *</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Advanced React & Redux"
+                          value={cert.title || ''}
+                          onChange={(e) => {
+                            const updated = [...profile.certifications];
+                            updated[index].title = e.target.value;
+                            setProfile({ ...profile, certifications: updated });
+                          }}
+                          className="w-full border rounded-lg px-3 py-1.5 bg-white text-sm focus:ring-1 focus:ring-brand-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-semibold mb-1 text-studio-700">Issuing Organization *</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Coursera, Geek Trust, AWS, Meta"
+                          value={cert.issuer || ''}
+                          onChange={(e) => {
+                            const updated = [...profile.certifications];
+                            updated[index].issuer = e.target.value;
+                            setProfile({ ...profile, certifications: updated });
+                          }}
+                          className="w-full border rounded-lg px-3 py-1.5 bg-white text-sm focus:ring-1 focus:ring-brand-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-semibold mb-1 text-studio-700">Issue Date / Year</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. 2023 or Nov 2023"
+                          value={cert.issueDate || ''}
+                          onChange={(e) => {
+                            const updated = [...profile.certifications];
+                            updated[index].issueDate = e.target.value;
+                            setProfile({ ...profile, certifications: updated });
+                          }}
+                          className="w-full border rounded-lg px-3 py-1.5 bg-white text-sm focus:ring-1 focus:ring-brand-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-semibold mb-1 text-studio-700">Credential URL (Optional)</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. https://coursera.org/verify/..."
+                          value={cert.credentialUrl || ''}
+                          onChange={(e) => {
+                            const updated = [...profile.certifications];
+                            updated[index].credentialUrl = e.target.value;
+                            setProfile({ ...profile, certifications: updated });
+                          }}
+                          className="w-full border rounded-lg px-3 py-1.5 bg-white text-sm focus:ring-1 focus:ring-brand-500"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           )}
 
