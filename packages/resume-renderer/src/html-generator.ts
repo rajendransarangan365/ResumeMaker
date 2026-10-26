@@ -3,7 +3,8 @@ import { getTemplateById } from '@ats/template-registry';
 
 export function generateResumeHtml(
   profile: ICandidateProfile,
-  resumeVersion: Partial<IResumeVersion>
+  resumeVersion: Partial<IResumeVersion>,
+  options?: { embedded?: boolean; mobileReflow?: boolean }
 ): string {
   const template = getTemplateById(resumeVersion.templateId || 'classic-professional');
   const formatting = {
@@ -318,11 +319,23 @@ export function generateResumeHtml(
     body {
       margin: 0;
       padding: 0;
-      background: #f8fafc;
+      background: ${options?.mobileReflow ? '#ffffff' : '#f8fafc'};
       font-family: '${formatting.fontFamily}', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       font-size: ${formatting.fontSizePt}pt;
       color: #0f172a;
     }
+    ${options?.mobileReflow ? `
+    .resume-page {
+      background: #ffffff;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-height: auto !important;
+      padding: 16px !important;
+      margin: 0 !important;
+      box-shadow: none !important;
+      box-sizing: border-box !important;
+    }
+    ` : `
     .resume-page {
       background: #ffffff;
       width: ${widthMm}mm;
@@ -331,6 +344,7 @@ export function generateResumeHtml(
       margin: 0 auto;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
+    `}
     @media print {
       body {
         background: transparent !important;
@@ -350,6 +364,7 @@ export function generateResumeHtml(
   </style>
 </head>
 <body>
+  ${!options?.embedded ? `
   <!-- Print & PDF Download Action Bar (Hidden when printing or saving as PDF) -->
   <div class="no-print" style="position: sticky; top: 0; z-index: 100; background: #0f172a; color: #ffffff; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
     <div style="display: flex; align-items: center; gap: 10px;">
@@ -366,6 +381,7 @@ export function generateResumeHtml(
       </button>
     </div>
   </div>
+  ` : ''}
 
   <main class="resume-page resume-template resume-template--${template.id}">
     ${bodyContent}
