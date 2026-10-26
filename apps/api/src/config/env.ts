@@ -43,7 +43,7 @@ const EnvironmentSchema = z.object({
 
   // Google Gemini AI
   GEMINI_API_KEY: z.string().default(''),
-  GEMINI_MODEL: z.string().default('gemini-2.5-flash'),
+  GEMINI_MODEL: z.string().default('gemini-3.5-flash'),
 
   // AI Governance
   AI_MONTHLY_BUDGET: z.coerce.number().default(100.0),

@@ -502,49 +502,163 @@ router.post(
         });
       }
 
-      // 2. Extract keywords from JD to prioritize matching candidate skills
-      const jdTokens = (jobDescriptionText.match(/[a-zA-Z0-9#+.]+/g) || []).map((w: string) => w.toLowerCase());
-      const candidateSkills = profile.skills?.technicalSkills || [];
+      // 2. Deep AI Reconstruct & Alignment with Job Description
+      const candidateProfileSnippet = `
+Candidate Name: ${profile.personalDetails.fullName}
+Current Headline: ${profile.personalDetails.headline}
+Skills: ${[
+        ...(profile.skills?.technicalSkills || []),
+        ...(profile.skills?.jobSkills || []),
+        ...(profile.skills?.computerSkills || []),
+      ].join(', ')}
+Work Experience:
+${(profile.workExperience || [])
+  .map(
+    (exp, idx) =>
+      `[EXP_${idx}] ${exp.jobTitle} at ${exp.employer} (${exp.startDate} - ${exp.isCurrent ? 'Present' : exp.endDate}):\n${exp.responsibilities.join('\n')}`
+  )
+  .join('\n\n')}
+Projects:
+${(profile.projects || [])
+  .map((p) => `- ${p.name}: ${p.description} (Tech: ${p.technologies?.join(', ') || ''})`)
+  .join('\n')}
+      `.trim();
 
-      // Prioritize skills matching the vacancy
-      const prioritizedSkills = [...candidateSkills].sort((a, b) => {
-        const aMatch = jdTokens.includes(a.toLowerCase());
-        const bMatch = jdTokens.includes(b.toLowerCase());
-        if (aMatch && !bMatch) return -1;
-        if (!aMatch && bMatch) return 1;
-        return 0;
-      });
+      const systemPrompt = `
+You are an Elite ATS Resume Architect and Career Strategist.
+Your goal is to optimize and tailor the candidate's verified background to maximize ATS alignment and recruiter selection for the provided target Job Description.
 
-      // 3. Tailor headline and summary directly to the target vacancy
-      // IMPORTANT: The target hiring company belongs ONLY in the resume title/application tracker,
-      // NEVER in the candidate's personal resume headline.
-      const currentHeadline = profile.personalDetails.headline || '';
-      // Clean any accidental company name from existing headline
-      let cleanedHeadline = currentHeadline;
+STRICT INTEGRITY AND ATS RULES:
+1. Re-frame and elevate the candidate's existing work experience bullets using strong action verbs (Architected, Engineered, Optimized, Streamlined, Spearheaded, Implemented).
+2. Integrate high-priority JD keywords that match the candidate's actual work (e.g. Node.js, Next.js, SSR, SSG, REST APIs, MongoDB/SQL, responsive UI).
+3. DO NOT invent false company names or false dates. Preserve the candidate's real companies and roles.
+4. Output a highly tailored, compelling 3-4 sentence professional summary highlighting their exact fit for "${jobTitle}".
+5. Prioritize and enrich verified technical skills from the JD (Node.js, Next.js, React.js, TypeScript, REST APIs, etc.).
+6. For each work experience entry, provide improved, ATS-optimized bullet points that highlight technical deliverables, performance optimizations, and full-stack contributions.
+
+Output strictly valid JSON with this exact structure:
+{
+  "tailoredHeadline": string,
+  "tailoredSummary": string,
+  "prioritizedTechnicalSkills": string[],
+  "prioritizedJobSkills": string[],
+  "prioritizedTools": string[],
+  "optimizedExperiences": [
+    {
+      "expIndex": number,
+      "improvedResponsibilities": string[]
+    }
+  ]
+}
+      `.trim();
+
+      const userPrompt = `
+TARGET JOB TITLE: ${jobTitle}
+HIRING COMPANY: ${companyName || 'Not specified'}
+
+TARGET JOB DESCRIPTION:
+${jobDescriptionText.slice(0, 6000)}
+
+CANDIDATE CURRENT PROFILE:
+${candidateProfileSnippet}
+      `.trim();
+
+      // Deterministic fallback if AI is offline
+      const heuristicFallback = () => {
+        const jdTokens = (jobDescriptionText.match(/[a-zA-Z0-9#+.]+/g) || []).map((w: string) => w.toLowerCase());
+        const existingTech = profile.skills?.technicalSkills || [];
+        
+        // Extract relevant tech keywords from JD
+        const candidateSkillsSet = new Set(existingTech);
+        const topJdKeywords = ['Node.js', 'Next.js', 'React.js', 'TypeScript', 'JavaScript', 'REST APIs', 'MongoDB', 'AWS', 'Express.js', 'PostgreSQL', 'HTML5/CSS3', 'Git'];
+        topJdKeywords.forEach(k => {
+          if (jobDescriptionText.toLowerCase().includes(k.toLowerCase())) {
+            candidateSkillsSet.add(k);
+          }
+        });
+
+        const prioritizedTechnicalSkills = Array.from(candidateSkillsSet).sort((a, b) => {
+          const aMatch = jdTokens.includes(a.toLowerCase());
+          const bMatch = jdTokens.includes(b.toLowerCase());
+          if (aMatch && !bMatch) return -1;
+          if (!aMatch && bMatch) return 1;
+          return 0;
+        });
+
+        // Optimize experience bullets
+        const optimizedExperiences = (profile.workExperience || []).map((exp, idx) => {
+          const improved = exp.responsibilities.map(b => {
+            let clean = b.replace(/^(?:spearheaded|worked on|helped with|assisted in)\s+/gi, '').trim();
+            if (/database|sql|query|efficiency|linq/i.test(clean)) {
+              return `Optimized database operations and SQL query workflows, improving latency and data throughput.`;
+            }
+            if (/react|ui|component|landing|figma/i.test(clean)) {
+              return `Engineered responsive web applications and modular UI components using React.js and modern JavaScript standards.`;
+            }
+            if (/\.net|mvc|application/i.test(clean)) {
+              return `Developed robust full-stack applications, implementing backend RESTful services and modular architecture.`;
+            }
+            return clean.length > 10 ? `Architected ${clean.charAt(0).toLowerCase() + clean.slice(1)}` : clean;
+          });
+          return { expIndex: idx, improvedResponsibilities: improved };
+        });
+
+        return {
+          tailoredHeadline: jobTitle,
+          tailoredSummary: `Results-oriented ${jobTitle} with proven expertise in ${prioritizedTechnicalSkills.slice(0, 4).join(', ')}. Demonstrated track record of building resilient web architectures, developing scalable backend APIs with Node.js, and crafting high-performance, responsive applications aligned with modern engineering standards.`,
+          prioritizedTechnicalSkills,
+          prioritizedJobSkills: Array.from(new Set([...(profile.skills?.jobSkills || []), 'Full-Stack Development', 'REST API Integration', 'Code Review', 'Agile SDLC'])),
+          prioritizedTools: Array.from(new Set([...(profile.skills?.computerSkills || []), 'Git', 'Visual Studio Code', 'Postman', 'Docker'])),
+          optimizedExperiences,
+        };
+      };
+
+      const aiResult = await geminiService.executeStructuredPrompt(
+        req.user!._id.toString(),
+        'candidate_matching',
+        systemPrompt,
+        userPrompt,
+        heuristicFallback
+      );
+
+      // Clean headline: ensure no hiring company slipped into the personal headline
+      let cleanedHeadline = (aiResult.tailoredHeadline || jobTitle).trim();
       if (companyName && cleanedHeadline.toLowerCase().includes(companyName.toLowerCase())) {
         cleanedHeadline = cleanedHeadline
           .replace(new RegExp(`\\s*\\|\\s*${companyName}.*`, 'i'), '')
           .replace(new RegExp(`\\s*-\\s*${companyName}.*`, 'i'), '')
           .trim();
       }
-      
-      const existingSpecialization = cleanedHeadline.split('|')[1]?.trim();
-      const tailoredHeadline = existingSpecialization
-        ? `${jobTitle} | ${existingSpecialization}`
-        : jobTitle;
+      if (!cleanedHeadline) cleanedHeadline = jobTitle;
 
-      const matchedSkillPreview = prioritizedSkills.slice(0, 4).join(', ');
+      // Update candidate profile with AI-reconstructed content
+      profile.personalDetails.headline = cleanedHeadline;
+      profile.professionalSummary = aiResult.tailoredSummary;
 
-      const tailoredSummary = `Results-oriented ${jobTitle} with proven expertise in ${
-        matchedSkillPreview || 'modern software engineering and scalable systems'
-      }. Demonstrated track record of building resilient web architectures, optimizing performance, and collaborating cross-functionally to deliver high-quality business outcomes aligned with ATS requirements.`;
-
-      // Update candidate profile
-      profile.personalDetails.headline = tailoredHeadline;
-      profile.professionalSummary = tailoredSummary;
-      if (prioritizedSkills.length > 0) {
-        profile.skills.technicalSkills = prioritizedSkills;
+      if (aiResult.prioritizedTechnicalSkills && aiResult.prioritizedTechnicalSkills.length > 0) {
+        profile.skills.technicalSkills = aiResult.prioritizedTechnicalSkills;
       }
+      if (aiResult.prioritizedJobSkills && aiResult.prioritizedJobSkills.length > 0) {
+        profile.skills.jobSkills = aiResult.prioritizedJobSkills;
+      }
+      if (aiResult.prioritizedTools && aiResult.prioritizedTools.length > 0) {
+        profile.skills.computerSkills = aiResult.prioritizedTools;
+      }
+
+      // Apply improved experience bullets to profile
+      if (aiResult.optimizedExperiences && Array.isArray(aiResult.optimizedExperiences)) {
+        for (const optExp of aiResult.optimizedExperiences) {
+          if (
+            typeof optExp.expIndex === 'number' &&
+            profile.workExperience[optExp.expIndex] &&
+            Array.isArray(optExp.improvedResponsibilities) &&
+            optExp.improvedResponsibilities.length > 0
+          ) {
+            profile.workExperience[optExp.expIndex].responsibilities = optExp.improvedResponsibilities;
+          }
+        }
+      }
+
       await profile.save();
 
       // 4. Create or update resume version
@@ -586,8 +700,8 @@ router.post(
           resumeId: targetResume._id,
           resume: targetResume,
           profile,
-          tailoredSummary,
-          prioritizedSkills,
+          tailoredSummary: profile.professionalSummary,
+          prioritizedSkills: profile.skills.technicalSkills,
         },
       });
     } catch (error) {
