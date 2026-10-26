@@ -210,13 +210,43 @@ Output strictly JSON:
 
       const userPrompt = `Target Role: ${targetRole || 'Professional'}\nOriginal Bullet: "${originalText}"`;
 
-      const heuristicFallback = () => ({
-        improvedBullets: [
-          `Spearheaded ${originalText.toLowerCase().replace(/^(developed|worked on|managed)\s*/i, '')}, enhancing overall system reliability and delivery velocity.`,
-          `Engineered scalable solutions for ${originalText.toLowerCase().replace(/^(developed|worked on|managed)\s*/i, '')}, collaborating closely with cross-functional stakeholders.`,
-        ],
-        feedback: 'Strengthened initial action verbs and emphasized deliverable outcomes.',
-      });
+      const heuristicFallback = () => {
+        // Strip duplicate "spearheaded", "worked on", and existing trailers
+        let clean = originalText
+          .replace(/^(?:spearheaded\s+|worked\s+on\s+|helped\s+with\s+|involved\s+in\s+|assisted\s+in\s+)+/gi, '')
+          .replace(/,\s*(?:enhancing\s+overall\s+system\s+reliability|collaborating\s+closely)[^.]*\.?$/i, '')
+          .trim();
+
+        // Context-aware action verb selection
+        let actionVerb = 'Engineered';
+        if (/database|sql|query|performance|latency|downtime|speed|fast|cache|optimiz/i.test(clean)) {
+          actionVerb = 'Optimized';
+        } else if (/api|backend|service|server|node|endpoint|controller|architecture|stored\s+procedure/i.test(clean)) {
+          actionVerb = 'Architected';
+        } else if (/ui|frontend|react|responsive|figma|css|component|view|interface/i.test(clean)) {
+          actionVerb = 'Developed';
+        } else if (/test|deploy|docker|ci|pipeline|git|automate/i.test(clean)) {
+          actionVerb = 'Automated';
+        } else if (/task|workflow|management|role-based|coordinat/i.test(clean)) {
+          actionVerb = 'Streamlined';
+        } else {
+          const verbs = ['Engineered', 'Delivered', 'Implemented', 'Refactored', 'Deployed'];
+          actionVerb = verbs[Math.floor(Math.random() * verbs.length)];
+        }
+
+        // Clean initial weak verb if present
+        clean = clean.replace(/^(?:developed|managed|created|built|designed|implemented|acquired|worked\s+on)\s+/i, '');
+        const sentence = `${actionVerb} ${clean.charAt(0).toLowerCase() + clean.slice(1)}`;
+        const cleanedSentence = sentence.endsWith('.') ? sentence : `${sentence}.`;
+
+        return {
+          improvedBullets: [
+            cleanedSentence,
+            `Led implementation of ${clean.charAt(0).toLowerCase() + clean.slice(1)}${clean.endsWith('.') ? '' : '.'}`,
+          ],
+          feedback: `Upgraded verb to decisive action "${actionVerb}" and formatted for high ATS score.`,
+        };
+      };
 
       const result = await geminiService.executeStructuredPrompt(
         req.user!._id.toString(),
@@ -316,16 +346,36 @@ Tools: ${(profile.skills?.computerSkills || []).join(', ')}
             if (strongVerbs.test(b.trim())) actionVerbCount++;
             if (metricRegex.test(b)) metricCount++;
 
-            // Upgrade weak initial phrases
-            let upgraded = b.trim();
-            if (/^(worked on|helped with|contributed to|involved in|assisted in)\s*/i.test(upgraded)) {
-              upgraded = upgraded.replace(/^(worked on|helped with|contributed to|involved in|assisted in)\s*/i, '');
-              upgraded = `Engineered ${upgraded.charAt(0).toLowerCase() + upgraded.slice(1)}, ensuring high reliability and code quality`;
-            } else if (/^(developed|implemented|built)\s*/i.test(upgraded)) {
-              upgraded = upgraded.replace(/\.$/, '') + ', optimizing runtime performance and user experience.';
-            } else if (!strongVerbs.test(upgraded)) {
-              upgraded = `Spearheaded ${upgraded.charAt(0).toLowerCase() + upgraded.slice(1)}`;
+            // Strip any existing repeated "spearheaded", "worked on", or redundant trailers
+            let clean = b
+              .replace(/^(?:spearheaded\s+|worked\s+on\s+|helped\s+with\s+|involved\s+in\s+|assisted\s+in\s+)+/gi, '')
+              .replace(/,\s*(?:enhancing\s+overall\s+system\s+reliability|collaborating\s+closely)[^.]*\.?$/i, '')
+              .trim();
+
+            // Transform junior/passive phrasing
+            if (/^acquired\s+skills\s+in\s+/i.test(clean)) {
+              clean = clean.replace(/^acquired\s+skills\s+in\s+/i, 'Built production applications utilizing ');
             }
+
+            // Determine appropriate dynamic action verb based on bullet focus
+            let verb = 'Engineered';
+            if (/database|sql|query|performance|latency|downtime|stored\s+procedure|optimiz/i.test(clean)) {
+              verb = 'Optimized';
+            } else if (/ui|frontend|react|figma|responsive|landing|css/i.test(clean)) {
+              verb = 'Developed';
+            } else if (/api|endpoint|architecture|rest|controller|backend/i.test(clean)) {
+              verb = 'Architected';
+            } else if (/task|workflow|management|role-based|coordinat/i.test(clean)) {
+              verb = 'Streamlined';
+            } else {
+              const pool = ['Delivered', 'Implemented', 'Engineered', 'Refactored', 'Designed'];
+              verb = pool[totalBullets % pool.length];
+            }
+
+            // Remove duplicated initial action verbs
+            clean = clean.replace(/^(?:developed|built|created|implemented|optimized|spearheaded|architected)\s+/i, '');
+            let upgraded = `${verb} ${clean.charAt(0).toLowerCase() + clean.slice(1)}`;
+            if (!upgraded.endsWith('.')) upgraded += '.';
 
             if (upgraded !== b) {
               calibratedBullets.push({
