@@ -62,7 +62,7 @@ export class GeminiService {
       return fallbackResult;
     }
 
-    const maxRetries = 3;
+    const maxRetries = 1;
     let delay = 1000;
 
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
@@ -75,7 +75,15 @@ export class GeminiService {
           },
         });
 
-        const result = await model.generateContent(userPrompt);
+        // 7-second timeout guarantee: never hang the browser or cloud container
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('AI inference timeout (7000ms). Falling back to built-in local engine.')), 7000)
+        );
+
+        const result = (await Promise.race([
+          model.generateContent(userPrompt),
+          timeoutPromise,
+        ])) as any;
         const durationMs = Date.now() - startTime;
         const text = result.response.text() || '{}';
 

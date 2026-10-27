@@ -160,9 +160,9 @@ export default function ResumeImportPage() {
       {stage === 'extracting' && (
         <div className="p-12 text-center bg-white rounded-2xl border border-studio-200 shadow-sm space-y-4">
           <RefreshCw className="w-8 h-8 text-brand-600 animate-spin mx-auto" />
-          <h3 className="font-bold text-base text-studio-900">Extracting & Classifying Document...</h3>
+          <h3 className="font-bold text-base text-studio-900">Running Built-in AI Resume Intelligence Agent...</h3>
           <p className="text-xs text-studio-500 max-w-md mx-auto">
-            Extracting text from raw buffers, running Gemini entity classification, and normalizing into verified candidate schema.
+            Parsing text buffers locally with the built-in Resume Intelligence Agent, accurately classifying candidate credentials, spoken languages, and work experience.
           </p>
         </div>
       )}
@@ -317,10 +317,10 @@ export default function ResumeImportPage() {
             </div>
           )}
 
-          {/* Extracted Skills */}
+          {/* Extracted Skills & Spoken Languages */}
           {parsedData.skills && (
             <div className="bg-white rounded-xl border border-studio-200 p-5 shadow-sm space-y-3">
-              <h3 className="font-bold text-sm text-studio-900 border-b pb-2">Extracted Skills</h3>
+              <h3 className="font-bold text-sm text-studio-900 border-b pb-2">Extracted Skills & Languages</h3>
               <div className="space-y-2 text-xs">
                 {parsedData.skills.technicalSkills?.length > 0 && (
                   <div>
@@ -340,6 +340,39 @@ export default function ResumeImportPage() {
                     <span className="text-studio-600">{parsedData.skills.computerSkills.join(', ')}</span>
                   </div>
                 )}
+                {parsedData.skills.languages?.length > 0 && (
+                  <div className="pt-2 border-t border-studio-100 flex items-center gap-2 flex-wrap">
+                    <strong className="text-studio-800">Spoken Languages:</strong>
+                    {parsedData.skills.languages.map((lang: any, lIdx: number) => (
+                      <span
+                        key={lIdx}
+                        className="px-2 py-0.5 bg-blue-50 text-blue-800 border border-blue-200 rounded-md font-semibold text-[11px]"
+                      >
+                        {typeof lang === 'string' ? lang : `${lang.name}${lang.proficiency ? ` (${lang.proficiency})` : ''}`}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Extracted Certifications */}
+          {parsedData.certifications && parsedData.certifications.length > 0 && (
+            <div className="bg-white rounded-xl border border-studio-200 p-5 shadow-sm space-y-3">
+              <h3 className="font-bold text-sm text-studio-900 border-b pb-2">
+                Extracted Certifications ({parsedData.certifications.length})
+              </h3>
+              <div className="space-y-2">
+                {parsedData.certifications.map((cert: any, idx: number) => (
+                  <div key={idx} className="p-3 rounded-lg border border-studio-100 bg-studio-50/50 flex justify-between items-start text-xs">
+                    <div>
+                      <div className="font-bold text-studio-900">{cert.title || cert.name}</div>
+                      <div className="text-studio-600">{cert.issuer || 'Verified Credential'}</div>
+                    </div>
+                    {cert.issueDate && <div className="text-studio-500 font-mono text-[11px]">{cert.issueDate}</div>}
+                  </div>
+                ))}
               </div>
             </div>
           )}

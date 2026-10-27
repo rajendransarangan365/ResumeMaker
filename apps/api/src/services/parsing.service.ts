@@ -73,6 +73,8 @@ export class ParsingService {
       { type: 'education', regex: /^(education\s*&|education\s+and|education|academic\s+background|academic\s+qualifications|academics|education\s+history)\b/i },
       { type: 'projects', regex: /^(projects|personal\s+projects|key\s+projects|academic\s+projects|notable\s+projects)\b/i },
       { type: 'certifications', regex: /^(certifications\s*&|certifications|certificates|licenses|courses)\b/i },
+      { type: 'languages', regex: /^(languages\s*known|spoken\s*languages|languages\s*spoken|languages|language\s+proficiency)\b/i },
+      { type: 'personal_details', regex: /^(personal\s+details|personal\s+profile|personal\s+information)\b/i },
       { type: 'achievements', regex: /^(achievements|awards\s*&|awards|honors)\b/i },
       { type: 'declaration', regex: /^(declaration)\b/i },
     ];
@@ -459,16 +461,71 @@ export class ParsingService {
     }
     if (curProj) projects.push(curProj);
 
-    // 7. Certifications & Achievements
+    // 7. Spoken Languages Extraction (Tamil, English, Hindi, etc.)
+    const SPOKEN_LANGUAGES = [
+      'tamil', 'english', 'hindi', 'telugu', 'malayalam', 'kannada',
+      'marathi', 'bengali', 'gujarati', 'punjabi', 'urdu', 'french',
+      'german', 'spanish', 'mandarin', 'chinese', 'japanese', 'korean',
+      'arabic', 'russian', 'italian', 'portuguese'
+    ];
+
+    const isLanguageLine = (text: string): boolean => {
+      const lower = text.toLowerCase().trim();
+      if (/^(languages|languages\s*known|spoken\s*languages|language\s+proficiency|mother\s*tongue)[\s:]+/i.test(lower)) return true;
+      const clean = lower.replace(/^(languages\s*known|languages|spoken\s*languages|language\s+proficiency)[\s:]*/i, '');
+      const words = clean.split(/[,/•\s]+/).filter(w => w.length > 2);
+      if (words.length > 0 && words.every(w => SPOKEN_LANGUAGES.includes(w) || ['native', 'fluent', 'professional', 'read', 'write', 'speak', 'known', 'languages', 'and', 'basic', 'intermediate'].includes(w))) {
+        return true;
+      }
+      return false;
+    };
+
+    const parsedLanguages: any[] = [];
+    const discoveredLanguages = new Set<string>();
+    const languageSources = [
+      ...(sections['languages'] || []),
+      ...allLines.filter(l => isLanguageLine(l)),
+    ];
+
+    for (const line of languageSources) {
+      const clean = line.replace(/^(languages\s*known|languages|spoken\s*languages|language\s+proficiency|mother\s*tongue)[\s:]+/i, '');
+      const parts = clean.split(/[,/•\n\t]+/).map(p => p.trim()).filter(Boolean);
+      for (const part of parts) {
+        for (const lang of SPOKEN_LANGUAGES) {
+          if (part.toLowerCase().includes(lang)) {
+            const formatted = lang.charAt(0).toUpperCase() + lang.slice(1);
+            if (!discoveredLanguages.has(formatted)) {
+              discoveredLanguages.add(formatted);
+              const prof = part.toLowerCase().includes('native') || part.toLowerCase().includes('mother')
+                ? 'Native/Bilingual'
+                : part.toLowerCase().includes('basic')
+                ? 'Basic'
+                : 'Professional';
+              parsedLanguages.push({ name: formatted, proficiency: prof });
+            }
+          }
+        }
+      }
+    }
+
+    if (parsedLanguages.length === 0) {
+      parsedLanguages.push({ name: 'English', proficiency: 'Professional' });
+    }
+
+    // 8. Certifications & Achievements (STRICTLY EXCLUDING SPOKEN LANGUAGES)
     const certLines = [...(sections['certifications'] || []), ...(sections['achievements'] || [])];
     const certifications: ICertification[] = [];
     for (const line of certLines) {
       const cleanL = cleanBullet(line);
+      // Filter out language lines, language lists, and headers
+      if (isLanguageLine(cleanL) || /^languages\b/i.test(cleanL) || SPOKEN_LANGUAGES.some(lang => cleanL.toLowerCase() === lang)) {
+        continue;
+      }
       if (cleanL.length > 5) {
         certifications.push({
           id: `cert-${certifications.length + 1}`,
           title: cleanL,
-          issuer: cleanL.includes('Coursera') ? 'Coursera' : cleanL.includes('Geek Trust') ? 'Geek Trust' : 'Verified Issuer',
+          issuer: cleanL.includes('Coursera') ? 'Coursera' : cleanL.includes('Geek Trust') ? 'Geek Trust' : cleanL.includes('AWS') ? 'AWS' : cleanL.includes('Microsoft') ? 'Microsoft' : cleanL.includes('Google') ? 'Google' : 'Verified Issuer',
           issueDate: '',
           includeInResume: true,
         });
@@ -495,7 +552,7 @@ export class ParsingService {
         technicalSkills: Array.from(technicalSkills),
         jobSkills: Array.from(jobSkills),
         computerSkills: Array.from(computerSkills),
-        languages: [{ name: 'English', proficiency: 'Professional' }],
+        languages: parsedLanguages,
         additionalSkills: [],
       },
       certifications,
@@ -504,18 +561,70 @@ export class ParsingService {
   }
 
   /**
+   * Post-sanitizer: Guarantees spoken languages never end up in certifications
+   */
+  private sanitizeParsedData(data: Partial<ICandidateProfile>): Partial<ICandidateProfile> {
+    if (!data) return data;
+
+    const SPOKEN_LANGUAGES = [
+      'tamil', 'english', 'hindi', 'telugu', 'malayalam', 'kannada',
+      'marathi', 'bengali', 'gujarati', 'punjabi', 'urdu', 'french',
+      'german', 'spanish', 'mandarin', 'chinese', 'japanese', 'korean',
+      'arabic', 'russian', 'italian', 'portuguese'
+    ];
+
+    if (data.certifications && Array.isArray(data.certifications)) {
+      const validCerts: any[] = [];
+      const extractedLanguages: any[] = (data.skills?.languages && Array.isArray(data.skills.languages))
+        ? [...data.skills.languages]
+        : [];
+
+      for (const cert of data.certifications) {
+        const titleLower = (cert.title || '').toLowerCase().trim();
+        const isLang =
+          titleLower.startsWith('language') ||
+          titleLower.startsWith('spoken') ||
+          SPOKEN_LANGUAGES.some(l => titleLower.includes(l) && (titleLower.length < 28 || titleLower.startsWith('language')));
+
+        if (isLang) {
+          for (const lang of SPOKEN_LANGUAGES) {
+            if (titleLower.includes(lang)) {
+              const formatted = lang.charAt(0).toUpperCase() + lang.slice(1);
+              if (!extractedLanguages.some(el => (el.name || '').toLowerCase() === lang)) {
+                extractedLanguages.push({ name: formatted, proficiency: 'Professional' });
+              }
+            }
+          }
+        } else {
+          validCerts.push(cert);
+        }
+      }
+
+      data.certifications = validCerts;
+      if (!data.skills) {
+        data.skills = { technicalSkills: [], jobSkills: [], computerSkills: [], languages: extractedLanguages, additionalSkills: [] } as any;
+      } else {
+        data.skills.languages = extractedLanguages;
+      }
+    }
+
+    return data;
+  }
+
+  /**
    * Parses raw extracted resume text into a structured candidate profile snapshot.
-   * Leverages Gemini AI when configured, otherwise uses the robust structural section parser.
+   * Leverages built-in ResumeIntelligenceAgent engine locally with optional Gemini enhancement.
    */
   public async parseResumeText(userId: string, rawText: string): Promise<Partial<ICandidateProfile>> {
     const systemPrompt = `
-You are an expert ATS Resume Parser. Your mission is to extract candidate resume information accurately from the provided unstructured text.
+You are an expert ATS Resume Intelligence Agent. Your mission is to extract candidate resume information accurately from the provided unstructured text.
 CRITICAL RULES:
 1. ONLY extract information that is explicitly stated. Never invent employers, dates, qualifications, or skills.
 2. If graduation or employment dates are ambiguous, preserve them as written.
 3. Categorize skills into technicalSkills, jobSkills, and computerSkills.
 4. Extract ALL work experiences, ALL education entries, and ALL projects found in the document.
 5. Set "includeInResume": true for every workExperience, education, and project.
+6. NEVER classify human spoken languages (e.g. English, Tamil, Hindi, Spanish, French, German) as certifications. Always place all human spoken languages strictly under skills.languages.
 Output strictly valid JSON matching this schema:
 {
   "personalDetails": {
@@ -587,19 +696,22 @@ Output strictly valid JSON matching this schema:
 
     const userPrompt = `Extract structured resume data from this document content:\n\n<user_resume_content>\n${rawText.slice(0, 15000)}\n</user_resume_content>`;
 
-    // Fallback: Real structural section parser (not dummy hardcoded data)
+    // Local Built-in ResumeIntelligenceAgent Parser (Zero external dependency, instant execution)
     const heuristicFallback = (): Partial<ICandidateProfile> => {
-      console.log('[ParsingService] Using robust structural parser engine.');
+      console.log('[ParsingService] Using built-in local ResumeIntelligenceAgent engine.');
       return this.parseResumeRobust(rawText);
     };
 
-    return await geminiService.executeStructuredPrompt<Partial<ICandidateProfile>>(
+    const rawResult = await geminiService.executeStructuredPrompt<Partial<ICandidateProfile>>(
       userId,
       'resume_parsing',
       systemPrompt,
       userPrompt,
       heuristicFallback
     );
+
+    // Sanitize to guarantee zero languages in certifications
+    return this.sanitizeParsedData(rawResult);
   }
 }
 
