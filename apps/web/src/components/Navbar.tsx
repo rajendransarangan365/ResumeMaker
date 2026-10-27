@@ -97,7 +97,7 @@ export function Navbar() {
 
   if (isInnerResumeEditor) {
     return (
-      <header className="hidden md:block sticky top-0 z-40 w-full border-b border-studio-200/90 bg-white/95 backdrop-blur-md transition-all overflow-hidden">
+      <header className="hidden md:block sticky top-0 z-40 w-full border-b border-studio-200/90 bg-white/95 backdrop-blur-md transition-all">
         <div className="mx-auto flex h-13 max-w-7xl items-center justify-between px-4 sm:px-6 min-w-0">
           <Link href="/dashboard" className="flex items-center gap-2 font-bold text-studio-900 group">
             <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-gradient-to-tr from-brand-600 to-indigo-500 text-white shadow-xs group-hover:scale-105 transition-transform">
@@ -159,7 +159,7 @@ export function Navbar() {
     : 'U';
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-studio-200/90 bg-white/95 backdrop-blur-md shadow-2xs overflow-hidden">
+    <header className="sticky top-0 z-40 w-full border-b border-studio-200/90 bg-white/95 backdrop-blur-md shadow-2xs">
       <div className="mx-auto flex h-14 sm:h-16 max-w-7xl items-center justify-between px-3 sm:px-6 lg:px-8 min-w-0 gap-2">
         {/* Brand Logo */}
         <Link href={currentUser ? '/dashboard' : '/'} className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
@@ -216,7 +216,7 @@ export function Navbar() {
                 </button>
 
                 {moreDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-52 rounded-xl bg-white shadow-xl border border-studio-200 py-1.5 z-50 animate-in fade-in zoom-in-95 duration-100">
+                  <div className="absolute right-0 top-full mt-2 w-52 rounded-xl bg-white shadow-xl border border-studio-200 py-1.5 z-50 animate-in fade-in zoom-in-95 duration-100">
                     {secondaryNavLinks.map((sLink) => {
                       const SIcon = sLink.icon;
                       const isSubActive = pathname === sLink.href;
@@ -313,7 +313,7 @@ export function Navbar() {
               href="/templates"
               className="hidden sm:inline-block text-xs font-semibold text-studio-600 hover:text-studio-900 py-1.5 px-3 rounded-lg hover:bg-studio-100 transition-colors"
             >
-              Templates (15)
+              Templates (30)
             </Link>
             <Link
               href="/login"
@@ -395,7 +395,7 @@ export function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-studio-700 hover:bg-studio-50"
               >
-                <span>Browse ATS Templates (15)</span>
+                <span>Browse ATS Templates (30)</span>
                 <ArrowRight className="w-4 h-4 text-studio-400" />
               </Link>
               <Link
