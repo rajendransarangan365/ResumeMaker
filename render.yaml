@@ -7,11 +7,13 @@ services:
     runtime: node
     plan: free
     region: oregon
-    buildCommand: npm install && npm run build:backend
+    buildCommand: npm install --include=dev && npm run build:backend
     startCommand: npm run start:api
     healthCheckPath: /api/v1/health
     autoDeploy: true
     envVars:
+      - key: NODE_VERSION
+        value: 20
       - key: NODE_ENV
         value: production
       - key: MONGODB_URI
@@ -45,14 +47,16 @@ services:
     runtime: node
     plan: free
     region: oregon
-    buildCommand: npm install && npm run build:frontend
+    buildCommand: npm install --include=dev && npm run build:frontend
     startCommand: npm run start:web
     autoDeploy: true
     envVars:
+      - key: NODE_VERSION
+        value: 20
       - key: NODE_ENV
         value: production
       - key: NEXT_PUBLIC_API_URL
-        value: https://ats-resume-api.onrender.com/api/v1
+        value: https://ats-resume-api-rop9.onrender.com/api/v1
       - key: NEXT_PUBLIC_APP_NAME
         value: "ATS Resume Intelligence Studio"
 
