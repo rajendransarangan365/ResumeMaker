@@ -13,14 +13,18 @@ import {
   ExternalLink,
   Search,
   ArrowLeft,
+  Sparkles,
+  Award,
 } from 'lucide-react';
 import { api, getAuthToken } from '@/lib/api';
+import { JDOptimizerModal } from '@/components/JDOptimizerModal';
 
 export default function ResumesListPage() {
   const router = useRouter();
   const [resumes, setResumes] = useState<any[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+  const [selectedResumeForOptimization, setSelectedResumeForOptimization] = useState<any | null>(null);
 
   useEffect(() => {
     const token = getAuthToken();
@@ -142,19 +146,38 @@ export default function ResumesListPage() {
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <h3
                     onClick={() => router.push(`/resumes/${r._id}`)}
-                    className="font-bold text-sm text-studio-900 hover:text-brand-600 cursor-pointer"
+                    className="font-bold text-sm text-studio-900 hover:text-brand-600 cursor-pointer line-clamp-1"
                   >
                     {r.title}
                   </h3>
-                  <span className="text-[10px] bg-studio-100 text-studio-700 px-2 py-0.5 rounded font-mono">
-                    {r.templateId}
-                  </span>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    {r.atsScore ? (
+                      <span className="text-[10px] bg-emerald-50 text-emerald-800 font-extrabold px-1.5 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
+                        <Award className="w-3 h-3 text-emerald-600" />
+                        <span>{r.atsScore}% ATS</span>
+                      </span>
+                    ) : null}
+                    <span className="text-[10px] bg-studio-100 text-studio-700 px-2 py-0.5 rounded font-mono">
+                      {r.templateId}
+                    </span>
+                  </div>
                 </div>
-                <p className="text-xs text-studio-600 mb-3">{r.targetRole || 'General Purpose'}</p>
-                <div className="flex items-center gap-1 text-[11px] text-studio-400 mb-4">
+                <p className="text-xs text-studio-600 mb-2">{r.targetRole || 'General Purpose'}</p>
+                <div className="flex items-center gap-1 text-[11px] text-studio-400 mb-3">
                   <Clock className="w-3.5 h-3.5" />
                   <span>Updated {new Date(r.updatedAt).toLocaleDateString()}</span>
                 </div>
+
+                {/* 100% ATS Tailor to JD Button right on the card */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedResumeForOptimization(r)}
+                  className="w-full mb-3 px-3 py-2 bg-gradient-to-r from-purple-600 via-indigo-600 to-brand-600 hover:from-purple-700 hover:via-indigo-700 hover:to-brand-700 text-white rounded-lg text-xs font-bold shadow-xs flex items-center justify-center gap-1.5 transition-all hover:shadow hover:scale-[1.01]"
+                  title="Extract JD skills and rewrite bullets for 100% ATS shortlist rate"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>⚡ 100% ATS Tailor to JD</span>
+                </button>
               </div>
 
               <div className="pt-3 border-t border-studio-100 flex items-center justify-between">
@@ -193,6 +216,16 @@ export default function ResumesListPage() {
           ))}
         </div>
       )}
+
+      {/* 100% ATS Shortlist Optimizer Modal */}
+      <JDOptimizerModal
+        isOpen={Boolean(selectedResumeForOptimization)}
+        resume={selectedResumeForOptimization}
+        onClose={() => setSelectedResumeForOptimization(null)}
+        onSuccess={(_saved) => {
+          loadResumes();
+        }}
+      />
     </div>
   );
 }

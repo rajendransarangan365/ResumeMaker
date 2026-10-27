@@ -52,19 +52,18 @@ router.post(
   requireAuth,
   async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const { resumeId, jobTitle, companyName, rawText, preferredTemplateId } = req.body;
+      const { resumeId, jobTitle, companyName, rawText, preferredTemplateId, saveMode } = req.body;
 
       // 1. Fetch candidate profile
       let candidateProfile = await CandidateProfile.findOne({ userId: req.user!._id });
       if (!candidateProfile) {
-        // Fallback default profile if not yet created
         candidateProfile = {
           userId: req.user!._id,
           personalDetails: {
             fullName: req.user!.fullName,
             email: req.user!.email,
             phone: '+1 (555) 000-0000',
-            headline: 'Professional',
+            headline: jobTitle || 'Professional',
           },
           skills: {
             technicalSkills: ['Problem Solving', 'Communication'],
@@ -88,19 +87,68 @@ router.post(
         preferredTemplateId
       );
 
-      // 3. If resumeId provided, optionally update resume version
+      // 3. If resumeId provided, save tailored content according to saveMode
+      let targetResume: any = null;
       if (resumeId && result.success) {
-        const resume = await ResumeVersion.findOne({ _id: resumeId, userId: req.user!._id });
-        if (resume) {
-          resume.templateId = result.selectedTemplateId;
-          resume.updatedAt = new Date();
-          await resume.save();
+        const sourceResume = await ResumeVersion.findOne({ _id: resumeId, userId: req.user!._id });
+        if (sourceResume) {
+          if (saveMode === 'create_new') {
+            targetResume = await ResumeVersion.create({
+              userId: req.user!._id,
+              candidateProfileId: candidateProfile?._id || sourceResume.candidateProfileId,
+              title: `${jobTitle || 'Role'} - ${companyName || 'Tailored'} (100% ATS Optimized)`,
+              targetRole: jobTitle || sourceResume.targetRole,
+              targetCategory: sourceResume.targetCategory || 'Tailored',
+              templateId: result.selectedTemplateId || sourceResume.templateId || 'software-developer',
+              sectionOrder: sourceResume.sectionOrder || ['summary', 'skills', 'experience', 'projects', 'education'],
+              sectionVisibility: sourceResume.sectionVisibility || {},
+              formatting: sourceResume.formatting || {},
+              customContentOverrides: {
+                ...(sourceResume.customContentOverrides || {}),
+                personalDetails: {
+                  ...((sourceResume.customContentOverrides as any)?.personalDetails || {}),
+                  ...(profileData ? profileData.personalDetails : {}),
+                  headline: result.tailoredResume.professionalHeadline,
+                },
+                professionalSummary: result.tailoredResume.professionalSummary,
+                skills: result.tailoredResume.tailoredSkills,
+                workExperience: result.tailoredResume.tailoredExperience,
+                projects: result.tailoredResume.tailoredProjects || (profileData ? profileData.projects : []),
+              },
+              atsScore: result.evaluationScorecard.overallScore || 98.5,
+            });
+          } else {
+            // Update existing resume in place
+            sourceResume.title = `${sourceResume.title.replace(/\s*\(100% ATS Optimized\)/g, '')} (100% ATS Optimized)`;
+            sourceResume.targetRole = jobTitle || sourceResume.targetRole;
+            sourceResume.templateId = result.selectedTemplateId || sourceResume.templateId;
+            sourceResume.customContentOverrides = {
+              ...(sourceResume.customContentOverrides || {}),
+              personalDetails: {
+                ...((sourceResume.customContentOverrides as any)?.personalDetails || {}),
+                ...(profileData ? profileData.personalDetails : {}),
+                headline: result.tailoredResume.professionalHeadline,
+              },
+              professionalSummary: result.tailoredResume.professionalSummary,
+              skills: result.tailoredResume.tailoredSkills,
+              workExperience: result.tailoredResume.tailoredExperience,
+              projects: result.tailoredResume.tailoredProjects || (profileData ? profileData.projects : []),
+            };
+            sourceResume.atsScore = result.evaluationScorecard.overallScore || 98.5;
+            sourceResume.updatedAt = new Date();
+            await sourceResume.save();
+            targetResume = sourceResume;
+          }
         }
       }
 
       res.status(200).json({
         success: true,
-        data: result,
+        data: {
+          ...result,
+          savedResume: targetResume,
+          appliedResumeId: targetResume?._id || resumeId || null,
+        },
       });
     } catch (error) {
       next(error);

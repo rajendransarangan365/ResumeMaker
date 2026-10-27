@@ -208,6 +208,7 @@ export const api = {
     companyName?: string;
     rawText: string;
     preferredTemplateId?: string;
+    saveMode?: 'update' | 'create_new';
   }) => fetcher<any>('/agents/orchestrate', { method: 'POST', body: JSON.stringify(body) }),
   matchCandidateJob: (body: {
     jobTitle: string;
