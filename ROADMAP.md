@@ -36,9 +36,9 @@ Current Phase: Implementation Complete & Verified Across All Milestones
 
 ---
 
-## Milestone 4: Template Registry & 15 ATS-Friendly Templates
-- [x] Template registry architecture with standardized data-mapping interfaces.
-- [x] Implementation of 15 distinct ATS-friendly templates:
+## Milestone 4: Template Registry & 30 ATS-Friendly Templates
+- [x] Template registry architecture with standardized data-mapping interfaces and zero data loss.
+- [x] Implementation of 30 distinct ATS-friendly templates across all career categories:
   1. Classic Professional
   2. Modern Minimal
   3. Corporate Standard
@@ -54,6 +54,21 @@ Current Phase: Implementation Complete & Verified Across All Milestones
   13. Skills-Focused
   14. Academic Professional
   15. General Purpose
+  16. Modern Single Column
+  17. Minimal Professional
+  18. Corporate Professional
+  19. Graduate Entry
+  20. Technical Specialist
+  21. Senior Engineer
+  22. Executive Leadership
+  23. Marketing Professional
+  24. Customer Support
+  25. Finance and Accounting
+  26. Healthcare and Medical
+  27. Researcher CV
+  28. Employment-Gap Friendly
+  29. International Professional
+  30. ATS-Focused Hybrid
 - [x] Dynamic section ordering and graceful omission of empty fields without data loss.
 - Status: **Complete & Verified**
 
@@ -105,7 +120,26 @@ Current Phase: Implementation Complete & Verified Across All Milestones
 ---
 
 ## Milestone 10: End-to-End Testing & Hardening
-- [x] Automated Vitest suite for schemas, authentication hashing, OTP verification, 15 template mappings, and A4 page balancing calculations.
+- [x] Automated Vitest suite for schemas, authentication hashing, OTP verification, 30 template mappings, and A4 page balancing calculations.
 - [x] Frontend form validation, responsive viewport checks (320px - 1440px), and accessibility tests.
 - [x] Complete browser subagent E2E flow recorded: Registration -> Email OTP -> Dashboard -> Profile & Career Gap Assistant -> New Resume -> 3-Pane Editor & Page Balancing -> Template Switcher -> DOCX/PDF Export -> JD Tailor Studio -> AI Usage Governance.
+- Status: **Complete & Verified**
+
+---
+
+## Milestone 11: Google ADK Multi-Agent Architecture & 20 Job Family Knowledge Base
+- [x] Coordinated 8-Agent Architecture built in Python (`apps/agents`) with Google ADK patterns:
+  1. Resume Intelligence Agent
+  2. Job Description Intelligence Agent
+  3. Candidate-Job Matching Agent
+  4. Resume Writing Agent
+  5. ATS Optimization Agent
+  6. Template Selection Agent
+  7. Resume Quality Assurance Agent
+  8. Evaluation Agent
+- [x] Central Resume Orchestrator running the 16-step controlled workflow with bounded retries (max 2) and transparent execution tracing.
+- [x] ModelProvider interface supporting 100% free local inference (Ollama), Google Gemini API, and high-precision offline deterministic rule-based fallback.
+- [x] Comprehensive 20 Job Family knowledge base (`knowledge/job-families/`) with skill taxonomies, STAR achievement patterns, domain terminology, and evaluation cases.
+- [x] Express backend bridge (`apps/api/src/services/agent.service.ts` & `agent.routes.ts`) with automatic fallback resilience.
+- [x] Next.js frontend Multi-Agent execution pipeline tracker and scorecard in `/resumes/tailor`.
 - Status: **Complete & Verified**

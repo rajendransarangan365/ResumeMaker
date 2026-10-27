@@ -1,0 +1,191 @@
+{
+  "id": "administration-office",
+  "displayName": "Administration and Office Management",
+  "description": "Executive assistance, office coordination, records management, calendar scheduling, travel logistics, document preparation, and office operations.",
+  "category": "Operations & Management",
+  "seniorityLevels": [
+    "Receptionist",
+    "Administrative Assistant",
+    "Office Manager",
+    "Executive Assistant (EA)",
+    "Chief of Staff"
+  ],
+  "jobTitles": [
+    {
+      "title": "Executive Assistant",
+      "level": "Senior",
+      "alternativeTitles": [
+        "EA to CEO",
+        "Senior Executive Assistant",
+        "C-Suite Assistant"
+      ]
+    },
+    {
+      "title": "Office Manager",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Office Administrator",
+        "Facilities Coordinator",
+        "Workplace Experience Coordinator"
+      ]
+    },
+    {
+      "title": "Administrative Assistant",
+      "level": "Entry / Junior",
+      "alternativeTitles": [
+        "Admin Assistant",
+        "Office Coordinator",
+        "Clerical Specialist"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Calendar & Schedule Management",
+        "category": "Administrative Coordination",
+        "synonyms": [
+          "Complex Scheduling",
+          "Google Calendar",
+          "Outlook Calendar",
+          "Time Zone Management"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Travel Coordination & Logistics",
+        "category": "Logistics",
+        "synonyms": [
+          "Itinerary Planning",
+          "Flight & Hotel Booking",
+          "Concur",
+          "Corporate Travel"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Office Software Suites",
+        "category": "Software Tools",
+        "synonyms": [
+          "Microsoft Office 365",
+          "Google Workspace",
+          "Word",
+          "Excel",
+          "PowerPoint"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Expense Reporting & Reconciliation",
+        "category": "Finance Support",
+        "synonyms": [
+          "Expensify",
+          "Concur Expense",
+          "Credit Card Reconciliation",
+          "Invoicing"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Meeting Minutes & Documentation",
+        "category": "Documentation",
+        "synonyms": [
+          "Board Deck Preparation",
+          "Agenda Setting",
+          "Confidential Transcriptions"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Microsoft 365 / Outlook",
+        "synonyms": [
+          "MS Office Suite"
+        ]
+      },
+      {
+        "name": "Google Workspace",
+        "synonyms": [
+          "G Suite",
+          "Gmail",
+          "Google Docs"
+        ]
+      },
+      {
+        "name": "Concur / Expensify",
+        "synonyms": [
+          "Travel and Expense Management"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Gatekeeping & priority triage",
+      "Complex multi-leg travel itineraries",
+      "Vendor contract management",
+      "C-Suite confidential correspondence",
+      "Facility safety protocols"
+    ],
+    "softSkills": [
+      "Extreme Discretion & Trustworthiness",
+      "Proactive Anticipation of Needs",
+      "Composure Under Pressure",
+      "Punctual Reliability"
+    ]
+  },
+  "commonCertifications": [
+    "Certified Administrative Professional (CAP)",
+    "Microsoft Office Specialist (MOS) Expert",
+    "Certified Executive Assistant (CEA)"
+  ],
+  "commonQualifications": [
+    "High School diploma, Associate or Bachelor's degree with extensive executive support history"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Coordinated",
+      "Organized",
+      "Streamlined",
+      "Scheduled",
+      "Prepared",
+      "Managed",
+      "Facilitated",
+      "Reconciled"
+    ],
+    "metricTemplates": [
+      "Provided high-level administrative support to [X] C-suite executives, flawlessly managing complex global calendars across [Y] time zones.",
+      "Negotiated office supplies and facility vendor agreements, reducing annual operating expenses by [X]%.",
+      "Coordinated international travel itineraries and visa logistics for [X] annual executive board trips with zero delays.",
+      "Processed over $[X]k in monthly expense reports using Expensify with 100% compliance to corporate policy."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "State level of leaders supported (e.g. CEO, VP, Board), scheduling volume, discretion, and office efficiency enhancements.",
+    "keySectionsRecommended": [
+      "Summary",
+      "Administrative Expertise",
+      "Professional Experience",
+      "Software Proficiencies",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Failing to highlight confidential gatekeeping or executive communication responsibilities"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Executive Assistant to the CEO",
+      "company": "Summit Capital Partners",
+      "requiredExperienceYears": 4,
+      "requiredQualifications": [
+        "4+ years supporting senior executives (C-Suite or Board level)",
+        "Mastery of Google Workspace and Microsoft 365 scheduling tools",
+        "Proven ability to manage confidential business affairs with complete discretion"
+      ],
+      "preferredQualifications": [
+        "Experience coordinating complex international multi-city travel",
+        "Bachelor’s degree in Business Administration or Communications"
+      ]
+    }
+  ]
+}

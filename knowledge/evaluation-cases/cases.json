@@ -1,0 +1,133 @@
+{
+  "version": "1.0.0",
+  "totalCases": 3,
+  "cases": [
+    {
+      "id": "case-01-fullstack-perfect-match",
+      "description": "Senior Full Stack developer with matching skills against a Senior Web Engineer JD",
+      "jobFamily": "software-development",
+      "candidate": {
+        "fullName": "Alex Vance",
+        "headline": "Senior Full Stack Engineer (TypeScript, React, Node.js)",
+        "skills": [
+          "TypeScript",
+          "JavaScript",
+          "React",
+          "Next.js",
+          "Node.js",
+          "PostgreSQL",
+          "Docker",
+          "AWS",
+          "RESTful APIs",
+          "Jest"
+        ],
+        "yearsExperience": 6,
+        "experienceCount": 3,
+        "hasDegree": true
+      },
+      "jobDescription": {
+        "title": "Senior Full Stack Software Engineer",
+        "requiredSkills": [
+          "TypeScript",
+          "React",
+          "Node.js",
+          "PostgreSQL",
+          "RESTful APIs"
+        ],
+        "preferredSkills": [
+          "Docker",
+          "AWS",
+          "Next.js"
+        ],
+        "requiredExperienceYears": 5
+      },
+      "expectedEvaluation": {
+        "requiredCoverageMin": 1,
+        "matchCategory": "Strong Match",
+        "isAtsApproved": true
+      }
+    },
+    {
+      "id": "case-02-career-change-transferable",
+      "description": "Data Analyst transitioning into Machine Learning Engineer role",
+      "jobFamily": "ai-data",
+      "candidate": {
+        "fullName": "Sarah Chen",
+        "headline": "Data Analyst transitioning to Machine Learning Engineer",
+        "skills": [
+          "Python",
+          "SQL",
+          "Pandas",
+          "Tableau",
+          "Statistics",
+          "Git",
+          "Scikit-Learn"
+        ],
+        "yearsExperience": 3,
+        "experienceCount": 2,
+        "hasDegree": true
+      },
+      "jobDescription": {
+        "title": "Junior Machine Learning Engineer",
+        "requiredSkills": [
+          "Python",
+          "SQL",
+          "Scikit-Learn",
+          "PyTorch"
+        ],
+        "preferredSkills": [
+          "Docker",
+          "MLOps",
+          "FastAPI"
+        ],
+        "requiredExperienceYears": 2
+      },
+      "expectedEvaluation": {
+        "requiredCoverageMin": 0.75,
+        "missingSkills": [
+          "PyTorch"
+        ],
+        "matchCategory": "Moderate Match - Gap Detected",
+        "isAtsApproved": true
+      }
+    },
+    {
+      "id": "case-03-severe-qualification-gap",
+      "description": "Frontend developer applying for a Licensed Professional Civil Engineer role",
+      "jobFamily": "construction-infrastructure",
+      "candidate": {
+        "fullName": "Jordan Miller",
+        "headline": "Junior Web Developer",
+        "skills": [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "React"
+        ],
+        "yearsExperience": 1,
+        "experienceCount": 1,
+        "hasDegree": false
+      },
+      "jobDescription": {
+        "title": "Senior Civil Structural Engineer (PE Licensed)",
+        "requiredSkills": [
+          "AutoCAD",
+          "Civil Engineering",
+          "Structural Analysis",
+          "PE License",
+          "Building Codes"
+        ],
+        "preferredSkills": [
+          "Revit",
+          "Bluebeam"
+        ],
+        "requiredExperienceYears": 6
+      },
+      "expectedEvaluation": {
+        "requiredCoverageMax": 0.1,
+        "matchCategory": "Unqualified / High Gap",
+        "isAtsApproved": false
+      }
+    }
+  ]
+}

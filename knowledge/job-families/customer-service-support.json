@@ -1,0 +1,201 @@
+{
+  "id": "customer-service-support",
+  "displayName": "Customer Service and Technical Support",
+  "description": "Client onboarding, technical support, helpdesk administration, customer success, ticket resolution, and client advocacy.",
+  "category": "Service & Support",
+  "seniorityLevels": [
+    "Helpdesk Technician L1",
+    "Customer Support Representative",
+    "Technical Support Specialist L2/L3",
+    "Customer Success Manager",
+    "Support Operations Lead",
+    "VP of Customer Experience"
+  ],
+  "jobTitles": [
+    {
+      "title": "Customer Support Specialist",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Customer Service Representative",
+        "Client Support Associate",
+        "Customer Care Specialist"
+      ]
+    },
+    {
+      "title": "Technical Support Engineer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Desktop Support Technician",
+        "Helpdesk Analyst",
+        "IT Support Specialist"
+      ]
+    },
+    {
+      "title": "Customer Success Manager (CSM)",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Client Success Manager",
+        "Account Relationship Specialist",
+        "Onboarding Manager"
+      ]
+    },
+    {
+      "title": "Support Operations Lead",
+      "level": "Lead / Staff",
+      "alternativeTitles": [
+        "Head of Customer Support",
+        "Support Team Lead",
+        "Customer Experience Director"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Helpdesk & Ticketing Systems",
+        "category": "Service Platforms",
+        "synonyms": [
+          "Zendesk",
+          "Jira Service Management",
+          "Freshdesk",
+          "ServiceNow"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Hardware & OS Troubleshooting",
+        "category": "IT Diagnostics",
+        "synonyms": [
+          "Windows 10/11",
+          "macOS Support",
+          "Active Directory",
+          "Hardware Repairs"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Knowledge Base Management",
+        "category": "Documentation",
+        "synonyms": [
+          "KB Authoring",
+          "FAQ Development",
+          "Standard Operating Procedures (SOPs)"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "SLA Monitoring & Compliance",
+        "category": "Support Operations",
+        "synonyms": [
+          "First Contact Resolution (FCR)",
+          "Mean Time to Resolution (MTTR)",
+          "SLA Enforcement"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Customer Satisfaction Management",
+        "category": "Client Experience",
+        "synonyms": [
+          "CSAT",
+          "NPS",
+          "Customer Advocacy",
+          "Conflict De-escalation"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Zendesk",
+        "synonyms": [
+          "Zendesk Support",
+          "Zendesk Guide"
+        ]
+      },
+      {
+        "name": "ServiceNow",
+        "synonyms": [
+          "ServiceNow IT Service Management"
+        ]
+      },
+      {
+        "name": "Jira Service Management",
+        "synonyms": [
+          "Jira Service Desk"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "First Response Time (FRT)",
+      "Customer Effort Score (CES)",
+      "Net Promoter Score (NPS)",
+      "Ticket escalation hierarchy",
+      "Root cause ticketing categorization"
+    ],
+    "softSkills": [
+      "Empathetic Listening",
+      "De-escalation of Frustrated Clients",
+      "Clear Non-Technical Communication",
+      "Patience & Composure",
+      "Time Management"
+    ]
+  },
+  "commonCertifications": [
+    "CompTIA A+",
+    "CompTIA Network+",
+    "ITIL Foundation v4",
+    "Zendesk Support Certified Administrator",
+    "Microsoft Certified: Modern Desktop Administrator Associate"
+  ],
+  "commonQualifications": [
+    "Associate or Bachelor's degree or equivalent technical troubleshooting work experience"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Resolved",
+      "Troubleshot",
+      "Trained",
+      "Streamlined",
+      "De-escalated",
+      "Onboarded",
+      "Documented",
+      "Standardized"
+    ],
+    "metricTemplates": [
+      "Maintained a [X]% average CSAT rating across [Y]+ resolved support tickets per month, exceeding team target by [Z]%.",
+      "Decreased First Contact Resolution (FCR) turnaround time from [X] hours to [Y] minutes by compiling a comprehensive 50-article internal knowledge base.",
+      "Successfully managed technical onboarding for [X] enterprise accounts, achieving a [Y]% 90-day retention rate.",
+      "Supported [X]+ corporate endpoints across Windows and macOS environments with 99.8% SLA compliance."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "Emphasize CSAT/NPS scores, volume of tickets resolved per day/month, and ticketing software expertise.",
+    "keySectionsRecommended": [
+      "Summary",
+      "Core Support Strengths",
+      "Professional Experience",
+      "Technical Tools & Certifications",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Writing generic descriptions without ticket volumes, CSAT metrics, or SLA adherence percentages"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Technical Support Specialist L2",
+      "company": "Apex Cloud Solutions",
+      "requiredExperienceYears": 2,
+      "requiredQualifications": [
+        "2+ years providing Tier 2 software/IT support using Zendesk or ServiceNow",
+        "Proven ability to troubleshoot web applications, REST APIs, and basic networking",
+        "Consistent historical CSAT scores above 95%"
+      ],
+      "preferredQualifications": [
+        "CompTIA A+ or ITIL v4 certification",
+        "Basic familiarity with SQL queries for log inspection"
+      ]
+    }
+  ]
+}

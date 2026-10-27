@@ -205,7 +205,7 @@ export interface ICandidateProfile {
 // Resume Versions & Formatting
 // -----------------------------------------------------------------------------
 export type PageSize = 'A4' | 'Letter';
-export type FontFamily = 'Roboto' | 'Inter' | 'Arial' | 'Times New Roman' | 'Calibri';
+export type FontFamily = 'Roboto' | 'Inter' | 'Arial' | 'Times New Roman' | 'Calibri' | 'Georgia';
 
 export interface IResumeFormatting {
   pageSize: PageSize;
@@ -251,7 +251,22 @@ export type TemplateId =
   | 'project-focused'
   | 'skills-focused'
   | 'academic-professional'
-  | 'general-purpose';
+  | 'general-purpose'
+  | 'modern-single-column'
+  | 'minimal-professional'
+  | 'corporate-professional'
+  | 'graduate-entry'
+  | 'technical-specialist'
+  | 'senior-engineer'
+  | 'executive-leadership'
+  | 'marketing-professional'
+  | 'customer-support'
+  | 'finance-accounting'
+  | 'healthcare-medical'
+  | 'researcher-cv'
+  | 'employment-gap-friendly'
+  | 'international-professional'
+  | 'ats-focused-hybrid';
 
 export interface ITemplateDefinition {
   id: TemplateId;

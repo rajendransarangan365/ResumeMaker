@@ -51,3 +51,11 @@ yarn-error.log*
 # Database local storage & dumps
 backups/
 data/
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/

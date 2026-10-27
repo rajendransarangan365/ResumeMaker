@@ -32,6 +32,8 @@ export default function TailorResumePage() {
   const [loading, setLoading] = useState(false);
   const [reconstructing, setReconstructing] = useState(false);
   const [matchResult, setMatchResult] = useState<any>(null);
+  const [orchestrating, setOrchestrating] = useState(false);
+  const [orchestrationResult, setOrchestrationResult] = useState<any>(null);
 
   // Existing resumes for tailoring target
   const [existingResumes, setExistingResumes] = useState<any[]>([]);
@@ -54,6 +56,47 @@ export default function TailorResumePage() {
       }
     });
   }, []);
+
+  const handleRunMultiAgentOrchestration = async () => {
+    if (!jdText.trim() || !jobTitle.trim()) {
+      alert('Please provide a target job title and job description first.');
+      return;
+    }
+    setOrchestrating(true);
+    setOrchestrationResult(null);
+
+    try {
+      const res = await api.orchestrateAgentResume({
+        resumeId: targetMode === 'existing' && selectedResumeId ? selectedResumeId : undefined,
+        jobTitle,
+        companyName: company || undefined,
+        rawText: jdText,
+      });
+
+      if (res.success && res.data) {
+        setOrchestrationResult(res.data);
+        if (res.data.matchReport) {
+          setMatchResult({
+            keywordCoveragePercentage: res.data.matchReport.overallScore,
+            matches: res.data.matchReport.matches.map((m: any) => ({
+              requirement: m.requirement,
+              matchStatus: m.status,
+              candidateEvidence: m.candidateEvidence,
+              recommendation: m.remediationAdvice || (m.status === 'Supported' ? 'Strong alignment with target role requirements.' : 'Address transparently.'),
+            })),
+            tailoredSummarySuggestion: res.data.tailoredResume?.professionalSummary,
+          });
+        }
+      } else {
+        alert(res.error?.message || 'Agent orchestration failed. Running fallback matching.');
+        handleMatch();
+      }
+    } catch (err: any) {
+      alert(err.message || 'An error occurred during multi-agent execution.');
+    } finally {
+      setOrchestrating(false);
+    }
+  };
 
   const handleMatch = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -305,6 +348,26 @@ export default function TailorResumePage() {
                 )}
               </button>
 
+              {/* 8-Agent Multi-Agent Orchestrator Pipeline */}
+              <button
+                type="button"
+                onClick={handleRunMultiAgentOrchestration}
+                disabled={orchestrating || !jdText.trim()}
+                className="w-full py-3 bg-gradient-to-r from-violet-600 via-indigo-600 to-brand-600 hover:from-violet-700 hover:to-brand-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-md flex items-center justify-center gap-2 transition-all disabled:opacity-50"
+              >
+                {orchestrating ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 animate-spin text-amber-300" />
+                    <span>Running 8-Agent Intelligence Pipeline...</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-4 h-4 text-amber-300" />
+                    <span>Run 8-Agent ATS Orchestrator Pipeline ⚡</span>
+                  </>
+                )}
+              </button>
+
               {/* Secondary: Check Keyword Alignment */}
               <button
                 type="submit"
@@ -445,6 +508,58 @@ export default function TailorResumePage() {
                   <span className="block text-[11px] text-studio-400">Verified Alignment</span>
                 </div>
               </div>
+
+              {/* Multi-Agent Orchestration Telemetry & Execution Pipeline */}
+              {orchestrationResult && (
+                <div className="bg-white rounded-2xl border border-violet-200 p-6 shadow-sm space-y-4">
+                  <div className="flex items-center justify-between border-b border-violet-100 pb-3">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-5 h-5 text-violet-600" />
+                      <h3 className="font-bold text-sm text-studio-900">8-Agent Multi-Agent Execution Trace</h3>
+                    </div>
+                    <span className="text-xs font-mono font-bold text-violet-700 bg-violet-50 px-2.5 py-1 rounded-full border border-violet-200">
+                      Executed in {orchestrationResult.totalDurationMs}ms
+                    </span>
+                  </div>
+
+                  {/* Agent Step Pipeline */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {orchestrationResult.executionTrace?.map((step: any, idx: number) => (
+                      <div key={idx} className="p-2.5 rounded-xl border border-studio-100 bg-studio-50/70 text-xs flex flex-col justify-between">
+                        <div className="flex items-center justify-between gap-1 mb-1">
+                          <span className="font-bold text-studio-900 truncate">{step.agentName}</span>
+                          <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                            {step.durationMs}ms
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-studio-600 leading-snug">{step.message || step.stepName}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Evaluation Scorecard Summary */}
+                  {orchestrationResult.evaluationScorecard && (
+                    <div className="pt-3 border-t border-studio-100 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                      <div className="p-2.5 bg-emerald-50 rounded-xl border border-emerald-100">
+                        <span className="text-[10px] uppercase font-bold text-emerald-700 block">Overall Grade</span>
+                        <span className="text-xl font-extrabold text-emerald-800">{orchestrationResult.evaluationScorecard.overallGrade}</span>
+                      </div>
+                      <div className="p-2.5 bg-brand-50 rounded-xl border border-brand-100">
+                        <span className="text-[10px] uppercase font-bold text-brand-700 block">ATS Score</span>
+                        <span className="text-xl font-extrabold text-brand-800 font-mono">{orchestrationResult.evaluationScorecard.overallScore}%</span>
+                      </div>
+                      <div className="p-2.5 bg-violet-50 rounded-xl border border-violet-100">
+                        <span className="text-[10px] uppercase font-bold text-violet-700 block">Action Verbs</span>
+                        <span className="text-xl font-extrabold text-violet-800 font-mono">{Math.round((orchestrationResult.evaluationScorecard.actionVerbStrengthRatio || 0.85) * 100)}%</span>
+                      </div>
+                      <div className="p-2.5 bg-amber-50 rounded-xl border border-amber-100">
+                        <span className="text-[10px] uppercase font-bold text-amber-700 block">Template</span>
+                        <span className="text-xs font-bold text-amber-900 block truncate mt-1">{orchestrationResult.selectedTemplateId}</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Requirement Matrix */}
               <div className="bg-white rounded-2xl border border-studio-200 p-6 shadow-sm space-y-4">

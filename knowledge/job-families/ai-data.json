@@ -1,0 +1,276 @@
+{
+  "id": "ai-data",
+  "displayName": "Artificial Intelligence and Data",
+  "description": "Data engineering, machine learning, data science, deep learning, business intelligence, generative AI, and statistical modeling.",
+  "category": "Technology",
+  "seniorityLevels": [
+    "Junior Data Analyst",
+    "Data Engineer",
+    "Machine Learning Engineer",
+    "Data Scientist",
+    "Senior AI Researcher",
+    "Head of Data"
+  ],
+  "jobTitles": [
+    {
+      "title": "Data Scientist",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Applied Scientist",
+        "Data Science Specialist",
+        "Quantitative Analyst"
+      ]
+    },
+    {
+      "title": "Machine Learning Engineer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "ML Engineer",
+        "MLOps Engineer",
+        "AI Engineer"
+      ]
+    },
+    {
+      "title": "Data Engineer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Big Data Engineer",
+        "ETL Developer",
+        "Data Platform Engineer"
+      ]
+    },
+    {
+      "title": "Senior AI Engineer",
+      "level": "Senior",
+      "alternativeTitles": [
+        "Senior ML Engineer",
+        "Lead Data Scientist",
+        "AI Solutions Architect"
+      ]
+    },
+    {
+      "title": "Business Intelligence Analyst",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "BI Developer",
+        "Analytics Specialist",
+        "Tableau/PowerBI Analyst"
+      ]
+    },
+    {
+      "title": "Director of Data Science",
+      "level": "Lead / Staff",
+      "alternativeTitles": [
+        "Head of Analytics",
+        "VP of AI & Data",
+        "Chief Data Officer"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Python",
+        "category": "Languages",
+        "synonyms": [
+          "Python3",
+          "NumPy",
+          "Pandas",
+          "SciPy"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "SQL",
+        "category": "Data Querying",
+        "synonyms": [
+          "Advanced SQL",
+          "PostgreSQL",
+          "Snowflake SQL",
+          "BigQuery SQL"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Machine Learning",
+        "category": "ML & AI",
+        "synonyms": [
+          "Scikit-Learn",
+          "Supervised Learning",
+          "Unsupervised Learning",
+          "XGBoost"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Deep Learning",
+        "category": "ML & AI",
+        "synonyms": [
+          "PyTorch",
+          "TensorFlow",
+          "Keras",
+          "Neural Networks"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Large Language Models (LLMs)",
+        "category": "Generative AI",
+        "synonyms": [
+          "Transformers",
+          "HuggingFace",
+          "LangChain",
+          "RAG",
+          "Prompt Engineering"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Big Data Processing",
+        "category": "Data Engineering",
+        "synonyms": [
+          "Apache Spark",
+          "PySpark",
+          "Databricks",
+          "Kafka",
+          "Flink"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Data Warehousing",
+        "category": "Data Platforms",
+        "synonyms": [
+          "Snowflake",
+          "Google BigQuery",
+          "Amazon Redshift",
+          "dbt"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Data Visualization & BI",
+        "category": "Analytics",
+        "synonyms": [
+          "Power BI",
+          "Tableau",
+          "Looker",
+          "Matplotlib",
+          "Seaborn"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "MLOps & Model Deployment",
+        "category": "MLOps",
+        "synonyms": [
+          "MLflow",
+          "Kubeflow",
+          "Triton",
+          "Docker Model Serving"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "PyTorch",
+        "synonyms": [
+          "Torch",
+          "TorchVision"
+        ]
+      },
+      {
+        "name": "Snowflake",
+        "synonyms": [
+          "Snowflake Data Cloud"
+        ]
+      },
+      {
+        "name": "Apache Spark",
+        "synonyms": [
+          "Spark",
+          "PySpark"
+        ]
+      },
+      {
+        "name": "dbt",
+        "synonyms": [
+          "data build tool"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Retrieval-Augmented Generation (RAG)",
+      "Feature engineering & selection",
+      "Vector embeddings & cosine similarity",
+      "Model drift & latency optimization",
+      "ETL/ELT pipeline lineage",
+      "A/B hypothesis testing & statistical significance"
+    ],
+    "softSkills": [
+      "Translating Data into Business Strategy",
+      "Hypothesis-Driven Problem Solving",
+      "Stakeholder Data Storytelling",
+      "Experimental Rigor"
+    ]
+  },
+  "commonCertifications": [
+    "AWS Certified Machine Learning - Specialty",
+    "Google Cloud Professional Data Engineer",
+    "Google Cloud Professional Machine Learning Engineer",
+    "Databricks Certified Data Engineer Associate",
+    "TensorFlow Developer Certificate"
+  ],
+  "commonQualifications": [
+    "Bachelor's, Master's, or PhD in Computer Science, Data Science, Statistics, Mathematics, or Computational Engineering"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Engineered",
+      "Trained",
+      "Deployed",
+      "Modeled",
+      "Extracted",
+      "Synthesized",
+      "Fine-Tuned",
+      "Evaluated"
+    ],
+    "metricTemplates": [
+      "Developed customer churn predictive model in PyTorch achieving an AUC-ROC of [X]%, directly preserving $[Y] in ARR.",
+      "Architected end-to-end data pipeline processing [X] TB of daily streaming events via Kafka and PySpark into Snowflake.",
+      "Deployed enterprise RAG system with local vector retrieval, accelerating support team search resolution by [X]%.",
+      "Engineered automated ETL workflows using dbt, decreasing reporting data latency from [X] hours to under [Y] minutes."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "Lead with specialization (Data Engineering, Predictive Modeling, GenAI/LLMs), dataset scales handled, and validated model lift metrics.",
+    "keySectionsRecommended": [
+      "Professional Summary",
+      "Technical Skills (Languages, Frameworks, ML/AI, Big Data, BI)",
+      "Work Experience",
+      "Published Papers / Key Repositories",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Listing academic theory without business impact",
+      "Omitting test/validation metrics (e.g. F1, AUC, latency, data volumes)"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Machine Learning Engineer",
+      "company": "Cognitive Dynamics",
+      "requiredExperienceYears": 3,
+      "requiredQualifications": [
+        "3+ years shipping production machine learning models in Python",
+        "Strong proficiency with PyTorch, Scikit-Learn, and SQL",
+        "Experience with containerized model serving using FastAPI and Docker"
+      ],
+      "preferredQualifications": [
+        "Familiarity with LangChain/LlamaIndex and RAG architecture",
+        "Experience with BigQuery or Snowflake data warehouses"
+      ]
+    }
+  ]
+}

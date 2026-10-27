@@ -1,0 +1,203 @@
+{
+  "id": "healthcare-medical",
+  "displayName": "Healthcare and Medical Administration",
+  "description": "Clinical nursing, medical administration, healthcare records, HIPAA compliance, patient care coordination, medical billing and coding.",
+  "category": "Healthcare & Science",
+  "seniorityLevels": [
+    "Certified Nursing Assistant (CNA)",
+    "Registered Nurse (RN)",
+    "Medical Biller / Coder",
+    "Charge Nurse",
+    "Clinical Nurse Manager",
+    "Director of Nursing / Medical Director"
+  ],
+  "jobTitles": [
+    {
+      "title": "Registered Nurse (RN)",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Staff Nurse",
+        "Clinical Nurse",
+        "ICU Nurse",
+        "Emergency Room Nurse"
+      ]
+    },
+    {
+      "title": "Medical Office Administrator",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Clinical Practice Manager",
+        "Healthcare Administrator",
+        "Clinic Coordinator"
+      ]
+    },
+    {
+      "title": "Medical Biller and Coder",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Health Information Technician",
+        "Medical Records Specialist",
+        "CPC Coder"
+      ]
+    },
+    {
+      "title": "Clinical Nurse Supervisor",
+      "level": "Lead / Staff",
+      "alternativeTitles": [
+        "Charge Nurse",
+        "Nursing Supervisor",
+        "Nurse Manager"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Direct Patient Care & Assessment",
+        "category": "Clinical Skills",
+        "synonyms": [
+          "Triage",
+          "Vital Signs",
+          "IV Administration",
+          "Medication Administration",
+          "Wound Care"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Electronic Health Records (EHR/EMR)",
+        "category": "Healthcare Tech",
+        "synonyms": [
+          "Epic Systems",
+          "Cerner",
+          "Athenahealth",
+          "eClinicalWorks"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "HIPAA & Healthcare Compliance",
+        "category": "Compliance",
+        "synonyms": [
+          "HIPAA Privacy Rule",
+          "Joint Commission (JCAHO)",
+          "OSHA Standards"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Medical Terminology & Diagnostics",
+        "category": "Clinical Knowledge",
+        "synonyms": [
+          "Anatomy",
+          "Physiology",
+          "Pathology",
+          "Pharmacology"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Medical Coding & Billing",
+        "category": "Healthcare Administration",
+        "synonyms": [
+          "ICD-10-CM",
+          "CPT Codes",
+          "HCPCS",
+          "Insurance Claims Processing"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Epic EHR",
+        "synonyms": [
+          "Epic Systems"
+        ]
+      },
+      {
+        "name": "Cerner",
+        "synonyms": [
+          "Oracle Cerner"
+        ]
+      },
+      {
+        "name": "Athenahealth",
+        "synonyms": [
+          "AthenaClinicals"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Infection control protocols",
+      "Patient Acuity Levels",
+      "BLS / ACLS protocols",
+      "Electronic MAR (Medication Administration Record)",
+      "Discharge planning & continuum of care"
+    ],
+    "softSkills": [
+      "Compassionate Bedside Manner",
+      "High Clinical Composure Under Crisis",
+      "Patient Advocacy",
+      "Interdisciplinary Teamwork"
+    ]
+  },
+  "commonCertifications": [
+    "RN (Registered Nurse License - State/eNLC)",
+    "BLS (Basic Life Support - AHA)",
+    "ACLS (Advanced Cardiac Life Support)",
+    "Certified Professional Coder (CPC - AAPC)",
+    "Certified Medical Administrative Assistant (CMAA)"
+  ],
+  "commonQualifications": [
+    "Associate Degree in Nursing (ADN) or Bachelor of Science in Nursing (BSN), Active unencumbered State Nursing License"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Administered",
+      "Assessed",
+      "Coordinated",
+      "Monitored",
+      "Documented",
+      "Triage",
+      "Facilitated",
+      "Implemented"
+    ],
+    "metricTemplates": [
+      "Delivered compassionate bedside patient care to [X]+ acute patients per shift across [Y]-bed unit with 100% adherence to clinical protocols.",
+      "Maintained a [X]% medication administration safety record, accurately recording all orders within Epic Systems EHR.",
+      "Streamlined clinical intake and registration processes, decreasing patient clinic wait times by [X]%.",
+      "Audited and processed [X]+ medical insurance claims weekly in ICD-10/CPT, maintaining a [Y]% first-pass clean claim rate."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "Lead with active unencumbered nursing licenses (RN, State, Compact), patient caseload capacity, and EHR platform expertise (Epic, Cerner).",
+    "keySectionsRecommended": [
+      "Summary",
+      "Licenses & Certifications (RN, BLS, ACLS)",
+      "Clinical Competencies",
+      "Professional Clinical Experience",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Failing to state license state, license number/status, or omitting BLS/ACLS expiry details"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Staff Registered Nurse (RN) - Medical/Surgical",
+      "company": "St. Jude Healthcare Network",
+      "requiredExperienceYears": 2,
+      "requiredQualifications": [
+        "Current unencumbered RN license in state of practice",
+        "Current AHA BLS and ACLS certifications",
+        "2+ years acute care experience in Med/Surg or telemetry units",
+        "Proficiency with Epic EHR documentation"
+      ],
+      "preferredQualifications": [
+        "Bachelor of Science in Nursing (BSN)",
+        "Certified Medical-Surgical Registered Nurse (CMSRN)"
+      ]
+    }
+  ]
+}

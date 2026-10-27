@@ -1,0 +1,206 @@
+{
+  "id": "engineering",
+  "displayName": "Engineering",
+  "description": "Mechanical, electrical, civil, chemical, and hardware engineering, CAD/CAM modeling, structural analysis, and technical design.",
+  "category": "Engineering & Industrial",
+  "seniorityLevels": [
+    "Junior Engineer",
+    "Mechanical/Electrical Engineer",
+    "Senior Project Engineer",
+    "Lead Systems Engineer",
+    "Principal Engineer",
+    "Chief Engineer"
+  ],
+  "jobTitles": [
+    {
+      "title": "Mechanical Engineer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Design Engineer",
+        "Product Development Engineer",
+        "CAD Engineer"
+      ]
+    },
+    {
+      "title": "Electrical Engineer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Electronics Engineer",
+        "Hardware Engineer",
+        "Power Systems Engineer"
+      ]
+    },
+    {
+      "title": "Civil Engineer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Structural Engineer",
+        "Site Engineer",
+        "Transportation Engineer"
+      ]
+    },
+    {
+      "title": "Senior Systems Engineer",
+      "level": "Senior",
+      "alternativeTitles": [
+        "Lead Design Engineer",
+        "Principal Systems Engineer",
+        "Engineering Lead"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Computer-Aided Design (CAD)",
+        "category": "Design Software",
+        "synonyms": [
+          "SolidWorks",
+          "AutoCAD",
+          "Autodesk Inventor",
+          "CATIA",
+          "PTC Creo"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Finite Element Analysis (FEA)",
+        "category": "Simulation",
+        "synonyms": [
+          "ANSYS",
+          "FEA Simulation",
+          "Stress Analysis",
+          "Thermal Analysis"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Circuit Design & PCB Layout",
+        "category": "Electrical",
+        "synonyms": [
+          "Altium Designer",
+          "KiCAD",
+          "Schematic Capture",
+          "Microcontrollers"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Geometric Dimensioning & Tolerancing (GD&T)",
+        "category": "Engineering Standards",
+        "synonyms": [
+          "ASME Y14.5",
+          "GD&T",
+          "Tolerance Stack-Up Analysis"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Prototyping & Manufacturing Design",
+        "category": "Manufacturing",
+        "synonyms": [
+          "DFM (Design for Manufacturability)",
+          "DFA (Design for Assembly)",
+          "3D Printing",
+          "CNC Machining"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "SolidWorks",
+        "synonyms": [
+          "SolidWorks 3D CAD"
+        ]
+      },
+      {
+        "name": "AutoCAD",
+        "synonyms": [
+          "Autodesk AutoCAD"
+        ]
+      },
+      {
+        "name": "ANSYS",
+        "synonyms": [
+          "ANSYS Mechanical"
+        ]
+      },
+      {
+        "name": "MATLAB / Simulink",
+        "synonyms": [
+          "MATLAB Modeling"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Root-mean-square (RMS)",
+      "BOM (Bill of Materials) management",
+      "Thermal dissipation & thermal relief",
+      "Tensile yield strength & fatigue limits",
+      "Engineering Change Orders (ECO)"
+    ],
+    "softSkills": [
+      "Mathematical Rigor",
+      "Cross-Disciplinary Coordination",
+      "Vendor & Fabrication Communication",
+      "Field Problem Solving"
+    ]
+  },
+  "commonCertifications": [
+    "PE (Professional Engineer License)",
+    "FE / EIT (Fundamentals of Engineering / Engineer in Training)",
+    "SolidWorks Certified Professional (CSWP)",
+    "Six Sigma Green Belt"
+  ],
+  "commonQualifications": [
+    "Bachelor's or Master's in Mechanical, Electrical, Civil, Aerospace, or Chemical Engineering"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Designed",
+      "Engineered",
+      "Modeled",
+      "Simulated",
+      "Prototyped",
+      "Fabricated",
+      "Validated",
+      "Calculated"
+    ],
+    "metricTemplates": [
+      "Designed high-precision mechanical enclosure in SolidWorks, cutting fabrication unit costs by [X]% through DFM optimization.",
+      "Conducted FEA structural stress simulations in ANSYS, identifying critical failure points and enhancing component fatigue life by [X]%.",
+      "Engineered multi-layer PCB layout in Altium Designer, reducing electrical electromagnetic interference (EMI) by [X] dB.",
+      "Prepared and managed comprehensive Bills of Materials (BOM) and fabrication drawings with strict ASME Y14.5 GD&T compliance."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "Specify engineering discipline, PE/EIT status, CAD/simulation software mastery, and tangible product/structural milestones delivered.",
+    "keySectionsRecommended": [
+      "Summary",
+      "Engineering Licensure (PE/EIT)",
+      "CAD & Simulation Tools",
+      "Engineering Project Experience",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Omitting specific CAD packages (SolidWorks, AutoCAD) or failing to cite GD&T/ASME compliance"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Senior Mechanical Design Engineer",
+      "company": "Vanguard Aerospace & Robotics",
+      "requiredExperienceYears": 5,
+      "requiredQualifications": [
+        "5+ years designing electro-mechanical hardware assemblies in SolidWorks",
+        "Expertise with FEA thermal/structural simulation and tolerance analysis",
+        "Hands-on experience taking hardware designs from prototype to DFM volume production"
+      ],
+      "preferredQualifications": [
+        "Master of Science in Mechanical Engineering (MSME)",
+        "Active Professional Engineer (PE) license"
+      ]
+    }
+  ]
+}

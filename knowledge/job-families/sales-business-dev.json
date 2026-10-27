@@ -1,0 +1,228 @@
+{
+  "id": "sales-business-dev",
+  "displayName": "Sales and Business Development",
+  "description": "B2B/B2C sales, enterprise account management, revenue generation, pipeline prospecting, negotiation, and client retention.",
+  "category": "Sales & Business",
+  "seniorityLevels": [
+    "Sales Development Representative (SDR)",
+    "Account Executive (AE)",
+    "Senior Account Executive",
+    "Enterprise Sales Director",
+    "VP of Global Sales"
+  ],
+  "jobTitles": [
+    {
+      "title": "Account Executive",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Inside Sales Representative",
+        "B2B Sales Representative",
+        "Commercial AE"
+      ]
+    },
+    {
+      "title": "Sales Development Representative (SDR)",
+      "level": "Entry / Junior",
+      "alternativeTitles": [
+        "Business Development Representative (BDR)",
+        "Outbound Prospector"
+      ]
+    },
+    {
+      "title": "Enterprise Account Executive",
+      "level": "Senior",
+      "alternativeTitles": [
+        "Strategic Accounts Manager",
+        "Major Accounts Executive",
+        "Key Account Executive"
+      ]
+    },
+    {
+      "title": "Business Development Manager",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "BDM",
+        "Partnership Manager",
+        "Alliance Manager"
+      ]
+    },
+    {
+      "title": "Director of Sales",
+      "level": "Lead / Staff",
+      "alternativeTitles": [
+        "VP of Sales",
+        "Head of Business Development",
+        "Chief Revenue Officer (CRO)"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "CRM Administration",
+        "category": "Sales Tooling",
+        "synonyms": [
+          "Salesforce",
+          "HubSpot CRM",
+          "Pipedrive",
+          "Zoho CRM"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Sales Pipeline Management",
+        "category": "Sales Operations",
+        "synonyms": [
+          "Pipeline Forecasting",
+          "Deal Qualification",
+          "Sales Funnel"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Prospecting & Lead Generation",
+        "category": "Business Development",
+        "synonyms": [
+          "Outbound Prospecting",
+          "Cold Calling",
+          "Email Outreach",
+          "Apollo.io",
+          "ZoomInfo"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Enterprise Contract Negotiation",
+        "category": "Deal Execution",
+        "synonyms": [
+          "Contract Closing",
+          "Pricing Strategies",
+          "RFP Responses",
+          "Commercial Terms"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Sales Methodologies",
+        "category": "Methodology",
+        "synonyms": [
+          "MEDDIC",
+          "BANT",
+          "SPIN Selling",
+          "Challenger Sale"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Customer Relationship Management",
+        "category": "Account Management",
+        "synonyms": [
+          "Client Retention",
+          "Account Expansion",
+          "Upselling",
+          "Cross-selling"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Salesforce",
+        "synonyms": [
+          "SFDC",
+          "Sales Cloud"
+        ]
+      },
+      {
+        "name": "HubSpot",
+        "synonyms": [
+          "HubSpot Sales Hub"
+        ]
+      },
+      {
+        "name": "LinkedIn Sales Navigator",
+        "synonyms": [
+          "Sales Nav"
+        ]
+      },
+      {
+        "name": "Outreach / Salesloft",
+        "synonyms": [
+          "Sales Engagement Platforms"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Annual Recurring Revenue (ARR)",
+      "Quota attainment percentage",
+      "Customer Acquisition Cost (CAC)",
+      "Lifetime Value (LTV)",
+      "Average Contract Value (ACV)",
+      "Sales cycle duration & velocity"
+    ],
+    "softSkills": [
+      "High Persuasion & Negotiation",
+      "Active Listening",
+      "Resilience & Grit",
+      "Executive Presentation",
+      "Consultative Value-Selling"
+    ]
+  },
+  "commonCertifications": [
+    "Certified Professional Sales Person (CPSP)",
+    "Salesforce Certified Administrator",
+    "HubSpot Inbound Sales Certified",
+    "MEDDIC Academy Certification"
+  ],
+  "commonQualifications": [
+    "Bachelor's in Business Administration, Marketing, Communications, or proven track record of exceeding revenue targets"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Generated",
+      "Negotiated",
+      "Closed",
+      "Surpassed",
+      "Prospected",
+      "Expanded",
+      "Cultivated",
+      "Secured"
+    ],
+    "metricTemplates": [
+      "Consistently exceeded annual sales quota, attaining [X]% of target ($[Y] in net new ARR) across [Z] closed-won deals.",
+      "Sourced and closed enterprise agreement valued at $[X], the largest commercial contract in corporate division history.",
+      "Generated $[X] in verified pipeline through strategic outbound prospecting campaigns across Fortune 500 accounts.",
+      "Reduced enterprise sales cycle duration from [X] days to [Y] days by executing structured MEDDIC deal qualification."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "Lead with historical quota attainment percentages, total revenue numbers delivered, and target customer profile (SMB/Mid-Market/Enterprise).",
+    "keySectionsRecommended": [
+      "Summary",
+      "Key Revenue Achievements (Highlights Box)",
+      "Sales Experience",
+      "Methodologies & Tools",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Writing job duty descriptions instead of quota numbers",
+      "Failing to include percentage of quota met and average deal size"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Senior Enterprise Account Executive",
+      "company": "SaaS Horizon Inc",
+      "requiredExperienceYears": 5,
+      "requiredQualifications": [
+        "5+ years B2B SaaS software sales experience with verifiable quota overachievement",
+        "Demonstrated track record closing 6-figure ACV contracts",
+        "Proficiency with Salesforce and MEDDIC deal qualification"
+      ],
+      "preferredQualifications": [
+        "Domain experience in HR tech or FinTech SaaS",
+        "Existing network of CIO/CTO contacts in North America"
+      ]
+    }
+  ]
+}

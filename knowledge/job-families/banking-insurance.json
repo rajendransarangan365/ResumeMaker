@@ -1,0 +1,210 @@
+{
+  "id": "banking-insurance",
+  "displayName": "Banking and Insurance",
+  "description": "Commercial banking, retail branch operations, underwriting, loan origination, wealth management, claims processing, and risk management.",
+  "category": "Finance & Banking",
+  "seniorityLevels": [
+    "Bank Teller / Associate",
+    "Loan Officer / Underwriter",
+    "Senior Claims Adjuster",
+    "Wealth Management Advisor",
+    "Branch Manager",
+    "VP of Lending"
+  ],
+  "jobTitles": [
+    {
+      "title": "Commercial Loan Officer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Loan Originator",
+        "Mortgage Loan Specialist",
+        "Credit Analyst"
+      ]
+    },
+    {
+      "title": "Underwriter",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Mortgage Underwriter",
+        "Commercial Credit Underwriter",
+        "Insurance Underwriter"
+      ]
+    },
+    {
+      "title": "Claims Adjuster",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Insurance Claims Specialist",
+        "Claims Examiner",
+        "Loss Adjuster"
+      ]
+    },
+    {
+      "title": "Branch Manager",
+      "level": "Lead / Staff",
+      "alternativeTitles": [
+        "Retail Banking Manager",
+        "Banking Operations Manager"
+      ]
+    },
+    {
+      "title": "Wealth Management Advisor",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Financial Advisor",
+        "Private Banker",
+        "Portfolio Manager"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Credit Analysis & Underwriting",
+        "category": "Credit Assessment",
+        "synonyms": [
+          "Debt-to-Income (DTI)",
+          "Loan-to-Value (LTV)",
+          "Credit Scoring",
+          "Financial Statement Analysis"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Regulatory Banking Compliance",
+        "category": "Compliance",
+        "synonyms": [
+          "Anti-Money Laundering (AML)",
+          "Know Your Customer (KYC)",
+          "Bank Secrecy Act (BSA)",
+          "Dodd-Frank"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Loan Origination Systems (LOS)",
+        "category": "Banking Software",
+        "synonyms": [
+          "Encompass",
+          "Fiserv",
+          "Jack Henry",
+          "nCino"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Insurance Claims Processing",
+        "category": "Insurance",
+        "synonyms": [
+          "Policy Evaluation",
+          "Claim Investigation",
+          "Settlement Negotiation",
+          "Damage Assessment"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Portfolio & Risk Assessment",
+        "category": "Wealth Management",
+        "synonyms": [
+          "Asset Allocation",
+          "Risk Mitigation",
+          "Retirement Planning",
+          "Fiduciary Standards"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Encompass",
+        "synonyms": [
+          "ICE Mortgage Technology Encompass"
+        ]
+      },
+      {
+        "name": "nCino",
+        "synonyms": [
+          "nCino Bank Operating System"
+        ]
+      },
+      {
+        "name": "Fiserv / Jack Henry",
+        "synonyms": [
+          "Core Banking Platforms"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Debt-Service Coverage Ratio (DSCR)",
+      "Suspicious Activity Reports (SAR)",
+      "Basis Points (BPS)",
+      "Loss Ratio & Combined Ratio",
+      "Amortization schedules",
+      "Underwriting guidelines"
+    ],
+    "softSkills": [
+      "High Discretion & Confidentiality",
+      "Client Relationship Building",
+      "Risk Prudence",
+      "Regulatory Integrity"
+    ]
+  },
+  "commonCertifications": [
+    "Certified Regulatory Compliance Manager (CRCM)",
+    "Chartered Financial Consultant (ChFC)",
+    "Certified Anti-Money Laundering Specialist (CAMS)",
+    "FINRA Series 7 and Series 66",
+    "NMLS License"
+  ],
+  "commonQualifications": [
+    "Bachelor's in Finance, Economics, Business, Risk Management, or required statutory banking/insurance licenses"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Originated",
+      "Underwrote",
+      "Approved",
+      "Investigated",
+      "Assessed",
+      "Audited",
+      "Advised",
+      "Processed"
+    ],
+    "metricTemplates": [
+      "Originated and closed $[X]M in commercial real estate loans, maintaining a delinquency rate below [Y]%.",
+      "Underwrote [X]+ complex mortgage applications per month, sustaining a [Y]% error-free file audit rating.",
+      "Processed and settled over [X] property claims totaling $[Y]M with an average turnaround time of [Z] business days.",
+      "Achieved 100% compliance on state and federal regulatory audits regarding KYC and AML protocols."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "State total loan or portfolio book value originated, underwriting compliance score, and regulatory licenses (NMLS, Series 7).",
+    "keySectionsRecommended": [
+      "Summary",
+      "Licensure & Certifications",
+      "Banking & Underwriting Expertise",
+      "Experience",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Omitting licenses or failure to cite compliance standards like AML/KYC"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Commercial Credit Underwriter",
+      "company": "First Heritage Bank",
+      "requiredExperienceYears": 3,
+      "requiredQualifications": [
+        "3+ years in commercial lending credit analysis or underwriting",
+        "Knowledge of financial statement analysis, debt capacity, and DSCR metrics",
+        "Working experience with nCino or Encompass loan origination platforms"
+      ],
+      "preferredQualifications": [
+        "Formal commercial credit training program completion",
+        "Strong knowledge of BSA/AML compliance mandates"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "id": "finance-accounting",
+  "displayName": "Finance and Accounting",
+  "description": "Corporate accounting, financial planning & analysis (FP&A), auditing, taxation, general ledger, reporting, and financial controls.",
+  "category": "Finance & Banking",
+  "seniorityLevels": [
+    "Staff Accountant",
+    "Financial Analyst",
+    "Senior Accountant",
+    "Accounting Manager",
+    "Finance Director",
+    "CFO"
+  ],
+  "jobTitles": [
+    {
+      "title": "Financial Analyst",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "FP&A Analyst",
+        "Corporate Financial Analyst",
+        "Budget Analyst"
+      ]
+    },
+    {
+      "title": "Senior Accountant",
+      "level": "Senior",
+      "alternativeTitles": [
+        "Senior Staff Accountant",
+        "General Ledger Accountant",
+        "Senior Financial Accountant"
+      ]
+    },
+    {
+      "title": "Accounting Manager",
+      "level": "Lead / Staff",
+      "alternativeTitles": [
+        "Assistant Controller",
+        "Audit Manager",
+        "Financial Reporting Manager"
+      ]
+    },
+    {
+      "title": "Corporate Controller",
+      "level": "Principal / Architect",
+      "alternativeTitles": [
+        "Head of Accounting",
+        "Director of Financial Reporting",
+        "Financial Controller"
+      ]
+    },
+    {
+      "title": "Chief Financial Officer (CFO)",
+      "level": "Principal / Architect",
+      "alternativeTitles": [
+        "VP of Finance",
+        "Treasurer",
+        "Finance Director"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "GAAP / IFRS Compliance",
+        "category": "Accounting Standards",
+        "synonyms": [
+          "US GAAP",
+          "IFRS",
+          "Financial Reporting Standards"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Financial Planning & Analysis (FP&A)",
+        "category": "Financial Strategy",
+        "synonyms": [
+          "Budgeting",
+          "Forecasting",
+          "Variance Analysis",
+          "Scenario Modeling"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "ERP Systems",
+        "category": "Accounting Software",
+        "synonyms": [
+          "NetSuite",
+          "SAP ERP",
+          "Oracle Financials",
+          "QuickBooks Online"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Advanced Excel & Financial Modeling",
+        "category": "Analytics Tooling",
+        "synonyms": [
+          "DCF Modeling",
+          "VLOOKUP / XLOOKUP",
+          "Pivot Tables",
+          "Index Match",
+          "Macros"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "General Ledger & Month-End Close",
+        "category": "Accounting Operations",
+        "synonyms": [
+          "GL Reconciliations",
+          "Accruals",
+          "Journal Entries",
+          "Fixed Assets"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Tax Compliance & Audit Preparation",
+        "category": "Compliance",
+        "synonyms": [
+          "Internal Controls",
+          "SOX 404",
+          "Corporate Tax Filings",
+          "Statutory Audit"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "NetSuite",
+        "synonyms": [
+          "Oracle NetSuite ERP"
+        ]
+      },
+      {
+        "name": "SAP ERP",
+        "synonyms": [
+          "SAP S/4HANA Finance"
+        ]
+      },
+      {
+        "name": "QuickBooks",
+        "synonyms": [
+          "QuickBooks Pro / Online"
+        ]
+      },
+      {
+        "name": "Tableau / Power BI",
+        "synonyms": [
+          "Financial Dashboards"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "EBITDA & Operating Cash Flow",
+      "Working Capital management",
+      "Variance analysis vs forecast",
+      "Sarbanes-Oxley (SOX) compliance",
+      "Chart of Accounts (CoA)",
+      "Depreciation & Amortization"
+    ],
+    "softSkills": [
+      "Meticulous Attention to Detail",
+      "Ethical Governance",
+      "Executive Financial Storytelling",
+      "Cross-Department Budget Partnering"
+    ]
+  },
+  "commonCertifications": [
+    "CPA (Certified Public Accountant)",
+    "CFA (Chartered Financial Analyst)",
+    "CMA (Certified Management Accountant)",
+    "ACCA (Association of Chartered Certified Accountants)"
+  ],
+  "commonQualifications": [
+    "Bachelor's or Master's in Accounting, Finance, Economics, or Business Administration"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Reconciled",
+      "Forecasted",
+      "Audited",
+      "Streamlined",
+      "Analyzed",
+      "Formulated",
+      "Reduced",
+      "Structured"
+    ],
+    "metricTemplates": [
+      "Spearheaded month-end close acceleration, reducing close cycle duration from [X] business days to [Y] days.",
+      "Constructed multi-scenario 5-year financial model that identified $[X]M in redundant operational expenditures.",
+      "Led external audit readiness for big-4 accounting firm, yielding zero material deficiencies across $[X]M in assets.",
+      "Managed general ledger reconciliations across [X] subsidiary entities in NetSuite with 100% balance sheet accuracy."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "State CPA/CFA license, total enterprise budget/portfolio managed, ERP systems used, and audit record.",
+    "keySectionsRecommended": [
+      "Summary",
+      "Credentials & Licenses (CPA, CFA)",
+      "Core Accounting/Finance Competencies",
+      "Experience",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Omitting specific GAAP/IFRS standards or naming of ERP systems (SAP, NetSuite, etc.)"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Senior Financial Analyst (FP&A)",
+      "company": "Meridian Capital Group",
+      "requiredExperienceYears": 4,
+      "requiredQualifications": [
+        "4+ years in FP&A, corporate finance, or public accounting",
+        "Advanced Excel financial modeling skills (DCF, scenario planning)",
+        "Demonstrated proficiency with NetSuite or SAP and BI reporting tools"
+      ],
+      "preferredQualifications": [
+        "CPA or CFA designation or candidacy",
+        "Experience supporting executive forecasting in high-growth companies"
+      ]
+    }
+  ]
+}

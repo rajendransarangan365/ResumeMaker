@@ -55,10 +55,10 @@ describe('Unit & Integration Test Suite', () => {
     });
   });
 
-  // 2. ATS Template Registry (15 Templates)
+  // 2. ATS Template Registry (30 Templates)
   describe('Template Registry & Data Mapping', () => {
-    it('should contain all 15 required ATS templates', () => {
-      expect(TEMPLATE_LIST.length).toBe(15);
+    it('should contain all 30 required ATS templates', () => {
+      expect(TEMPLATE_LIST.length).toBe(30);
       const expectedIds = [
         'classic-professional',
         'modern-minimal',
@@ -75,6 +75,21 @@ describe('Unit & Integration Test Suite', () => {
         'skills-focused',
         'academic-professional',
         'general-purpose',
+        'modern-single-column',
+        'minimal-professional',
+        'corporate-professional',
+        'graduate-entry',
+        'technical-specialist',
+        'senior-engineer',
+        'executive-leadership',
+        'marketing-professional',
+        'customer-support',
+        'finance-accounting',
+        'healthcare-medical',
+        'researcher-cv',
+        'employment-gap-friendly',
+        'international-professional',
+        'ats-focused-hybrid',
       ];
       expectedIds.forEach((id) => {
         expect(ATS_TEMPLATES[id as keyof typeof ATS_TEMPLATES]).toBeDefined();

@@ -1,0 +1,260 @@
+{
+  "id": "cybersecurity",
+  "displayName": "Cybersecurity",
+  "description": "Information security, threat intelligence, vulnerability management, penetration testing, incident response, and regulatory compliance.",
+  "category": "Technology",
+  "seniorityLevels": [
+    "Security Analyst (SOC L1/L2)",
+    "Security Engineer",
+    "Penetration Tester",
+    "Senior Threat Hunter",
+    "Security Architect",
+    "CISO"
+  ],
+  "jobTitles": [
+    {
+      "title": "Information Security Analyst",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "SOC Analyst",
+        "Cybersecurity Specialist",
+        "Security Operations Analyst"
+      ]
+    },
+    {
+      "title": "Security Engineer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "AppSec Engineer",
+        "Cloud Security Engineer",
+        "Network Security Engineer"
+      ]
+    },
+    {
+      "title": "Penetration Tester",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Ethical Hacker",
+        "Red Team Specialist",
+        "Vulnerability Assessment Engineer"
+      ]
+    },
+    {
+      "title": "Incident Responder",
+      "level": "Senior",
+      "alternativeTitles": [
+        "DFIR Specialist",
+        "Security Incident Manager",
+        "Threat Hunter"
+      ]
+    },
+    {
+      "title": "Chief Information Security Officer (CISO)",
+      "level": "Lead / Staff",
+      "alternativeTitles": [
+        "Head of Security",
+        "VP of Information Security",
+        "Director of Cyber Defense"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "SIEM & Log Analysis",
+        "category": "Security Monitoring",
+        "synonyms": [
+          "Splunk",
+          "Microsoft Sentinel",
+          "QRadar",
+          "Elastic SIEM"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Incident Response & DFIR",
+        "category": "Incident Management",
+        "synonyms": [
+          "Digital Forensics",
+          "Memory Forensics",
+          "Chain of Custody",
+          "Wireshark"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Vulnerability Assessment",
+        "category": "Threat Management",
+        "synonyms": [
+          "Nessus",
+          "Qualys",
+          "Rapid7",
+          "Burp Suite",
+          "OWASP Top 10"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Penetration Testing & Red Teaming",
+        "category": "Ethical Hacking",
+        "synonyms": [
+          "Metasploit",
+          "Kali Linux",
+          "Cobalt Strike",
+          "Nmap"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Identity & Access Management (IAM)",
+        "category": "Access Control",
+        "synonyms": [
+          "Active Directory",
+          "Okta",
+          "OAuth2",
+          "SAML",
+          "RBAC",
+          "MFA"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Cloud Security",
+        "category": "Infrastructure Security",
+        "synonyms": [
+          "AWS GuardDuty",
+          "Security Hub",
+          "CSPM",
+          "Prisma Cloud"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Regulatory Compliance",
+        "category": "Governance & Risk",
+        "synonyms": [
+          "SOC 2",
+          "ISO 27001",
+          "HIPAA",
+          "PCI-DSS",
+          "NIST CSF",
+          "GDPR"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Firewalls & Network Security",
+        "category": "Network Defense",
+        "synonyms": [
+          "Palo Alto Networks",
+          "Fortinet",
+          "Cisco ASA",
+          "IDS/IPS"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Splunk",
+        "synonyms": [
+          "Splunk Enterprise",
+          "Splunk Cloud"
+        ]
+      },
+      {
+        "name": "Burp Suite",
+        "synonyms": [
+          "Burp Suite Professional"
+        ]
+      },
+      {
+        "name": "Qualys",
+        "synonyms": [
+          "QualysGuard",
+          "Qualys VMDR"
+        ]
+      },
+      {
+        "name": "CrowdStrike Falcon",
+        "synonyms": [
+          "CrowdStrike",
+          "EDR"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Zero-trust architecture (ZTA)",
+      "MITRE ATT&CK framework",
+      "Defense in depth",
+      "Privilege escalation & lateral movement",
+      "Indicators of Compromise (IoCs)",
+      "Mean Time to Detect (MTTD)"
+    ],
+    "softSkills": [
+      "Crisis Management",
+      "Analytical Forensic Thinking",
+      "Audit & Compliance Communication",
+      "Ethical Integrity",
+      "Collaborative Remediation"
+    ]
+  },
+  "commonCertifications": [
+    "CISSP (Certified Information Systems Security Professional)",
+    "CEH (Certified Ethical Hacker)",
+    "CompTIA Security+",
+    "OSCP (Offensive Security Certified Professional)",
+    "CISM (Certified Information Security Manager)"
+  ],
+  "commonQualifications": [
+    "Bachelor's in Cybersecurity, Computer Science, Information Assurance, or equivalent verified industry accreditation"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Investigated",
+      "Mitigated",
+      "Neutralized",
+      "Hardened",
+      "Audited",
+      "Monitored",
+      "Secured",
+      "Remediated"
+    ],
+    "metricTemplates": [
+      "Conducted enterprise vulnerability assessments across [X] IP assets and servers, identifying and remediating [Y] critical CVEs.",
+      "Led SOC incident response team reducing Mean Time to Detect (MTTD) from [X] hours to [Y] minutes.",
+      "Spearheaded enterprise SOC 2 Type II and ISO 27001 certification audit preparation, achieving 100% compliance on initial audit.",
+      "Architected and implemented multi-factor authentication (MFA) and zero-trust conditional access across [X] global employee accounts."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "Prominently display gold-standard security certifications (CISSP, CEH, OSCP), security domain focus, and threat mitigation records.",
+    "keySectionsRecommended": [
+      "Summary",
+      "Security Certifications",
+      "Security Domain Skills",
+      "Professional Experience",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Violating NDAs by naming proprietary vulnerabilities or internal host details",
+      "Failing to mention recognized frameworks (NIST, MITRE)"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Information Security Engineer",
+      "company": "Fortress Defense Systems",
+      "requiredExperienceYears": 4,
+      "requiredQualifications": [
+        "4+ years in SOC analysis, incident response, or cloud security engineering",
+        "Expertise with Splunk or Sentinel SIEM log correlation",
+        "Hands-on knowledge of MITRE ATT&CK and NIST cybersecurity frameworks"
+      ],
+      "preferredQualifications": [
+        "Active CISSP or CompTIA CySA+ certification",
+        "Experience automating security tasks with Python or Bash"
+      ]
+    }
+  ]
+}

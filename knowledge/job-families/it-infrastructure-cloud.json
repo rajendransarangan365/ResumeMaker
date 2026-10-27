@@ -1,0 +1,281 @@
+{
+  "id": "it-infrastructure-cloud",
+  "displayName": "IT Infrastructure and Cloud",
+  "description": "System administration, cloud engineering, network architecture, virtualization, site reliability, and enterprise IT support.",
+  "category": "Technology",
+  "seniorityLevels": [
+    "Junior IT Specialist",
+    "Systems Administrator",
+    "Cloud Engineer",
+    "Senior DevOps Engineer",
+    "Site Reliability Engineer (SRE)",
+    "Infrastructure Architect"
+  ],
+  "jobTitles": [
+    {
+      "title": "Cloud Engineer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "AWS Cloud Engineer",
+        "Azure Cloud Engineer",
+        "Cloud Systems Engineer"
+      ]
+    },
+    {
+      "title": "DevOps Engineer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Build and Release Engineer",
+        "DevSecOps Engineer",
+        "Platform Engineer"
+      ]
+    },
+    {
+      "title": "Site Reliability Engineer (SRE)",
+      "level": "Senior",
+      "alternativeTitles": [
+        "SRE",
+        "Reliability Engineer",
+        "Infrastructure Operations Engineer"
+      ]
+    },
+    {
+      "title": "Systems Administrator",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "SysAdmin",
+        "Linux Administrator",
+        "Windows Systems Administrator"
+      ]
+    },
+    {
+      "title": "Network Engineer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Network Specialist",
+        "Cisco Network Engineer",
+        "Infrastructure Network Architect"
+      ]
+    },
+    {
+      "title": "Cloud Solutions Architect",
+      "level": "Principal / Architect",
+      "alternativeTitles": [
+        "Enterprise Cloud Architect",
+        "Infrastructure Architect"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Amazon Web Services (AWS)",
+        "category": "Cloud Platforms",
+        "synonyms": [
+          "AWS",
+          "EC2",
+          "S3",
+          "RDS",
+          "IAM",
+          "CloudFormation"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Microsoft Azure",
+        "category": "Cloud Platforms",
+        "synonyms": [
+          "Azure",
+          "Azure AD",
+          "Azure VMs",
+          "ARM Templates"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Google Cloud Platform (GCP)",
+        "category": "Cloud Platforms",
+        "synonyms": [
+          "GCP",
+          "GCE",
+          "GCS",
+          "BigQuery"
+        ],
+        "importance": "Medium"
+      },
+      {
+        "name": "Terraform & IaC",
+        "category": "Infrastructure as Code",
+        "synonyms": [
+          "Terraform",
+          "Infrastructure as Code",
+          "IaC",
+          "Terragrunt"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Kubernetes & Helm",
+        "category": "Orchestration",
+        "synonyms": [
+          "K8s",
+          "Helm",
+          "EKS",
+          "AKS"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Linux Systems Administration",
+        "category": "Operating Systems",
+        "synonyms": [
+          "RHEL",
+          "Ubuntu Server",
+          "Debian",
+          "Bash Scripting",
+          "Shell"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Monitoring & Observability",
+        "category": "Observability",
+        "synonyms": [
+          "Prometheus",
+          "Grafana",
+          "Datadog",
+          "ELK Stack",
+          "CloudWatch"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Network Protocols & Routing",
+        "category": "Networking",
+        "synonyms": [
+          "TCP/IP",
+          "BGP",
+          "DNS",
+          "DHCP",
+          "VPC",
+          "VPN",
+          "Firewalls"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "CI/CD Automation",
+        "category": "Automation",
+        "synonyms": [
+          "Ansible",
+          "Puppet",
+          "GitHub Actions",
+          "Jenkins"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Terraform",
+        "synonyms": [
+          "HashiCorp Terraform"
+        ]
+      },
+      {
+        "name": "Datadog",
+        "synonyms": [
+          "Datadog APM",
+          "Datadog Logs"
+        ]
+      },
+      {
+        "name": "Ansible",
+        "synonyms": [
+          "Ansible Playbooks",
+          "Ansible Tower"
+        ]
+      },
+      {
+        "name": "Docker / Podman",
+        "synonyms": [
+          "Container Runtimes"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Zero-trust network architecture",
+      "Mean Time to Resolution (MTTR)",
+      "High Availability (HA)",
+      "Disaster Recovery (DR)",
+      "SLA / SLO / SLI adherence",
+      "Auto-scaling policies",
+      "Cost optimization (FinOps)"
+    ],
+    "softSkills": [
+      "Incident Response Under Pressure",
+      "Root Cause Analysis (RCA)",
+      "Capacity Planning",
+      "Technical Documentation",
+      "Cross-Team Incident Coordination"
+    ]
+  },
+  "commonCertifications": [
+    "AWS Certified Solutions Architect",
+    "AWS Certified DevOps Engineer",
+    "Microsoft Certified: Azure Solutions Architect Expert",
+    "Certified Kubernetes Administrator (CKA)",
+    "Cisco Certified Network Associate (CCNA)"
+  ],
+  "commonQualifications": [
+    "Bachelor's in Information Technology, Computer Science, or equivalent field experience with industry certifications"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Provisioned",
+      "Migrated",
+      "Architected",
+      "Automated",
+      "Configured",
+      "Hardened",
+      "Maintained",
+      "Remediated"
+    ],
+    "metricTemplates": [
+      "Automated enterprise cloud provisioning using Terraform IaC, cutting infrastructure lead time from [X] days to [Y] minutes.",
+      "Achieved [X]% infrastructure uptime SLA across [Y] production Kubernetes clusters serving [Z] end users.",
+      "Designed multi-region disaster recovery strategy yielding an RPO of under [X] minutes and RTO of [Y] minutes.",
+      "Reduced annual cloud expenditure by [X]% through automated resource scheduling and rightsizing EC2 instances."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "State platform certifications, total managed cloud/system scale, uptime statistics, and automation achievements.",
+    "keySectionsRecommended": [
+      "Summary",
+      "Cloud & Infrastructure Certifications",
+      "Technical Expertise",
+      "Professional Experience",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Failing to specify scale (number of servers, clusters, or user volume)",
+      "Omitting specific IaC or monitoring tooling"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Senior DevOps / Cloud Engineer",
+      "company": "Vanguard Platforms",
+      "requiredExperienceYears": 4,
+      "requiredQualifications": [
+        "4+ years managing production infrastructure on AWS or Azure",
+        "Proficiency in Terraform, Docker, and Kubernetes",
+        "Experience establishing monitoring with Prometheus and Grafana"
+      ],
+      "preferredQualifications": [
+        "CKA or AWS DevOps Engineer Professional certification",
+        "Python or Go scripting for infrastructure automation"
+      ]
+    }
+  ]
+}

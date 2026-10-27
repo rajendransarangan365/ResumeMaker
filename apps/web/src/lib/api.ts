@@ -197,4 +197,21 @@ export const api = {
 
   // AI Usage
   getAiUsageSummary: () => fetcher<{ summary: any; recentLogs: any[] }>('/ai-usage/summary'),
+
+  // Multi-Agent Engine & Knowledge Base
+  getAgentHealth: () => fetcher<{ pythonService: string; pythonDetails: any; localEngine: string; totalJobFamiliesLoaded: number }>('/agents/health'),
+  getJobFamilies: () => fetcher<{ total: number; jobFamilies: any[] }>('/agents/knowledge/job-families'),
+  getJobFamilyById: (id: string) => fetcher<{ jobFamily: any }>(`/agents/knowledge/job-families/${id}`),
+  orchestrateAgentResume: (body: {
+    resumeId?: string;
+    jobTitle: string;
+    companyName?: string;
+    rawText: string;
+    preferredTemplateId?: string;
+  }) => fetcher<any>('/agents/orchestrate', { method: 'POST', body: JSON.stringify(body) }),
+  matchCandidateJob: (body: {
+    jobTitle: string;
+    companyName?: string;
+    rawText: string;
+  }) => fetcher<any>('/agents/match', { method: 'POST', body: JSON.stringify(body) }),
 };

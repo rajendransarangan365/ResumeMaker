@@ -207,7 +207,7 @@ export const CandidateProfileSchema = z.object({
 // -----------------------------------------------------------------------------
 export const ResumeFormattingSchema = z.object({
   pageSize: z.enum(['A4', 'Letter']).default('A4'),
-  fontFamily: z.enum(['Roboto', 'Inter', 'Arial', 'Times New Roman', 'Calibri']).default('Roboto'),
+  fontFamily: z.enum(['Roboto', 'Inter', 'Arial', 'Times New Roman', 'Calibri', 'Georgia']).default('Roboto'),
   fontSizePt: z.number().min(8).max(14).default(10),
   lineSpacing: z.number().min(1.0).max(2.0).default(1.25),
   marginsMm: z.number().min(10).max(30).default(15),

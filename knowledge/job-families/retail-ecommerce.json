@@ -1,0 +1,191 @@
+{
+  "id": "retail-ecommerce",
+  "displayName": "Retail and E-commerce",
+  "description": "Online store management, merchandising, catalog optimization, marketplace operations (Amazon, Shopify), store management, and omnichannel retail.",
+  "category": "Sales & Business",
+  "seniorityLevels": [
+    "Retail Sales Associate",
+    "E-commerce Specialist",
+    "Assistant Store Manager",
+    "E-commerce Operations Manager",
+    "Store Manager",
+    "VP of Retail & Digital"
+  ],
+  "jobTitles": [
+    {
+      "title": "E-commerce Manager",
+      "level": "Senior",
+      "alternativeTitles": [
+        "Online Store Manager",
+        "Digital Merchandising Manager",
+        "Amazon Marketplace Specialist"
+      ]
+    },
+    {
+      "title": "Retail Store Manager",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "General Store Manager",
+        "Retail Operations Manager",
+        "Shop Manager"
+      ]
+    },
+    {
+      "title": "E-commerce Catalog Specialist",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Product Listing Specialist",
+        "Digital Merchandiser",
+        "Shopify Specialist"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "E-commerce Platforms",
+        "category": "Platforms",
+        "synonyms": [
+          "Shopify",
+          "Shopify Plus",
+          "Magento",
+          "WooCommerce",
+          "BigCommerce"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Marketplace Operations",
+        "category": "Marketplaces",
+        "synonyms": [
+          "Amazon Seller Central",
+          "Amazon Vendor Central",
+          "eBay",
+          "Walmart Marketplace"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Product Merchandising & Listing Optimization",
+        "category": "Merchandising",
+        "synonyms": [
+          "A+ Content",
+          "Product Descriptions",
+          "SEO Listings",
+          "Category Management"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Inventory & Order Management",
+        "category": "Fulfillment",
+        "synonyms": [
+          "ShipStation",
+          "FBA (Fulfillment by Amazon)",
+          "Order Tracking",
+          "Stock Reordering"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Retail Store Operations",
+        "category": "Store Management",
+        "synonyms": [
+          "POS Systems",
+          "Visual Merchandising",
+          "Loss Prevention",
+          "Cash Handling"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Shopify Plus",
+        "synonyms": [
+          "Shopify Store"
+        ]
+      },
+      {
+        "name": "Amazon Seller Central",
+        "synonyms": [
+          "FBA Management"
+        ]
+      },
+      {
+        "name": "ShipStation",
+        "synonyms": [
+          "E-commerce Shipping"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Average Order Value (AOV)",
+      "Gross Merchandise Value (GMV)",
+      "Conversion Rate (CVR)",
+      "Cart abandonment rate",
+      "FBA inventory performance index (IPI)"
+    ],
+    "softSkills": [
+      "Customer Empathy",
+      "Visual Aesthetic Merchandising",
+      "Multi-tasking Retail Floor Leadership",
+      "Vendor Communication"
+    ]
+  },
+  "commonCertifications": [
+    "Shopify Certified Partner",
+    "Amazon Advertising Certification",
+    "National Retail Federation (NRF) Customer Service Certification"
+  ],
+  "commonQualifications": [
+    "Bachelor's in Marketing, Business, Fashion Merchandising, or extensive hands-on store/e-commerce track record"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Expanded",
+      "Merchandised",
+      "Boosted",
+      "Optimized",
+      "Managed",
+      "Supervised",
+      "Launched",
+      "Generated"
+    ],
+    "metricTemplates": [
+      "Scaled direct-to-consumer Shopify store revenue from $[X]k to $[Y]M in 18 months, boosting Average Order Value (AOV) by [Z]%.",
+      "Managed catalog of [X]+ SKUs across Amazon Seller Central, maintaining an account health rating of [Y]% and Amazon Buy Box share of [Z]%.",
+      "Led retail staff of [X] associates, consistently surpassing monthly store revenue sales goals by [Y]%.",
+      "Reduced checkout cart abandonment rate from [X]% to [Y]% through frictionless payment gateway integration."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "Highlight total GMV or store sales generated, platform expertise (Shopify, Amazon), and AOV/conversion improvements.",
+    "keySectionsRecommended": [
+      "Summary",
+      "E-commerce & Retail Strengths",
+      "Experience",
+      "Platform Certifications",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Failing to mention GMV, order volume, or catalog SKU size"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "E-commerce Operations Manager",
+      "company": "Verve Direct Brands",
+      "requiredExperienceYears": 3,
+      "requiredQualifications": [
+        "3+ years managing Shopify Plus or Amazon Seller Central stores",
+        "Demonstrated track record optimizing listings, A+ content, and conversion rates",
+        "Proficiency with inventory management tools and ShipStation"
+      ],
+      "preferredQualifications": [
+        "Experience managing digital advertising via Amazon Ads",
+        "Strong understanding of e-commerce SEO"
+      ]
+    }
+  ]
+}

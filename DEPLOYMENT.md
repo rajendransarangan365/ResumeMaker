@@ -67,14 +67,92 @@ NEXT_PUBLIC_APP_NAME="ATS Resume Intelligence Studio"
 
 ---
 
-## 3. Local Standalone PC Deployment
+---
 
-### 3.1 Prerequisites
+## 3. Deploying to Render (Zero-Cost / Free-Tier Production)
+
+The repository includes a ready-to-use Render Blueprint specification: [`render.yaml`](file:///d:/Resume%20maker/render.yaml).
+
+### 3.1 Option A: One-Click Deploy via Render Blueprint (Recommended)
+
+1. Push your repository to **GitHub** or **GitLab**.
+2. Log in to [Render.com](https://render.com).
+3. Click **"New +"** in the top navigation -> Select **"Blueprint"**.
+4. Connect your repository. Render will automatically detect [`render.yaml`](file:///d:/Resume%20maker/render.yaml).
+5. Render reads the services:
+   - **`ats-resume-api`** (Node.js Web Service)
+   - **`ats-resume-web`** (Next.js Web Service)
+   - **`ats-agent-service`** (Python ADK Agent Service - Optional)
+6. Supply the required environment variable:
+   - `MONGODB_URI`: Your MongoDB Atlas URI (e.g., `mongodb+srv://<user>:<password>@cluster.mongodb.net/ats_resume_studio?retryWrites=true&w=majority`).
+   - `GEMINI_API_KEY`: (Optional) Your Google Gemini API key if using cloud LLM features.
+7. Click **"Apply"**. Render will build and deploy your services.
+
+---
+
+### 3.2 Option B: Manual Service Creation in Render Dashboard
+
+If you prefer setting up services manually without Blueprints:
+
+#### Step 1: Deploy Backend API (`apps/api`)
+1. Click **"New +"** -> **"Web Service"**.
+2. Connect your Git repository.
+3. Configure the service settings:
+   - **Name**: `ats-resume-api`
+   - **Region**: `Oregon (US West)` or your preferred region.
+   - **Branch**: `main`
+   - **Root Directory**: Leave blank (runs at repository root for npm workspaces).
+   - **Runtime**: `Node`
+   - **Build Command**: `npm install && npm run build:backend`
+   - **Start Command**: `npm run start:api`
+   - **Health Check Path**: `/api/v1/health`
+4. In **Environment Variables**, add:
+   - `NODE_ENV`: `production`
+   - `MONGODB_URI`: `mongodb+srv://<user>:<pass>@cluster.mongodb.net/ats_resume_studio?retryWrites=true&w=majority`
+   - `SESSION_SECRET`: (Random 32+ character string)
+   - `COOKIE_SECRET`: (Random 32+ character string)
+   - `JWT_SECRET`: (Random 32+ character string)
+   - `JWT_REFRESH_SECRET`: (Random 32+ character string)
+   - `PASSWORD_RESET_TOKEN_SECRET`: (Random 32+ character string)
+   - `WEB_ORIGIN`: Your frontend URL (e.g., `https://ats-resume-web.onrender.com`)
+   - `CORS_ORIGIN`: Your frontend URL (e.g., `https://ats-resume-web.onrender.com`)
+   - `GEMINI_API_KEY`: (Optional Gemini key)
+5. Click **"Create Web Service"**. Copy your deployed API URL (e.g., `https://ats-resume-api.onrender.com`).
+
+#### Step 2: Deploy Frontend Web App (`apps/web`)
+1. Click **"New +"** -> **"Web Service"**.
+2. Connect the same Git repository.
+3. Configure settings:
+   - **Name**: `ats-resume-web`
+   - **Region**: Same region as backend.
+   - **Branch**: `main`
+   - **Root Directory**: Leave blank.
+   - **Runtime**: `Node`
+   - **Build Command**: `npm install && npm run build:frontend`
+   - **Start Command**: `npm run start:web`
+4. In **Environment Variables**, add:
+   - `NODE_ENV`: `production`
+   - `NEXT_PUBLIC_API_URL`: `https://ats-resume-api.onrender.com/api/v1` (replace with your Step 1 API URL)
+5. Click **"Create Web Service"**.
+
+---
+
+### 3.3 Render Free-Tier Sleeping / Cold-Start Optimization
+
+- Free-tier Render web services spin down after 15 minutes of inactivity.
+- The health check endpoint `/api/v1/health` responds with HTTP 200 and database connectivity status.
+- You can keep your free instance warm using a free pinging service (like [UptimeRobot](https://uptimerobot.com) or [Cron-Job.org](https://cron-job.org)) pointed to `https://<your-api>.onrender.com/api/v1/health` every 10 minutes.
+
+---
+
+## 4. Local Standalone PC Deployment
+
+### 4.1 Prerequisites
 1. **Node.js**: v18.0.0 or higher (v20+ recommended).
 2. **MongoDB Community Server**: Version 4.4+ installed and running as a local service on port 27017.
 3. **Git**: Installed and available in system PATH.
 
-### 3.2 Build & Execution Steps
+### 4.2 Build & Execution Steps
 ```bash
 # 1. Clone or navigate to the workspace
 cd "D:\Resume maker"
@@ -94,15 +172,15 @@ npm run start:web
 
 ---
 
-## 4. Android PWA Installation & Local Pairing
+## 5. Android PWA Installation & Local Pairing
 
-### 4.1 Installing as PWA
+### 5.1 Installing as PWA
 1. Open Google Chrome on your Android mobile device.
 2. Navigate to your deployed URL or PC local network address (e.g., `http://192.168.1.100:3000`).
 3. Tap the browser menu (three dots) -> Tap **"Add to Home screen"** or **"Install App"**.
 4. The application icon will be placed on your home screen, launching in standalone fullscreen mode.
 
-### 4.2 Offline Operation on Android
+### 5.2 Offline Operation on Android
 - When network connectivity is lost, the PWA service worker serves cached UI components and templates.
 - Resumes created while offline are saved to **IndexedDB**.
 - AI features requiring server interaction (Gemini parsing/optimization) will display an "Offline - Connect to internet for AI features" status badge.
@@ -110,15 +188,15 @@ npm run start:web
 
 ---
 
-## 5. Database Backup and Disaster Recovery
+## 6. Database Backup and Disaster Recovery
 
-### 5.1 Performing a Database Backup
+### 6.1 Performing a Database Backup
 ```bash
 # Create timestamped dump
 mongodump --uri="mongodb://127.0.0.1:27017/ats_resume_studio" --out="./backups/$(date +%Y%m%d_%H%M%S)"
 ```
 
-### 5.2 Restoring from Backup
+### 6.2 Restoring from Backup
 ```bash
 # Restore specific backup folder
 mongorestore --uri="mongodb://127.0.0.1:27017/ats_resume_studio" --drop ./backups/20261025_194500/ats_resume_studio
@@ -126,10 +204,11 @@ mongorestore --uri="mongodb://127.0.0.1:27017/ats_resume_studio" --drop ./backup
 
 ---
 
-## 6. Production Hardening Checklist
+## 7. Production Hardening Checklist
 - [ ] Ensure all environment variables pass runtime Zod validation on boot.
-- [ ] Enforce HTTPS termination via Nginx / Cloudflare with TLS 1.3.
+- [ ] Enforce HTTPS termination via Nginx / Cloudflare / Render with TLS 1.3.
 - [ ] Verify MongoDB authentication is enabled and not exposed to public interface 0.0.0.0.
-- [ ] Confirm CORS configuration allows only whitelisted frontend domains.
-- [ ] Verify `NODE_ENV=production` sets cookie attributes: `Secure: true`, `SameSite: Strict`.
+- [ ] Confirm CORS configuration (`WEB_ORIGIN`, `CORS_ORIGIN`) allows only whitelisted frontend domains.
+- [ ] Verify `NODE_ENV=production` sets cookie attributes: `Secure: true`, `SameSite: Strict` / `SameSite: Lax`.
 - [ ] Validate Nodemailer SMTP transporter connection on system startup.
+

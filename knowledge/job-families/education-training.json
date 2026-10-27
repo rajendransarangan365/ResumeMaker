@@ -1,0 +1,202 @@
+{
+  "id": "education-training",
+  "displayName": "Education and Training",
+  "description": "Curriculum design, classroom instruction, corporate training, educational technology (EdTech), instructional design, and academic leadership.",
+  "category": "Education & Public Service",
+  "seniorityLevels": [
+    "Teaching Assistant",
+    "Teacher / Instructor",
+    "Senior Lecturer / Professor",
+    "Instructional Designer",
+    "Corporate Trainer",
+    "Dean / Academic Director"
+  ],
+  "jobTitles": [
+    {
+      "title": "Instructional Designer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Curriculum Developer",
+        "Learning Experience Designer (LXD)",
+        "E-Learning Specialist"
+      ]
+    },
+    {
+      "title": "Corporate Trainer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Learning & Development (L&D) Specialist",
+        "Training Coordinator",
+        "Talent Development Specialist"
+      ]
+    },
+    {
+      "title": "Educator / Teacher",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "High School Teacher",
+        "Middle School Teacher",
+        "Classroom Instructor"
+      ]
+    },
+    {
+      "title": "Director of Learning and Development",
+      "level": "Lead / Staff",
+      "alternativeTitles": [
+        "Head of L&D",
+        "Chief Learning Officer",
+        "Academic Director"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Instructional Design Methodologies",
+        "category": "Pedagogy",
+        "synonyms": [
+          "ADDIE Model",
+          "Bloom’s Taxonomy",
+          "Kirkpatrick Model",
+          "Agile SAM"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Learning Management Systems (LMS)",
+        "category": "EdTech",
+        "synonyms": [
+          "Canvas",
+          "Blackboard",
+          "Moodle",
+          "Cornerstone OnDemand",
+          "Docebo"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "E-Learning Authoring Tools",
+        "category": "Authoring Software",
+        "synonyms": [
+          "Articulate Storyline 360",
+          "Articulate Rise",
+          "Adobe Captivate",
+          "Camtasia"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Curriculum & Assessment Design",
+        "category": "Curriculum",
+        "synonyms": [
+          "Formative Assessment",
+          "Summative Assessment",
+          "Rubric Creation",
+          "Learning Objectives"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Classroom Management & Delivery",
+        "category": "Teaching",
+        "synonyms": [
+          "Differentiated Instruction",
+          "Student Engagement",
+          "Virtual Classroom Facilitation",
+          "Webinars"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Articulate 360",
+        "synonyms": [
+          "Storyline 360",
+          "Rise 360"
+        ]
+      },
+      {
+        "name": "Canvas LMS",
+        "synonyms": [
+          "Instructure Canvas"
+        ]
+      },
+      {
+        "name": "Adobe Captivate",
+        "synonyms": [
+          "Captivate E-Learning"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Synchronous vs Asynchronous learning",
+      "Adult Learning Principles (Andragogy)",
+      "SCORM / xAPI compliance",
+      "Knowledge retention metrics",
+      "Needs Analysis & Gap Assessment"
+    ],
+    "softSkills": [
+      "Enthusiastic Facilitation",
+      "Active Empathetic Mentorship",
+      "Clarity of Explanation",
+      "Patient Feedback Delivery"
+    ]
+  },
+  "commonCertifications": [
+    "State Teaching License / Certification",
+    "Certified Professional in Learning and Performance (CPLP / CPTD)",
+    "Instructional Design Certificate (ATD)",
+    "Google Certified Educator"
+  ],
+  "commonQualifications": [
+    "Bachelor's, Master's, or Ph.D. in Education, Instructional Design, Educational Technology, or subject matter discipline"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Instructed",
+      "Designed",
+      "Facilitated",
+      "Authored",
+      "Evaluated",
+      "Trained",
+      "Spearheaded",
+      "Mentored"
+    ],
+    "metricTemplates": [
+      "Designed and deployed interactive e-learning curriculum in Articulate 360 for [X] corporate staff, increasing completion rates by [Y]%.",
+      "Facilitated professional training workshops for over [X] adult learners, maintaining a [Y]% course satisfaction rating.",
+      "Integrated Canvas LMS across [X] academic departments, training [Y] faculty members on digital rubric grading.",
+      "Improved standardized student benchmark testing proficiency by [X]% through differentiated instruction and targeted tutoring."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "State instructional methodologies (ADDIE, Bloom), e-learning authoring tools (Articulate 360, Canvas), and learner outcome metrics.",
+    "keySectionsRecommended": [
+      "Summary",
+      "Teaching / L&D Certifications",
+      "Instructional Design Strengths",
+      "Experience",
+      "Education & Publications"
+    ],
+    "commonPitfalls": [
+      "Writing generic classroom duties without student/learner outcomes, satisfaction metrics, or authoring tools"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Instructional Designer / E-Learning Specialist",
+      "company": "Apex Learning Technologies",
+      "requiredExperienceYears": 3,
+      "requiredQualifications": [
+        "3+ years developing asynchronous digital learning modules with Articulate 360 (Storyline and Rise)",
+        "Demonstrated knowledge of adult learning theory and ADDIE framework",
+        "Experience deploying SCORM packages into Canvas or Cornerstone LMS"
+      ],
+      "preferredQualifications": [
+        "Master’s in Instructional Design or Educational Technology",
+        "Video editing skills using Camtasia or Premiere"
+      ]
+    }
+  ]
+}

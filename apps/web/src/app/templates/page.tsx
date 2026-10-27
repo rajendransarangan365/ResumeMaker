@@ -44,10 +44,10 @@ export default function TemplatesGalleryPage() {
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-studio-900 tracking-tight flex items-center gap-2">
           <Layout className="w-6 h-6 text-brand-600" />
-          <span>ATS-Compliant Template Gallery (15 Templates)</span>
+          <span>ATS-Compliant Template Gallery ({TEMPLATE_LIST.length} Templates)</span>
         </h1>
         <p className="text-xs sm:text-sm text-studio-500 mt-1">
-          Every template adheres to single-column ATS extraction standards, selectable typography, and verified reading hierarchy.
+          Every template adheres to single-column ATS extraction standards, selectable typography, and verified reading hierarchy across all career stages.
         </p>
       </div>
 

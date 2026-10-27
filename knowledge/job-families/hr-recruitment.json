@@ -1,0 +1,221 @@
+{
+  "id": "hr-recruitment",
+  "displayName": "Human Resources and Recruitment",
+  "description": "Talent acquisition, employee relations, onboarding, performance management, HR operations, compliance, compensation and benefits.",
+  "category": "Operations & Management",
+  "seniorityLevels": [
+    "HR Coordinator",
+    "Talent Acquisition Specialist",
+    "HR Generalist",
+    "Senior HR Business Partner (HRBP)",
+    "Director of Human Resources",
+    "Chief People Officer (CPO)"
+  ],
+  "jobTitles": [
+    {
+      "title": "HR Generalist",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Human Resources Specialist",
+        "People Operations Specialist",
+        "Staff HR Associate"
+      ]
+    },
+    {
+      "title": "Technical Recruiter",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Talent Acquisition Specialist",
+        "Corporate Recruiter",
+        "Headhunter"
+      ]
+    },
+    {
+      "title": "HR Business Partner (HRBP)",
+      "level": "Senior",
+      "alternativeTitles": [
+        "Senior HRBP",
+        "People Partner",
+        "Regional HR Manager"
+      ]
+    },
+    {
+      "title": "Director of Human Resources",
+      "level": "Lead / Staff",
+      "alternativeTitles": [
+        "Head of People Operations",
+        "VP of Talent",
+        "Chief People Officer (CPO)"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Human Resource Information Systems (HRIS)",
+        "category": "HR Tech",
+        "synonyms": [
+          "Workday",
+          "BambooHR",
+          "ADP Workforce Now",
+          "Rippling"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Applicant Tracking Systems (ATS)",
+        "category": "Recruiting Tech",
+        "synonyms": [
+          "Greenhouse",
+          "Lever",
+          "Workable",
+          "iCIMS",
+          "Jobvite"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Talent Acquisition & Sourcing",
+        "category": "Recruitment",
+        "synonyms": [
+          "Full-Cycle Recruiting",
+          "Boolean Search",
+          "LinkedIn Recruiter",
+          "Candidate Pipeline"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Employment Law & Labor Compliance",
+        "category": "Legal Compliance",
+        "synonyms": [
+          "EEOC",
+          "FLSA",
+          "FMLA",
+          "ADA",
+          "Title VII",
+          "COBRA"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Employee Relations & Conflict Resolution",
+        "category": "People Operations",
+        "synonyms": [
+          "Workplace Investigations",
+          "Performance Improvement Plans (PIPs)",
+          "Exit Interviews"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Compensation, Benefits & Total Rewards",
+        "category": "Compensation",
+        "synonyms": [
+          "Salary Benchmarking",
+          "Benefits Administration",
+          "401k Plans",
+          "Healthcare Open Enrollment"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Workday",
+        "synonyms": [
+          "Workday HCM"
+        ]
+      },
+      {
+        "name": "Greenhouse",
+        "synonyms": [
+          "Greenhouse ATS"
+        ]
+      },
+      {
+        "name": "LinkedIn Recruiter",
+        "synonyms": [
+          "Recruiter Corporate"
+        ]
+      },
+      {
+        "name": "BambooHR",
+        "synonyms": [
+          "BambooHR Platform"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Time-to-Hire & Cost-per-Hire",
+      "Employee Net Promoter Score (eNPS)",
+      "Retention & voluntary turnover rate",
+      "Performance management cycles",
+      "Diversity, Equity, and Inclusion (DEI) benchmarking"
+    ],
+    "softSkills": [
+      "High Discretion & Empathy",
+      "Executive Coaching",
+      "Conflict De-escalation",
+      "Impartial Investigation",
+      "Organizational Culture Champion"
+    ]
+  },
+  "commonCertifications": [
+    "SHRM-CP (Society for Human Resource Management Certified Professional)",
+    "SHRM-SCP",
+    "PHR (Professional in Human Resources)",
+    "SPHR (Senior Professional in Human Resources)",
+    "Talent Acquisition Strategist (TAS)"
+  ],
+  "commonQualifications": [
+    "Bachelor's in Human Resources, Business Administration, Psychology, or recognized SHRM/HRCI accreditation"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Recruited",
+      "Implemented",
+      "Resolved",
+      "Streamlined",
+      "Onboarded",
+      "Benchmarked",
+      "Administered",
+      "Cultivated"
+    ],
+    "metricTemplates": [
+      "Managed full-cycle recruitment across [X] technical roles per quarter, reducing average Time-to-Fill from [Y] to [Z] days.",
+      "Overhauled employee onboarding program across [X] distributed employees, driving 90-day retention to [Y]%.",
+      "Implemented Workday HRIS system for [X] employees on schedule, replacing disparate legacy systems.",
+      "Conducted [X] workplace grievance investigations with 100% adherence to EEOC guidelines and zero corporate liability findings."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "Display SHRM/PHR certification, total employee headcount supported, ATS/HRIS tools used, and hiring metrics.",
+    "keySectionsRecommended": [
+      "Summary",
+      "HR Certifications & Affiliations",
+      "Core People Competencies",
+      "Professional Experience",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Describing HR as administrative paperwork rather than strategic talent and culture initiatives with measurable retention/hiring metrics"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Senior Human Resources Generalist",
+      "company": "Vanguard Global Corp",
+      "requiredExperienceYears": 4,
+      "requiredQualifications": [
+        "4+ years in human resources generalist duties supporting 300+ employees",
+        "Demonstrated knowledge of federal and state labor laws (FLSA, FMLA, EEOC)",
+        "Hands-on experience managing HRIS in Workday, ADP, or BambooHR"
+      ],
+      "preferredQualifications": [
+        "Active SHRM-CP or PHR certification",
+        "Experience administering open enrollment benefits and 401(k) programs"
+      ]
+    }
+  ]
+}

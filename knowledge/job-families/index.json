@@ -1,0 +1,543 @@
+{
+  "totalFamilies": 20,
+  "updatedAt": "2026-10-27T14:28:43.335Z",
+  "families": [
+    {
+      "id": "software-development",
+      "displayName": "Software Development",
+      "category": "Technology",
+      "description": "Design, development, testing, and deployment of software applications, web systems, microservices, and mobile apps.",
+      "seniorityLevels": [
+        "Entry / Junior",
+        "Mid-Level",
+        "Senior",
+        "Lead / Staff",
+        "Principal / Architect",
+        "Engineering Manager"
+      ],
+      "topJobTitles": [
+        "Full Stack Developer",
+        "Frontend Developer",
+        "Backend Developer",
+        "Senior Software Engineer"
+      ],
+      "technicalSkillsCount": 18,
+      "commonCertifications": [
+        "AWS Certified Developer - Associate",
+        "AWS Certified Solutions Architect",
+        "Meta Certified Frontend Developer",
+        "Oracle Certified Professional: Java SE",
+        "Certified Kubernetes Application Developer (CKAD)"
+      ]
+    },
+    {
+      "id": "it-infrastructure-cloud",
+      "displayName": "IT Infrastructure and Cloud",
+      "category": "Technology",
+      "description": "System administration, cloud engineering, network architecture, virtualization, site reliability, and enterprise IT support.",
+      "seniorityLevels": [
+        "Junior IT Specialist",
+        "Systems Administrator",
+        "Cloud Engineer",
+        "Senior DevOps Engineer",
+        "Site Reliability Engineer (SRE)",
+        "Infrastructure Architect"
+      ],
+      "topJobTitles": [
+        "Cloud Engineer",
+        "DevOps Engineer",
+        "Site Reliability Engineer (SRE)",
+        "Systems Administrator"
+      ],
+      "technicalSkillsCount": 9,
+      "commonCertifications": [
+        "AWS Certified Solutions Architect",
+        "AWS Certified DevOps Engineer",
+        "Microsoft Certified: Azure Solutions Architect Expert",
+        "Certified Kubernetes Administrator (CKA)",
+        "Cisco Certified Network Associate (CCNA)"
+      ]
+    },
+    {
+      "id": "ai-data",
+      "displayName": "Artificial Intelligence and Data",
+      "category": "Technology",
+      "description": "Data engineering, machine learning, data science, deep learning, business intelligence, generative AI, and statistical modeling.",
+      "seniorityLevels": [
+        "Junior Data Analyst",
+        "Data Engineer",
+        "Machine Learning Engineer",
+        "Data Scientist",
+        "Senior AI Researcher",
+        "Head of Data"
+      ],
+      "topJobTitles": [
+        "Data Scientist",
+        "Machine Learning Engineer",
+        "Data Engineer",
+        "Senior AI Engineer"
+      ],
+      "technicalSkillsCount": 9,
+      "commonCertifications": [
+        "AWS Certified Machine Learning - Specialty",
+        "Google Cloud Professional Data Engineer",
+        "Google Cloud Professional Machine Learning Engineer",
+        "Databricks Certified Data Engineer Associate",
+        "TensorFlow Developer Certificate"
+      ]
+    },
+    {
+      "id": "cybersecurity",
+      "displayName": "Cybersecurity",
+      "category": "Technology",
+      "description": "Information security, threat intelligence, vulnerability management, penetration testing, incident response, and regulatory compliance.",
+      "seniorityLevels": [
+        "Security Analyst (SOC L1/L2)",
+        "Security Engineer",
+        "Penetration Tester",
+        "Senior Threat Hunter",
+        "Security Architect",
+        "CISO"
+      ],
+      "topJobTitles": [
+        "Information Security Analyst",
+        "Security Engineer",
+        "Penetration Tester",
+        "Incident Responder"
+      ],
+      "technicalSkillsCount": 8,
+      "commonCertifications": [
+        "CISSP (Certified Information Systems Security Professional)",
+        "CEH (Certified Ethical Hacker)",
+        "CompTIA Security+",
+        "OSCP (Offensive Security Certified Professional)",
+        "CISM (Certified Information Security Manager)"
+      ]
+    },
+    {
+      "id": "sales-business-dev",
+      "displayName": "Sales and Business Development",
+      "category": "Sales & Business",
+      "description": "B2B/B2C sales, enterprise account management, revenue generation, pipeline prospecting, negotiation, and client retention.",
+      "seniorityLevels": [
+        "Sales Development Representative (SDR)",
+        "Account Executive (AE)",
+        "Senior Account Executive",
+        "Enterprise Sales Director",
+        "VP of Global Sales"
+      ],
+      "topJobTitles": [
+        "Account Executive",
+        "Sales Development Representative (SDR)",
+        "Enterprise Account Executive",
+        "Business Development Manager"
+      ],
+      "technicalSkillsCount": 6,
+      "commonCertifications": [
+        "Certified Professional Sales Person (CPSP)",
+        "Salesforce Certified Administrator",
+        "HubSpot Inbound Sales Certified",
+        "MEDDIC Academy Certification"
+      ]
+    },
+    {
+      "id": "marketing-advertising",
+      "displayName": "Marketing and Advertising",
+      "category": "Sales & Business",
+      "description": "Digital marketing, brand strategy, demand generation, content marketing, SEO/SEM, marketing automation, and paid media.",
+      "seniorityLevels": [
+        "Marketing Coordinator",
+        "Digital Marketing Specialist",
+        "Content Strategist",
+        "Growth Marketing Manager",
+        "VP of Brand & Growth",
+        "CMO"
+      ],
+      "topJobTitles": [
+        "Digital Marketing Specialist",
+        "Growth Marketing Manager",
+        "SEO / SEM Specialist",
+        "Content Marketing Manager"
+      ],
+      "technicalSkillsCount": 6,
+      "commonCertifications": [
+        "Google Ads Certified Professional",
+        "Google Analytics Individual Qualification (GAIQ)",
+        "HubSpot Inbound Marketing Certification",
+        "Meta Certified Digital Marketing Associate"
+      ]
+    },
+    {
+      "id": "customer-service-support",
+      "displayName": "Customer Service and Technical Support",
+      "category": "Service & Support",
+      "description": "Client onboarding, technical support, helpdesk administration, customer success, ticket resolution, and client advocacy.",
+      "seniorityLevels": [
+        "Helpdesk Technician L1",
+        "Customer Support Representative",
+        "Technical Support Specialist L2/L3",
+        "Customer Success Manager",
+        "Support Operations Lead",
+        "VP of Customer Experience"
+      ],
+      "topJobTitles": [
+        "Customer Support Specialist",
+        "Technical Support Engineer",
+        "Customer Success Manager (CSM)",
+        "Support Operations Lead"
+      ],
+      "technicalSkillsCount": 5,
+      "commonCertifications": [
+        "CompTIA A+",
+        "CompTIA Network+",
+        "ITIL Foundation v4",
+        "Zendesk Support Certified Administrator",
+        "Microsoft Certified: Modern Desktop Administrator Associate"
+      ]
+    },
+    {
+      "id": "finance-accounting",
+      "displayName": "Finance and Accounting",
+      "category": "Finance & Banking",
+      "description": "Corporate accounting, financial planning & analysis (FP&A), auditing, taxation, general ledger, reporting, and financial controls.",
+      "seniorityLevels": [
+        "Staff Accountant",
+        "Financial Analyst",
+        "Senior Accountant",
+        "Accounting Manager",
+        "Finance Director",
+        "CFO"
+      ],
+      "topJobTitles": [
+        "Financial Analyst",
+        "Senior Accountant",
+        "Accounting Manager",
+        "Corporate Controller"
+      ],
+      "technicalSkillsCount": 6,
+      "commonCertifications": [
+        "CPA (Certified Public Accountant)",
+        "CFA (Chartered Financial Analyst)",
+        "CMA (Certified Management Accountant)",
+        "ACCA (Association of Chartered Certified Accountants)"
+      ]
+    },
+    {
+      "id": "banking-insurance",
+      "displayName": "Banking and Insurance",
+      "category": "Finance & Banking",
+      "description": "Commercial banking, retail branch operations, underwriting, loan origination, wealth management, claims processing, and risk management.",
+      "seniorityLevels": [
+        "Bank Teller / Associate",
+        "Loan Officer / Underwriter",
+        "Senior Claims Adjuster",
+        "Wealth Management Advisor",
+        "Branch Manager",
+        "VP of Lending"
+      ],
+      "topJobTitles": [
+        "Commercial Loan Officer",
+        "Underwriter",
+        "Claims Adjuster",
+        "Branch Manager"
+      ],
+      "technicalSkillsCount": 5,
+      "commonCertifications": [
+        "Certified Regulatory Compliance Manager (CRCM)",
+        "Chartered Financial Consultant (ChFC)",
+        "Certified Anti-Money Laundering Specialist (CAMS)",
+        "FINRA Series 7 and Series 66",
+        "NMLS License"
+      ]
+    },
+    {
+      "id": "hr-recruitment",
+      "displayName": "Human Resources and Recruitment",
+      "category": "Operations & Management",
+      "description": "Talent acquisition, employee relations, onboarding, performance management, HR operations, compliance, compensation and benefits.",
+      "seniorityLevels": [
+        "HR Coordinator",
+        "Talent Acquisition Specialist",
+        "HR Generalist",
+        "Senior HR Business Partner (HRBP)",
+        "Director of Human Resources",
+        "Chief People Officer (CPO)"
+      ],
+      "topJobTitles": [
+        "HR Generalist",
+        "Technical Recruiter",
+        "HR Business Partner (HRBP)",
+        "Director of Human Resources"
+      ],
+      "technicalSkillsCount": 6,
+      "commonCertifications": [
+        "SHRM-CP (Society for Human Resource Management Certified Professional)",
+        "SHRM-SCP",
+        "PHR (Professional in Human Resources)",
+        "SPHR (Senior Professional in Human Resources)",
+        "Talent Acquisition Strategist (TAS)"
+      ]
+    },
+    {
+      "id": "administration-office",
+      "displayName": "Administration and Office Management",
+      "category": "Operations & Management",
+      "description": "Executive assistance, office coordination, records management, calendar scheduling, travel logistics, document preparation, and office operations.",
+      "seniorityLevels": [
+        "Receptionist",
+        "Administrative Assistant",
+        "Office Manager",
+        "Executive Assistant (EA)",
+        "Chief of Staff"
+      ],
+      "topJobTitles": [
+        "Executive Assistant",
+        "Office Manager",
+        "Administrative Assistant"
+      ],
+      "technicalSkillsCount": 5,
+      "commonCertifications": [
+        "Certified Administrative Professional (CAP)",
+        "Microsoft Office Specialist (MOS) Expert",
+        "Certified Executive Assistant (CEA)"
+      ]
+    },
+    {
+      "id": "operations-logistics",
+      "displayName": "Operations and Logistics",
+      "category": "Operations & Management",
+      "description": "Supply chain management, warehouse operations, procurement, inventory control, distribution, fleet routing, and continuous process improvement.",
+      "seniorityLevels": [
+        "Logistics Coordinator",
+        "Warehouse Supervisor",
+        "Supply Chain Analyst",
+        "Operations Manager",
+        "Director of Supply Chain",
+        "VP of Global Operations"
+      ],
+      "topJobTitles": [
+        "Operations Manager",
+        "Supply Chain Analyst",
+        "Warehouse Operations Supervisor"
+      ],
+      "technicalSkillsCount": 5,
+      "commonCertifications": [
+        "APICS CSCP (Certified Supply Chain Professional)",
+        "APICS CPIM (Certified in Planning and Inventory Management)",
+        "Six Sigma Green Belt / Black Belt",
+        "PMP (Project Management Professional)"
+      ]
+    },
+    {
+      "id": "retail-ecommerce",
+      "displayName": "Retail and E-commerce",
+      "category": "Sales & Business",
+      "description": "Online store management, merchandising, catalog optimization, marketplace operations (Amazon, Shopify), store management, and omnichannel retail.",
+      "seniorityLevels": [
+        "Retail Sales Associate",
+        "E-commerce Specialist",
+        "Assistant Store Manager",
+        "E-commerce Operations Manager",
+        "Store Manager",
+        "VP of Retail & Digital"
+      ],
+      "topJobTitles": [
+        "E-commerce Manager",
+        "Retail Store Manager",
+        "E-commerce Catalog Specialist"
+      ],
+      "technicalSkillsCount": 5,
+      "commonCertifications": [
+        "Shopify Certified Partner",
+        "Amazon Advertising Certification",
+        "National Retail Federation (NRF) Customer Service Certification"
+      ]
+    },
+    {
+      "id": "healthcare-medical",
+      "displayName": "Healthcare and Medical Administration",
+      "category": "Healthcare & Science",
+      "description": "Clinical nursing, medical administration, healthcare records, HIPAA compliance, patient care coordination, medical billing and coding.",
+      "seniorityLevels": [
+        "Certified Nursing Assistant (CNA)",
+        "Registered Nurse (RN)",
+        "Medical Biller / Coder",
+        "Charge Nurse",
+        "Clinical Nurse Manager",
+        "Director of Nursing / Medical Director"
+      ],
+      "topJobTitles": [
+        "Registered Nurse (RN)",
+        "Medical Office Administrator",
+        "Medical Biller and Coder",
+        "Clinical Nurse Supervisor"
+      ],
+      "technicalSkillsCount": 5,
+      "commonCertifications": [
+        "RN (Registered Nurse License - State/eNLC)",
+        "BLS (Basic Life Support - AHA)",
+        "ACLS (Advanced Cardiac Life Support)",
+        "Certified Professional Coder (CPC - AAPC)",
+        "Certified Medical Administrative Assistant (CMAA)"
+      ]
+    },
+    {
+      "id": "engineering",
+      "displayName": "Engineering",
+      "category": "Engineering & Industrial",
+      "description": "Mechanical, electrical, civil, chemical, and hardware engineering, CAD/CAM modeling, structural analysis, and technical design.",
+      "seniorityLevels": [
+        "Junior Engineer",
+        "Mechanical/Electrical Engineer",
+        "Senior Project Engineer",
+        "Lead Systems Engineer",
+        "Principal Engineer",
+        "Chief Engineer"
+      ],
+      "topJobTitles": [
+        "Mechanical Engineer",
+        "Electrical Engineer",
+        "Civil Engineer",
+        "Senior Systems Engineer"
+      ],
+      "technicalSkillsCount": 5,
+      "commonCertifications": [
+        "PE (Professional Engineer License)",
+        "FE / EIT (Fundamentals of Engineering / Engineer in Training)",
+        "SolidWorks Certified Professional (CSWP)",
+        "Six Sigma Green Belt"
+      ]
+    },
+    {
+      "id": "manufacturing-quality",
+      "displayName": "Manufacturing and Quality",
+      "category": "Engineering & Industrial",
+      "description": "Plant operations, quality assurance, ISO 9001 audits, root cause analysis, statistical process control (SPC), assembly operations, and safety.",
+      "seniorityLevels": [
+        "Quality Inspector",
+        "Quality Engineer",
+        "Manufacturing Engineer",
+        "Quality Assurance Manager",
+        "Plant Operations Director"
+      ],
+      "topJobTitles": [
+        "Quality Assurance Engineer",
+        "Manufacturing Engineer",
+        "Quality Assurance Manager"
+      ],
+      "technicalSkillsCount": 5,
+      "commonCertifications": [
+        "ASQ CQE (Certified Quality Engineer)",
+        "ASQ CQA (Certified Quality Auditor)",
+        "Six Sigma Green Belt / Black Belt",
+        "Certified Six Sigma Black Belt (CSSBB)"
+      ]
+    },
+    {
+      "id": "construction-infrastructure",
+      "displayName": "Construction and Infrastructure",
+      "category": "Engineering & Industrial",
+      "description": "General contracting, civil construction, jobsite management, project bidding, building codes, OSHA compliance, and infrastructure development.",
+      "seniorityLevels": [
+        "Field Engineer",
+        "Construction Estimator",
+        "Assistant Project Manager",
+        "Site Superintendent",
+        "Construction Project Manager",
+        "VP of Construction"
+      ],
+      "topJobTitles": [
+        "Construction Project Manager",
+        "Site Superintendent",
+        "Construction Estimator"
+      ],
+      "technicalSkillsCount": 5,
+      "commonCertifications": [
+        "OSHA 30-Hour Construction Safety",
+        "CCM (Certified Construction Manager)",
+        "PMP (Project Management Professional)",
+        "LEED AP (Leadership in Energy and Environmental Design)"
+      ]
+    },
+    {
+      "id": "education-training",
+      "displayName": "Education and Training",
+      "category": "Education & Public Service",
+      "description": "Curriculum design, classroom instruction, corporate training, educational technology (EdTech), instructional design, and academic leadership.",
+      "seniorityLevels": [
+        "Teaching Assistant",
+        "Teacher / Instructor",
+        "Senior Lecturer / Professor",
+        "Instructional Designer",
+        "Corporate Trainer",
+        "Dean / Academic Director"
+      ],
+      "topJobTitles": [
+        "Instructional Designer",
+        "Corporate Trainer",
+        "Educator / Teacher",
+        "Director of Learning and Development"
+      ],
+      "technicalSkillsCount": 5,
+      "commonCertifications": [
+        "State Teaching License / Certification",
+        "Certified Professional in Learning and Performance (CPLP / CPTD)",
+        "Instructional Design Certificate (ATD)",
+        "Google Certified Educator"
+      ]
+    },
+    {
+      "id": "hospitality-travel",
+      "displayName": "Hospitality and Travel",
+      "category": "Service & Support",
+      "description": "Hotel management, guest relations, front office operations, event planning, food & beverage coordination, and travel tourism.",
+      "seniorityLevels": [
+        "Front Desk Agent",
+        "Concierge / Guest Relations",
+        "Event Coordinator",
+        "Restaurant / F&B Manager",
+        "Hotel General Manager"
+      ],
+      "topJobTitles": [
+        "Hotel General Manager",
+        "Guest Services Manager",
+        "Event & Banquet Coordinator"
+      ],
+      "technicalSkillsCount": 5,
+      "commonCertifications": [
+        "Certified Hotel Administrator (CHA)",
+        "Certified Hospitality Supervisor (CHS)",
+        "ServSafe Manager Food Protection",
+        "Sommelier Certification (Court of Master Sommeliers)"
+      ]
+    },
+    {
+      "id": "project-management-executive",
+      "displayName": "Project Management and Executive Leadership",
+      "category": "Operations & Management",
+      "description": "Agile/Scrum management, program governance, enterprise strategic planning, stakeholder alignment, P&L management, and executive leadership.",
+      "seniorityLevels": [
+        "Associate Project Manager",
+        "Scrum Master",
+        "Project Manager (PMP)",
+        "Senior Program Manager",
+        "Director of PMO",
+        "Chief Operating Officer (COO) / CEO"
+      ],
+      "topJobTitles": [
+        "Project Manager (PMP)",
+        "Program Manager",
+        "Scrum Master / Agile Coach",
+        "Director of Program Management (PMO)"
+      ],
+      "technicalSkillsCount": 5,
+      "commonCertifications": [
+        "PMP (Project Management Professional - PMI)",
+        "CSM (Certified ScrumMaster - Scrum Alliance)",
+        "PMI-ACP (Agile Certified Practitioner)",
+        "SAFe Agilist (Scaled Agile Framework)",
+        "PRINCE2 Practitioner"
+      ]
+    }
+  ]
+}

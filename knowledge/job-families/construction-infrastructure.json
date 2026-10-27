@@ -1,0 +1,191 @@
+{
+  "id": "construction-infrastructure",
+  "displayName": "Construction and Infrastructure",
+  "description": "General contracting, civil construction, jobsite management, project bidding, building codes, OSHA compliance, and infrastructure development.",
+  "category": "Engineering & Industrial",
+  "seniorityLevels": [
+    "Field Engineer",
+    "Construction Estimator",
+    "Assistant Project Manager",
+    "Site Superintendent",
+    "Construction Project Manager",
+    "VP of Construction"
+  ],
+  "jobTitles": [
+    {
+      "title": "Construction Project Manager",
+      "level": "Senior",
+      "alternativeTitles": [
+        "Commercial Project Manager",
+        "General Contractor PM",
+        "Infrastructure Project Manager"
+      ]
+    },
+    {
+      "title": "Site Superintendent",
+      "level": "Senior",
+      "alternativeTitles": [
+        "General Superintendent",
+        "Construction Superintendent",
+        "Jobsite Supervisor"
+      ]
+    },
+    {
+      "title": "Construction Estimator",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Cost Estimator",
+        "Bidding Specialist",
+        "Preconstruction Estimator"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Construction Management Software",
+        "category": "Software",
+        "synonyms": [
+          "Procore",
+          "Plangrid",
+          "Bluebeam Revu",
+          "AutoCAD"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Project Scheduling & Critical Path",
+        "category": "Project Controls",
+        "synonyms": [
+          "Primavera P6",
+          "Microsoft Project",
+          "CPM Scheduling",
+          "Submittals & RFIs"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Cost Estimation & Bidding",
+        "category": "Financial Controls",
+        "synonyms": [
+          "Quantity Takeoff",
+          "Subcontractor Scopes",
+          "Bid Packages",
+          "Budget Forecasting"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "OSHA & Jobsite Safety Compliance",
+        "category": "Safety & Compliance",
+        "synonyms": [
+          "OSHA 30",
+          "Site Safety Audits",
+          "Toolbox Talks",
+          "PPE Enforcement"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Building Codes & Inspection",
+        "category": "Codes & Permitting",
+        "synonyms": [
+          "IBC (International Building Code)",
+          "ADA Standards",
+          "City Permitting",
+          "Quality Control"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Procore",
+        "synonyms": [
+          "Procore Project Management"
+        ]
+      },
+      {
+        "name": "Primavera P6",
+        "synonyms": [
+          "Oracle Primavera P6"
+        ]
+      },
+      {
+        "name": "Bluebeam Revu",
+        "synonyms": [
+          "Bluebeam PDF Takeoff"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Requests for Information (RFIs)",
+      "Submittals & Shop Drawings",
+      "Change Orders & Contingency",
+      "Notice to Proceed (NTP)",
+      "Substantial Completion & Punch Lists"
+    ],
+    "softSkills": [
+      "Subcontractor Negotiations",
+      "Jobsite Decisiveness",
+      "Owner/Architect Relations",
+      "Crisis Safety Leadership"
+    ]
+  },
+  "commonCertifications": [
+    "OSHA 30-Hour Construction Safety",
+    "CCM (Certified Construction Manager)",
+    "PMP (Project Management Professional)",
+    "LEED AP (Leadership in Energy and Environmental Design)"
+  ],
+  "commonQualifications": [
+    "Bachelor's in Construction Management, Civil Engineering, Building Science, or equivalent field general contracting history"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Constructed",
+      "Managed",
+      "Supervised",
+      "Estimated",
+      "Coordinated",
+      "Scheduled",
+      "Negotiated",
+      "Delivered"
+    ],
+    "metricTemplates": [
+      "Delivered $[X]M commercial development project on schedule and [Y]% under budget with zero OSHA recordable safety incidents.",
+      "Managed daily operations across [X]+ trades and subcontractors on active jobsite, maintaining critical path milestones via Primavera P6.",
+      "Compiled accurate bid takeoffs in Bluebeam, winning $[X]M in competitive municipal infrastructure contracts.",
+      "Resolved over [X] RFIs and submittal packages with architects, mitigating potential project delays."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "State total dollar value of construction projects delivered, safety record (OSHA 30, zero recordables), and management software (Procore, P6).",
+    "keySectionsRecommended": [
+      "Summary",
+      "Safety & Professional Certifications (OSHA 30)",
+      "Construction Competencies",
+      "Project Experience (with Project $ Values)",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Failing to quantify project values ($M), square footage, or safety records"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Commercial Construction Project Manager",
+      "company": "Keystone Builders & Contractors",
+      "requiredExperienceYears": 5,
+      "requiredQualifications": [
+        "5+ years leading ground-up commercial construction projects valued at >$10M",
+        "Proficiency in Procore, Bluebeam Revu, and Primavera P6 scheduling",
+        "Valid OSHA 30-Hour Construction certification"
+      ],
+      "preferredQualifications": [
+        "Degree in Construction Management or Civil Engineering",
+        "CCM or LEED AP accreditation"
+      ]
+    }
+  ]
+}

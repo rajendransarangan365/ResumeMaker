@@ -14,6 +14,7 @@ import { optimizationRoutes } from './routes/optimization.routes';
 import { exportRoutes } from './routes/export.routes';
 import { aiUsageRoutes } from './routes/ai-usage.routes';
 import { healthRoutes } from './routes/health.routes';
+import { agentRoutes } from './routes/agent.routes';
 
 export function createApp(): Application {
   const app = express();
@@ -78,6 +79,7 @@ export function createApp(): Application {
   app.use('/api/v1/optimization', optimizationRoutes);
   app.use('/api/v1/exports', exportRoutes);
   app.use('/api/v1/ai-usage', aiUsageRoutes);
+  app.use('/api/v1/agents', agentRoutes);
 
   // Error Handling Middleware
   app.use(errorHandler);

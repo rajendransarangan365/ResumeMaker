@@ -1,0 +1,188 @@
+{
+  "id": "hospitality-travel",
+  "displayName": "Hospitality and Travel",
+  "description": "Hotel management, guest relations, front office operations, event planning, food & beverage coordination, and travel tourism.",
+  "category": "Service & Support",
+  "seniorityLevels": [
+    "Front Desk Agent",
+    "Concierge / Guest Relations",
+    "Event Coordinator",
+    "Restaurant / F&B Manager",
+    "Hotel General Manager"
+  ],
+  "jobTitles": [
+    {
+      "title": "Hotel General Manager",
+      "level": "Senior",
+      "alternativeTitles": [
+        "Hotel Operations Manager",
+        "Resort Manager",
+        "Managing Director"
+      ]
+    },
+    {
+      "title": "Guest Services Manager",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Front Office Manager",
+        "Guest Relations Lead",
+        "Hotel Assistant Manager"
+      ]
+    },
+    {
+      "title": "Event & Banquet Coordinator",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Hospitality Event Planner",
+        "Catering Sales Manager"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Property Management Systems (PMS)",
+        "category": "Hospitality Tech",
+        "synonyms": [
+          "Opera PMS",
+          "Amadeus Hospitality",
+          "Cloudbeds",
+          "Fidelio"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Guest Relations & VIP Experience",
+        "category": "Customer Experience",
+        "synonyms": [
+          "Concierge Service",
+          "Complaint Resolution",
+          "VIP Protocol",
+          "Guest Loyalty Programs"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Revenue Management & Booking",
+        "category": "Financial Management",
+        "synonyms": [
+          "RevPAR",
+          "ADR (Average Daily Rate)",
+          "Occupancy Rates",
+          "Yield Management"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Food & Beverage Operations",
+        "category": "F&B Operations",
+        "synonyms": [
+          "Menu Planning",
+          "Banquet Service",
+          "Inventory Control",
+          "ServSafe Food Safety"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Event Coordination & Scheduling",
+        "category": "Events",
+        "synonyms": [
+          "Banquet Event Orders (BEOs)",
+          "Vendor Coordination",
+          "Wedding & Corporate Events"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Opera PMS",
+        "synonyms": [
+          "Oracle Hospitality Opera"
+        ]
+      },
+      {
+        "name": "OpenTable / Resy",
+        "synonyms": [
+          "Restaurant Reservation Platforms"
+        ]
+      },
+      {
+        "name": "Delphi / Amadeus",
+        "synonyms": [
+          "Sales and Event Management"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "RevPAR (Revenue Per Available Room)",
+      "ADR (Average Daily Rate)",
+      "Occupancy Percentage",
+      "Forbes Travel Guide Five-Star Standards",
+      "TripAdvisor / OTA review scores"
+    ],
+    "softSkills": [
+      "Impeccable Hospitality Etiquette",
+      "Crisis Guest Resolution",
+      "Charismatic Leadership",
+      "Stamina Under High Volume"
+    ]
+  },
+  "commonCertifications": [
+    "Certified Hotel Administrator (CHA)",
+    "Certified Hospitality Supervisor (CHS)",
+    "ServSafe Manager Food Protection",
+    "Sommelier Certification (Court of Master Sommeliers)"
+  ],
+  "commonQualifications": [
+    "Bachelor's in Hospitality Management, Hotel Administration, Culinary Arts, or proven guest operations track record"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Managed",
+      "Coordinated",
+      "Elevated",
+      "Welcomed",
+      "Hosted",
+      "Supervised",
+      "Boosted",
+      "Organized"
+    ],
+    "metricTemplates": [
+      "Managed daily operations of [X]-room luxury boutique hotel, driving annual occupancy to [Y]% and elevating RevPAR by [Z]%.",
+      "Elevated guest satisfaction ratings on TripAdvisor from [X] to [Y] stars, achieving #1 regional ranking.",
+      "Planned and orchestrated over [X] high-end corporate banquets and weddings generating $[Y]k in catering revenue.",
+      "Trained and supervised front office staff of [X] associates with 100% compliance to Five-Star hospitality standards."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "State hotel room count, occupancy rate accomplishments, RevPAR growth, and PMS software (Opera, Delphi).",
+    "keySectionsRecommended": [
+      "Summary",
+      "Hospitality Certifications (ServSafe, CHA)",
+      "Guest Services Competencies",
+      "Experience",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Writing generic service responsibilities without room counts, occupancy numbers, or customer rating scores"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Front Office Operations Manager",
+      "company": "Grand Horizon Luxury Resorts",
+      "requiredExperienceYears": 4,
+      "requiredQualifications": [
+        "4+ years in upscale hotel front office or guest services management",
+        "Proficiency in Oracle Opera PMS or Cloudbeds",
+        "Demonstrated record elevating guest satisfaction scores and ADR"
+      ],
+      "preferredQualifications": [
+        "Degree in Hospitality Management",
+        "Certified Hospitality Supervisor (CHS) designation"
+      ]
+    }
+  ]
+}

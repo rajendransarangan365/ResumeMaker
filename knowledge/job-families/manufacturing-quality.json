@@ -1,0 +1,190 @@
+{
+  "id": "manufacturing-quality",
+  "displayName": "Manufacturing and Quality",
+  "description": "Plant operations, quality assurance, ISO 9001 audits, root cause analysis, statistical process control (SPC), assembly operations, and safety.",
+  "category": "Engineering & Industrial",
+  "seniorityLevels": [
+    "Quality Inspector",
+    "Quality Engineer",
+    "Manufacturing Engineer",
+    "Quality Assurance Manager",
+    "Plant Operations Director"
+  ],
+  "jobTitles": [
+    {
+      "title": "Quality Assurance Engineer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "QA Engineer (Manufacturing)",
+        "Quality Control Engineer",
+        "Quality Systems Specialist"
+      ]
+    },
+    {
+      "title": "Manufacturing Engineer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Process Engineer",
+        "Industrial Engineer",
+        "Assembly Process Specialist"
+      ]
+    },
+    {
+      "title": "Quality Assurance Manager",
+      "level": "Lead / Staff",
+      "alternativeTitles": [
+        "Director of Quality Control",
+        "Director of Quality Systems"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Quality Management Systems (QMS)",
+        "category": "Quality Systems",
+        "synonyms": [
+          "ISO 9001",
+          "IATF 16949",
+          "AS9100",
+          "ISO 13485"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Statistical Process Control (SPC)",
+        "category": "Process Control",
+        "synonyms": [
+          "Minitab",
+          "Control Charts",
+          "Cp/Cpk Capability Studies",
+          "Gauge R&R"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Root Cause & Corrective Action",
+        "category": "Problem Solving",
+        "synonyms": [
+          "CAPA",
+          "8D Problem Solving",
+          "5 Whys",
+          "Fishbone / Ishikawa Diagrams"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Failure Mode and Effects Analysis (FMEA)",
+        "category": "Risk Analysis",
+        "synonyms": [
+          "DFMEA",
+          "PFMEA",
+          "Risk Priority Number (RPN)"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Lean Manufacturing & Continuous Improvement",
+        "category": "Lean Methods",
+        "synonyms": [
+          "Kaizen",
+          "Poka-Yoke (Mistake Proofing)",
+          "Value Stream Mapping (VSM)"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Minitab",
+        "synonyms": [
+          "Minitab Statistical Software"
+        ]
+      },
+      {
+        "name": "Coordinate Measuring Machines (CMM)",
+        "synonyms": [
+          "CMM Metrology",
+          "Calipers",
+          "Micrometers"
+        ]
+      },
+      {
+        "name": "ERP Manufacturing Modules",
+        "synonyms": [
+          "SAP PP",
+          "Epicor Manufacturing"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Parts Per Million (PPM) defect rate",
+      "First Pass Yield (FPY)",
+      "Non-Conformance Reports (NCR)",
+      "Production Part Approval Process (PPAP)",
+      "Standard Operating Procedures (SOP)"
+    ],
+    "softSkills": [
+      "Uncompromising Standard of Accuracy",
+      "Cross-Shift Leadership",
+      "Audit Composure",
+      "Root Cause Tenacity"
+    ]
+  },
+  "commonCertifications": [
+    "ASQ CQE (Certified Quality Engineer)",
+    "ASQ CQA (Certified Quality Auditor)",
+    "Six Sigma Green Belt / Black Belt",
+    "Certified Six Sigma Black Belt (CSSBB)"
+  ],
+  "commonQualifications": [
+    "Bachelor's in Industrial Engineering, Mechanical Engineering, Materials Science, or certified ASQ credential"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Inspected",
+      "Reduced",
+      "Standardized",
+      "Audited",
+      "Investigated",
+      "Implemented",
+      "Calibrated",
+      "Validated"
+    ],
+    "metricTemplates": [
+      "Reduced scrap rate by [X]% and saved $[Y]k annually by conducting 8D root-cause investigations and implementing Poka-Yoke tooling.",
+      "Achieved [X]% First Pass Yield (FPY) across high-volume automated production line with a Cpk of >[Y].",
+      "Led internal audit preparation for ISO 9001:2015 recertification, resulting in zero major non-conformances.",
+      "Executed PFMEA risk assessments and Gauge R&R studies across [X] precision manufacturing fixtures."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "Display ASQ and Six Sigma certifications, defect reduction percentages (PPM), and QMS standards (ISO 9001/AS9100).",
+    "keySectionsRecommended": [
+      "Summary",
+      "Quality Certifications (ASQ, Six Sigma)",
+      "QMS & Manufacturing Strengths",
+      "Experience",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Omitting statistical metrics (Cp, Cpk, PPM, First Pass Yield) or naming of ISO standards"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Senior Quality Assurance Engineer",
+      "company": "Precision Components Corp",
+      "requiredExperienceYears": 4,
+      "requiredQualifications": [
+        "4+ years in quality engineering within an ISO 9001 or AS9100 manufacturing facility",
+        "Mastery of Statistical Process Control (SPC), Gauge R&R, and Minitab",
+        "Proven expertise leading 8D CAPA root cause problem solving"
+      ],
+      "preferredQualifications": [
+        "ASQ Certified Quality Engineer (CQE) or Six Sigma Green Belt",
+        "Experience conducting PPAP documentation for Tier 1 suppliers"
+      ]
+    }
+  ]
+}

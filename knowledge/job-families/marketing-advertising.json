@@ -1,0 +1,230 @@
+{
+  "id": "marketing-advertising",
+  "displayName": "Marketing and Advertising",
+  "description": "Digital marketing, brand strategy, demand generation, content marketing, SEO/SEM, marketing automation, and paid media.",
+  "category": "Sales & Business",
+  "seniorityLevels": [
+    "Marketing Coordinator",
+    "Digital Marketing Specialist",
+    "Content Strategist",
+    "Growth Marketing Manager",
+    "VP of Brand & Growth",
+    "CMO"
+  ],
+  "jobTitles": [
+    {
+      "title": "Digital Marketing Specialist",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Online Marketing Manager",
+        "Performance Marketing Specialist",
+        "Demand Gen Specialist"
+      ]
+    },
+    {
+      "title": "Growth Marketing Manager",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "User Acquisition Manager",
+        "Growth Hacker",
+        "Performance Marketing Manager"
+      ]
+    },
+    {
+      "title": "SEO / SEM Specialist",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Search Engine Optimization Specialist",
+        "PPC Manager",
+        "Search Strategist"
+      ]
+    },
+    {
+      "title": "Content Marketing Manager",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Content Strategist",
+        "Editorial Manager",
+        "Copywriter & Content Lead"
+      ]
+    },
+    {
+      "title": "Chief Marketing Officer (CMO)",
+      "level": "Lead / Staff",
+      "alternativeTitles": [
+        "VP of Marketing",
+        "Head of Brand Strategy",
+        "Global Marketing Director"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Search Engine Optimization (SEO)",
+        "category": "Organic Growth",
+        "synonyms": [
+          "Technical SEO",
+          "Keyword Research",
+          "Ahrefs",
+          "SEMrush"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Paid Search & Social (SEM/PPC)",
+        "category": "Paid Media",
+        "synonyms": [
+          "Google Ads",
+          "Meta Ads Manager",
+          "LinkedIn Ads",
+          "PPC Campaigns"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Web Analytics & Tagging",
+        "category": "Analytics",
+        "synonyms": [
+          "Google Analytics 4 (GA4)",
+          "Google Tag Manager",
+          "Mixpanel",
+          "Amplitude"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Marketing Automation & Email",
+        "category": "Retention & Email",
+        "synonyms": [
+          "HubSpot Marketing",
+          "Marketo",
+          "Klaviyo",
+          "Mailchimp",
+          "Customer.io"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Conversion Rate Optimization (CRO)",
+        "category": "Optimization",
+        "synonyms": [
+          "A/B Testing",
+          "Landing Page Optimization",
+          "Optimizely",
+          "Unbounce"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Content Marketing Strategy",
+        "category": "Content & Editorial",
+        "synonyms": [
+          "Blog Strategy",
+          "Whitepapers",
+          "Case Studies",
+          "Brand Storytelling"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Google Ads",
+        "synonyms": [
+          "Google AdWords"
+        ]
+      },
+      {
+        "name": "Google Analytics 4",
+        "synonyms": [
+          "GA4",
+          "Universal Analytics Migration"
+        ]
+      },
+      {
+        "name": "Ahrefs / SEMrush",
+        "synonyms": [
+          "SEO Suites"
+        ]
+      },
+      {
+        "name": "Marketo / HubSpot",
+        "synonyms": [
+          "Marketing Automation"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Cost Per Acquisition (CPA)",
+      "Return on Ad Spend (ROAS)",
+      "Click-Through Rate (CTR)",
+      "Marketing Qualified Leads (MQLs)",
+      "Customer Acquisition Cost (CAC)",
+      "Organic organic impressions"
+    ],
+    "softSkills": [
+      "Creative Brand Vision",
+      "Data-Driven Decision Making",
+      "Storytelling & Copywriting",
+      "Campaign Project Management",
+      "Cross-Functional Collaboration"
+    ]
+  },
+  "commonCertifications": [
+    "Google Ads Certified Professional",
+    "Google Analytics Individual Qualification (GAIQ)",
+    "HubSpot Inbound Marketing Certification",
+    "Meta Certified Digital Marketing Associate"
+  ],
+  "commonQualifications": [
+    "Bachelor's in Marketing, Communications, Advertising, Business, or proven commercial campaign execution portfolio"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Orchestrated",
+      "Scaled",
+      "Spearheaded",
+      "Optimized",
+      "Launched",
+      "Generated",
+      "Acquired",
+      "Produced"
+    ],
+    "metricTemplates": [
+      "Scaled organic inbound traffic by [X]% year-over-year through targeted technical SEO enhancements and keyword clusters.",
+      "Managed $[X]k monthly paid ad budget across Google and Meta, generating [Y] MQLs at a [Z]% reduction in CPA.",
+      "Executed automated email nurture campaign in HubSpot, boosting email-to-pipeline conversion rate by [X]%.",
+      "Increased landing page conversion rate from [X]% to [Y]% through structured multivariate A/B testing."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "Focus on growth metrics, budget managed, CAC/ROAS efficiencies, and key channel specializations.",
+    "keySectionsRecommended": [
+      "Summary",
+      "Core Marketing Competencies",
+      "Marketing Campaigns & Experience",
+      "Tools & Certifications",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Focusing entirely on activities (e.g. wrote posts) rather than outcomes (traffic, leads, conversions, ROAS)"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Performance Marketing Manager",
+      "company": "Nova Growth Brands",
+      "requiredExperienceYears": 4,
+      "requiredQualifications": [
+        "4+ years managing multi-channel paid acquisition across Google and Meta Ads",
+        "Expert proficiency in Google Analytics 4 (GA4) and Google Tag Manager",
+        "Demonstrated record managing >$100k/mo ad spend profitably"
+      ],
+      "preferredQualifications": [
+        "Experience with B2B lead generation via LinkedIn Ads",
+        "HubSpot or Marketo marketing automation certification"
+      ]
+    }
+  ]
+}

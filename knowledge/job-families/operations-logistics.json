@@ -1,0 +1,193 @@
+{
+  "id": "operations-logistics",
+  "displayName": "Operations and Logistics",
+  "description": "Supply chain management, warehouse operations, procurement, inventory control, distribution, fleet routing, and continuous process improvement.",
+  "category": "Operations & Management",
+  "seniorityLevels": [
+    "Logistics Coordinator",
+    "Warehouse Supervisor",
+    "Supply Chain Analyst",
+    "Operations Manager",
+    "Director of Supply Chain",
+    "VP of Global Operations"
+  ],
+  "jobTitles": [
+    {
+      "title": "Operations Manager",
+      "level": "Senior",
+      "alternativeTitles": [
+        "Director of Operations",
+        "General Operations Manager",
+        "Business Operations Lead"
+      ]
+    },
+    {
+      "title": "Supply Chain Analyst",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Logistics Analyst",
+        "Procurement Specialist",
+        "Inventory Planner"
+      ]
+    },
+    {
+      "title": "Warehouse Operations Supervisor",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Fulfillment Manager",
+        "Distribution Center Supervisor",
+        "Inventory Manager"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Supply Chain Planning & Sourcing",
+        "category": "Supply Chain",
+        "synonyms": [
+          "Vendor Management",
+          "Procurement",
+          "Purchase Orders (PO)",
+          "Supplier Relations"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Inventory Control & Warehouse Management",
+        "category": "Warehousing",
+        "synonyms": [
+          "WMS",
+          "Warehouse Management Systems",
+          "Cycle Counts",
+          "FIFO",
+          "SKU Management"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Lean / Six Sigma Methodologies",
+        "category": "Process Improvement",
+        "synonyms": [
+          "Kaizen",
+          "Continuous Improvement",
+          "5S",
+          "Root Cause Analysis",
+          "DMAIC"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Logistics, Freight & Distribution",
+        "category": "Logistics",
+        "synonyms": [
+          "Freight Forwarding",
+          "Bill of Lading (BOL)",
+          "3PL Management",
+          "DOT Compliance"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "ERP & Operations Platforms",
+        "category": "Operations Tech",
+        "synonyms": [
+          "SAP SCM",
+          "Oracle SCM",
+          "Manhattan Associates",
+          "Fishbowl"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "SAP SCM",
+        "synonyms": [
+          "SAP Supply Chain Management"
+        ]
+      },
+      {
+        "name": "Manhattan Associates WMS",
+        "synonyms": [
+          "Manhattan WMS"
+        ]
+      },
+      {
+        "name": "Microsoft Excel / Power BI",
+        "synonyms": [
+          "Supply Chain Analytics"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "On-Time In-Full (OTIF) delivery rate",
+      "Order lead times & safety stock calculation",
+      "Economic Order Quantity (EOQ)",
+      "Inventory turnover ratio",
+      "Standard Operating Procedures (SOPs)"
+    ],
+    "softSkills": [
+      "Decisive Tactical Problem-Solving",
+      "Cross-Functional Logistics Orchestration",
+      "Team Leadership Across Shifts",
+      "Vendor Negotiation"
+    ]
+  },
+  "commonCertifications": [
+    "APICS CSCP (Certified Supply Chain Professional)",
+    "APICS CPIM (Certified in Planning and Inventory Management)",
+    "Six Sigma Green Belt / Black Belt",
+    "PMP (Project Management Professional)"
+  ],
+  "commonQualifications": [
+    "Bachelor's in Supply Chain Management, Logistics, Industrial Engineering, or Business Administration"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Optimized",
+      "Streamlined",
+      "Negotiated",
+      "Directed",
+      "Supervised",
+      "Consolidated",
+      "Reduced",
+      "Standardized"
+    ],
+    "metricTemplates": [
+      "Overhauled warehouse pick-pack fulfillment routing, improving order fulfillment speed by [X]% across [Y] daily shipments.",
+      "Negotiated 3PL freight carrier contracts, securing a [X]% rate discount while elevating On-Time Delivery (OTD) to [Y]%.",
+      "Reduced inventory carrying costs by $[X]k by introducing automated reorder points and cycle count procedures.",
+      "Implemented 5S and Lean manufacturing principles, decreasing workplace distribution incidents by [X]%."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "Lead with scale of warehouse/fleet/budget managed, OTIF delivery rate improvements, and Lean/Six Sigma credentials.",
+    "keySectionsRecommended": [
+      "Summary",
+      "Operations & Supply Chain Certifications",
+      "Core Operational Strengths",
+      "Experience",
+      "Education"
+    ],
+    "commonPitfalls": [
+      "Omitting specific WMS/ERP platforms or failing to quantify inventory reductions or delivery percentages"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Supply Chain Operations Manager",
+      "company": "Pioneer Logistics International",
+      "requiredExperienceYears": 5,
+      "requiredQualifications": [
+        "5+ years in supply chain operations, logistics, or distribution management",
+        "Demonstrated mastery of WMS platforms and inventory control methods",
+        "Proven track record optimizing carrier freight costs and OTIF delivery rates"
+      ],
+      "preferredQualifications": [
+        "APICS CSCP or Six Sigma Green Belt certification",
+        "Experience implementing automated barcode scanning and RFID tracking"
+      ]
+    }
+  ]
+}

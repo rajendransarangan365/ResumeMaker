@@ -1,0 +1,393 @@
+{
+  "id": "software-development",
+  "displayName": "Software Development",
+  "description": "Design, development, testing, and deployment of software applications, web systems, microservices, and mobile apps.",
+  "category": "Technology",
+  "seniorityLevels": [
+    "Entry / Junior",
+    "Mid-Level",
+    "Senior",
+    "Lead / Staff",
+    "Principal / Architect",
+    "Engineering Manager"
+  ],
+  "jobTitles": [
+    {
+      "title": "Full Stack Developer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Full Stack Software Engineer",
+        "Web Applications Engineer",
+        "Software Developer"
+      ]
+    },
+    {
+      "title": "Frontend Developer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Frontend Engineer",
+        "UI/UX Developer",
+        "React/Vue Developer"
+      ]
+    },
+    {
+      "title": "Backend Developer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Backend Software Engineer",
+        "API Engineer",
+        "Server-Side Developer"
+      ]
+    },
+    {
+      "title": "Senior Software Engineer",
+      "level": "Senior",
+      "alternativeTitles": [
+        "Senior Full Stack Engineer",
+        "Senior Backend Engineer",
+        "Senior Developer"
+      ]
+    },
+    {
+      "title": "Lead Software Engineer",
+      "level": "Lead / Staff",
+      "alternativeTitles": [
+        "Tech Lead",
+        "Staff Engineer",
+        "Engineering Lead"
+      ]
+    },
+    {
+      "title": "Mobile Developer",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "iOS Developer",
+        "Android Developer",
+        "React Native Developer",
+        "Flutter Developer"
+      ]
+    },
+    {
+      "title": "Junior Software Engineer",
+      "level": "Entry / Junior",
+      "alternativeTitles": [
+        "Associate Software Engineer",
+        "Graduate Developer",
+        "Junior Programmer"
+      ]
+    },
+    {
+      "title": "Software Architect",
+      "level": "Principal / Architect",
+      "alternativeTitles": [
+        "Solutions Architect",
+        "Enterprise Software Architect",
+        "Systems Architect"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "JavaScript",
+        "category": "Programming Languages",
+        "synonyms": [
+          "JS",
+          "ECMAScript",
+          "ES6+"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "TypeScript",
+        "category": "Programming Languages",
+        "synonyms": [
+          "TS"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Python",
+        "category": "Programming Languages",
+        "synonyms": [
+          "Py3",
+          "Python3"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Java",
+        "category": "Programming Languages",
+        "synonyms": [
+          "Java 17",
+          "Core Java",
+          "J2EE"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "C#",
+        "category": "Programming Languages",
+        "synonyms": [
+          "C-Sharp",
+          ".NET",
+          "CSharp"
+        ],
+        "importance": "Medium"
+      },
+      {
+        "name": "Go",
+        "category": "Programming Languages",
+        "synonyms": [
+          "Golang"
+        ],
+        "importance": "Medium"
+      },
+      {
+        "name": "React",
+        "category": "Frontend Frameworks",
+        "synonyms": [
+          "React.js",
+          "ReactJS",
+          "React 18"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Next.js",
+        "category": "Frontend Frameworks",
+        "synonyms": [
+          "NextJS",
+          "Next 14"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Node.js",
+        "category": "Backend Runtimes",
+        "synonyms": [
+          "NodeJS",
+          "Node",
+          "Express.js"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "RESTful APIs",
+        "category": "API Architecture",
+        "synonyms": [
+          "REST APIs",
+          "REST Web Services",
+          "HTTP APIs"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "GraphQL",
+        "category": "API Architecture",
+        "synonyms": [
+          "GQL",
+          "Apollo GraphQL"
+        ],
+        "importance": "Medium"
+      },
+      {
+        "name": "Microservices",
+        "category": "Architecture",
+        "synonyms": [
+          "Microservice Architecture",
+          "Distributed Systems"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "SQL & Relational DBs",
+        "category": "Databases",
+        "synonyms": [
+          "PostgreSQL",
+          "MySQL",
+          "Relational Databases"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "NoSQL DBs",
+        "category": "Databases",
+        "synonyms": [
+          "MongoDB",
+          "DynamoDB",
+          "Redis",
+          "Document DB"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "CI/CD Pipelines",
+        "category": "DevOps & Tooling",
+        "synonyms": [
+          "Continuous Integration",
+          "GitHub Actions",
+          "GitLab CI",
+          "Jenkins"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Docker & Containerization",
+        "category": "DevOps & Tooling",
+        "synonyms": [
+          "Docker",
+          "Containers",
+          "Kubernetes",
+          "K8s"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Automated Testing",
+        "category": "Quality & Testing",
+        "synonyms": [
+          "Unit Testing",
+          "Jest",
+          "Vitest",
+          "Cypress",
+          "Playwright",
+          "TDD"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Git & Version Control",
+        "category": "Collaboration",
+        "synonyms": [
+          "Git",
+          "GitHub",
+          "GitLab",
+          "Branching Strategies"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Docker",
+        "synonyms": [
+          "Docker Desktop",
+          "Docker Engine"
+        ]
+      },
+      {
+        "name": "Kubernetes",
+        "synonyms": [
+          "K8s",
+          "EKS",
+          "GKE"
+        ]
+      },
+      {
+        "name": "AWS",
+        "synonyms": [
+          "Amazon Web Services",
+          "EC2",
+          "S3",
+          "Lambda"
+        ]
+      },
+      {
+        "name": "Git & GitHub",
+        "synonyms": [
+          "GitHub Enterprise",
+          "GitLab",
+          "Bitbucket"
+        ]
+      },
+      {
+        "name": "Postman",
+        "synonyms": [
+          "API Testing",
+          "Swagger",
+          "OpenAPI"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "High-throughput microservices",
+      "Idempotent endpoints",
+      "Event-driven architecture",
+      "Database indexing & query optimization",
+      "Zero-downtime deployment",
+      "State management",
+      "Asynchronous processing",
+      "Concurrency & race conditions",
+      "OAuth2 / JWT authentication"
+    ],
+    "softSkills": [
+      "Analytical Problem Solving",
+      "Cross-functional Collaboration",
+      "Code Review & Mentorship",
+      "Agile/Scrum Delivery",
+      "Technical Communication"
+    ]
+  },
+  "commonCertifications": [
+    "AWS Certified Developer - Associate",
+    "AWS Certified Solutions Architect",
+    "Meta Certified Frontend Developer",
+    "Oracle Certified Professional: Java SE",
+    "Certified Kubernetes Application Developer (CKAD)"
+  ],
+  "commonQualifications": [
+    "Bachelor's or Master's in Computer Science, Software Engineering, or equivalent practical industry experience"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Architected",
+      "Engineered",
+      "Optimized",
+      "Refactored",
+      "Spearheaded",
+      "Automated",
+      "Streamlined",
+      "Decommissioned"
+    ],
+    "metricTemplates": [
+      "Reduced API response latency by [X]% across [Y] endpoints by implementing Redis caching and indexing query paths.",
+      "Architected and delivered [X] microservices handling [Y] daily active requests with 99.99% uptime.",
+      "Refactored legacy monolithic codebase into TypeScript, reducing production bug regressions by [X]%.",
+      "Automated CI/CD build and testing pipeline, cutting release deployment cycle time from [X] hours to [Y] minutes."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "Lead with stack specialization (e.g., Full Stack / Backend), years of experience, scale of systems built, and core performance wins.",
+    "keySectionsRecommended": [
+      "Professional Summary",
+      "Technical Skills (Languages, Frameworks, Cloud/DevOps, Databases)",
+      "Professional Experience",
+      "Key Projects / Open Source",
+      "Education & Certifications"
+    ],
+    "commonPitfalls": [
+      "Listing tools without specifying context in experience bullets",
+      "Missing performance metrics or scale indicators",
+      "Using outdated terminology without specifying modern versions"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Senior Full Stack Engineer",
+      "company": "CloudScale Technologies",
+      "requiredExperienceYears": 5,
+      "requiredQualifications": [
+        "Bachelor's in Computer Science or related degree",
+        "5+ years building scalable web services with Node.js and TypeScript",
+        "Demonstrated mastery of React/Next.js and state architecture",
+        "Hands-on production experience with PostgreSQL and Docker"
+      ],
+      "preferredQualifications": [
+        "AWS cloud deployment experience",
+        "GraphQL and Kafka event streams experience",
+        "Experience mentoring junior/mid developers"
+      ]
+    }
+  ]
+}

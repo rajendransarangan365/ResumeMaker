@@ -1,0 +1,206 @@
+{
+  "id": "project-management-executive",
+  "displayName": "Project Management and Executive Leadership",
+  "description": "Agile/Scrum management, program governance, enterprise strategic planning, stakeholder alignment, P&L management, and executive leadership.",
+  "category": "Operations & Management",
+  "seniorityLevels": [
+    "Associate Project Manager",
+    "Scrum Master",
+    "Project Manager (PMP)",
+    "Senior Program Manager",
+    "Director of PMO",
+    "Chief Operating Officer (COO) / CEO"
+  ],
+  "jobTitles": [
+    {
+      "title": "Project Manager (PMP)",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Technical Project Manager",
+        "Delivery Lead",
+        "Project Lead"
+      ]
+    },
+    {
+      "title": "Program Manager",
+      "level": "Senior",
+      "alternativeTitles": [
+        "Senior Program Manager",
+        "Enterprise PMO Lead",
+        "Portfolio Manager"
+      ]
+    },
+    {
+      "title": "Scrum Master / Agile Coach",
+      "level": "Mid-Level",
+      "alternativeTitles": [
+        "Agile Project Manager",
+        "RTE (Release Train Engineer)",
+        "Agile Delivery Lead"
+      ]
+    },
+    {
+      "title": "Director of Program Management (PMO)",
+      "level": "Lead / Staff",
+      "alternativeTitles": [
+        "Head of PMO",
+        "VP of Strategic Execution",
+        "Chief Operating Officer (COO)"
+      ]
+    }
+  ],
+  "skills": {
+    "technicalSkills": [
+      {
+        "name": "Project Lifecycle Management",
+        "category": "Methodology",
+        "synonyms": [
+          "Waterfall",
+          "Agile",
+          "Scrum",
+          "Kanban",
+          "Hybrid Methodologies",
+          "PRINCE2"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Project Management Software",
+        "category": "Tools",
+        "synonyms": [
+          "Jira Software",
+          "Asana",
+          "Monday.com",
+          "Smartsheet",
+          "Microsoft Project"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Budgeting & P&L Governance",
+        "category": "Financial Controls",
+        "synonyms": [
+          "Resource Allocation",
+          "Budget Tracking",
+          "Variance Analysis",
+          "Earned Value (EVM)"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Risk Management & Mitigation",
+        "category": "Governance",
+        "synonyms": [
+          "RAID Logs",
+          "Risk Register",
+          "Contingency Planning",
+          "Critical Path Method"
+        ],
+        "importance": "High"
+      },
+      {
+        "name": "Executive Stakeholder Management",
+        "category": "Leadership",
+        "synonyms": [
+          "Steering Committee Reporting",
+          "Executive Alignment",
+          "Vendor Contracts",
+          "Change Management"
+        ],
+        "importance": "High"
+      }
+    ],
+    "toolsAndPlatforms": [
+      {
+        "name": "Jira Software",
+        "synonyms": [
+          "Atlassian Jira",
+          "Confluence"
+        ]
+      },
+      {
+        "name": "Smartsheet",
+        "synonyms": [
+          "Smartsheet PMO"
+        ]
+      },
+      {
+        "name": "Asana",
+        "synonyms": [
+          "Asana Enterprise"
+        ]
+      }
+    ],
+    "domainTerminology": [
+      "Sprint velocity and burndown charts",
+      "Scope creep & change management requests",
+      "Earned Value Management (EVM)",
+      "Key Performance Indicators (KPIs) & OKRs",
+      "Cross-functional dependencies"
+    ],
+    "softSkills": [
+      "Strategic Vision Alignment",
+      "Decisive Consensus Building",
+      "Influence Without Direct Authority",
+      "Conflict Mediation",
+      "Executive Presence"
+    ]
+  },
+  "commonCertifications": [
+    "PMP (Project Management Professional - PMI)",
+    "CSM (Certified ScrumMaster - Scrum Alliance)",
+    "PMI-ACP (Agile Certified Practitioner)",
+    "SAFe Agilist (Scaled Agile Framework)",
+    "PRINCE2 Practitioner"
+  ],
+  "commonQualifications": [
+    "Bachelor's or Master's in Business Administration (MBA), Computer Science, Engineering, or active PMP credential"
+  ],
+  "achievementPatterns": {
+    "actionVerbs": [
+      "Spearheaded",
+      "Governed",
+      "Directed",
+      "Orchestrated",
+      "Delivered",
+      "Mitigated",
+      "Standardized",
+      "Accelerated"
+    ],
+    "metricTemplates": [
+      "Spearheaded $[X]M enterprise digital transformation program across [Y] cross-functional squads, delivering all deliverables on schedule and [Z]% under budget.",
+      "Established formal PMO governance frameworks, increasing on-time project delivery rates from [X]% to [Y]%.",
+      "Led agile sprint delivery using Jira for [X] developers, boosting velocity by [Y]% and reducing defect spillover.",
+      "Managed multi-million dollar vendor contracts, successfully mitigating [X] critical project risks through structured RAID logs."
+    ]
+  },
+  "resumeWritingGuidance": {
+    "summaryStrategy": "Lead with PMP/CSM credentials, total budget/portfolio size delivered ($M), methodology specialization (Agile/Waterfall), and stakeholder influence.",
+    "keySectionsRecommended": [
+      "Executive Summary",
+      "Credentials (PMP, CSM, SAFe)",
+      "Program & Portfolio Management Core Competencies",
+      "Experience",
+      "Education & MBA"
+    ],
+    "commonPitfalls": [
+      "Describing daily tasks rather than project outcomes, budget figures, team sizes, and on-time delivery percentages"
+    ]
+  },
+  "exampleJobDescriptions": [
+    {
+      "title": "Senior Technical Program Manager (PMP)",
+      "company": "Vanguard Global Systems",
+      "requiredExperienceYears": 6,
+      "requiredQualifications": [
+        "6+ years managing large-scale cross-functional software programs",
+        "Active Project Management Professional (PMP) or CSM certification",
+        "Mastery of Jira, Confluence, and Agile/Scrum delivery frameworks"
+      ],
+      "preferredQualifications": [
+        "Master of Business Administration (MBA)",
+        "Experience managing multi-million dollar capital technology budgets"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,276 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-10-27T14:29:19.571Z",
+  "categories": [
+    {
+      "category": "Software Engineering & Web",
+      "skills": [
+        {
+          "canonical": "JavaScript",
+          "synonyms": [
+            "JS",
+            "ECMAScript",
+            "ES6",
+            "ES2022"
+          ],
+          "category": "Languages"
+        },
+        {
+          "canonical": "TypeScript",
+          "synonyms": [
+            "TS"
+          ],
+          "category": "Languages"
+        },
+        {
+          "canonical": "Python",
+          "synonyms": [
+            "Python3",
+            "Py3"
+          ],
+          "category": "Languages"
+        },
+        {
+          "canonical": "React",
+          "synonyms": [
+            "React.js",
+            "ReactJS",
+            "React 18"
+          ],
+          "category": "Frameworks"
+        },
+        {
+          "canonical": "Next.js",
+          "synonyms": [
+            "NextJS",
+            "Next 14",
+            "App Router"
+          ],
+          "category": "Frameworks"
+        },
+        {
+          "canonical": "Node.js",
+          "synonyms": [
+            "NodeJS",
+            "Node runtime",
+            "Express.js"
+          ],
+          "category": "Backend"
+        },
+        {
+          "canonical": "RESTful APIs",
+          "synonyms": [
+            "REST API",
+            "RESTful Web Services",
+            "HTTP APIs"
+          ],
+          "category": "Architecture"
+        },
+        {
+          "canonical": "GraphQL",
+          "synonyms": [
+            "GQL",
+            "Apollo Client",
+            "Apollo Server"
+          ],
+          "category": "Architecture"
+        },
+        {
+          "canonical": "SQL",
+          "synonyms": [
+            "Structured Query Language",
+            "PostgreSQL",
+            "MySQL",
+            "MSSQL"
+          ],
+          "category": "Databases"
+        },
+        {
+          "canonical": "MongoDB",
+          "synonyms": [
+            "Mongo",
+            "NoSQL",
+            "DocumentDB"
+          ],
+          "category": "Databases"
+        }
+      ]
+    },
+    {
+      "category": "Cloud, DevOps & Infrastructure",
+      "skills": [
+        {
+          "canonical": "Amazon Web Services",
+          "synonyms": [
+            "AWS",
+            "Amazon Cloud",
+            "EC2",
+            "S3",
+            "Lambda"
+          ],
+          "category": "Cloud"
+        },
+        {
+          "canonical": "Microsoft Azure",
+          "synonyms": [
+            "Azure",
+            "Azure Cloud",
+            "Azure DevOps"
+          ],
+          "category": "Cloud"
+        },
+        {
+          "canonical": "Docker",
+          "synonyms": [
+            "Docker Engine",
+            "Docker Compose",
+            "Containerization"
+          ],
+          "category": "Containers"
+        },
+        {
+          "canonical": "Kubernetes",
+          "synonyms": [
+            "K8s",
+            "EKS",
+            "AKS",
+            "GKE",
+            "Container Orchestration"
+          ],
+          "category": "Containers"
+        },
+        {
+          "canonical": "Terraform",
+          "synonyms": [
+            "IaC",
+            "Infrastructure as Code",
+            "HashiCorp Terraform"
+          ],
+          "category": "IaC"
+        },
+        {
+          "canonical": "CI/CD",
+          "synonyms": [
+            "Continuous Integration",
+            "Continuous Deployment",
+            "GitHub Actions",
+            "GitLab CI",
+            "Jenkins"
+          ],
+          "category": "DevOps"
+        }
+      ]
+    },
+    {
+      "category": "AI, Data & Analytics",
+      "skills": [
+        {
+          "canonical": "Machine Learning",
+          "synonyms": [
+            "ML",
+            "Supervised Learning",
+            "Scikit-Learn",
+            "Statistical Learning"
+          ],
+          "category": "AI"
+        },
+        {
+          "canonical": "Deep Learning",
+          "synonyms": [
+            "DL",
+            "PyTorch",
+            "TensorFlow",
+            "Neural Networks"
+          ],
+          "category": "AI"
+        },
+        {
+          "canonical": "Large Language Models",
+          "synonyms": [
+            "LLM",
+            "Generative AI",
+            "GenAI",
+            "Transformers",
+            "Prompt Engineering",
+            "RAG"
+          ],
+          "category": "AI"
+        },
+        {
+          "canonical": "Apache Spark",
+          "synonyms": [
+            "Spark",
+            "PySpark",
+            "Databricks"
+          ],
+          "category": "Big Data"
+        },
+        {
+          "canonical": "Snowflake",
+          "synonyms": [
+            "Snowflake Data Cloud",
+            "Snowflake DW"
+          ],
+          "category": "Data Warehousing"
+        },
+        {
+          "canonical": "Power BI",
+          "synonyms": [
+            "PowerBI",
+            "Microsoft Power BI",
+            "DAX"
+          ],
+          "category": "BI"
+        },
+        {
+          "canonical": "Tableau",
+          "synonyms": [
+            "Tableau Desktop",
+            "Tableau Server"
+          ],
+          "category": "BI"
+        }
+      ]
+    },
+    {
+      "category": "Project Management & Leadership",
+      "skills": [
+        {
+          "canonical": "Agile Methodology",
+          "synonyms": [
+            "Agile",
+            "Scrum",
+            "Kanban",
+            "Sprint Planning"
+          ],
+          "category": "Methodology"
+        },
+        {
+          "canonical": "Jira",
+          "synonyms": [
+            "Atlassian Jira",
+            "Jira Software"
+          ],
+          "category": "Tools"
+        },
+        {
+          "canonical": "PMP",
+          "synonyms": [
+            "Project Management Professional",
+            "PMI PMP"
+          ],
+          "category": "Certifications"
+        },
+        {
+          "canonical": "Risk Management",
+          "synonyms": [
+            "RAID Logs",
+            "Risk Mitigation",
+            "Contingency Planning"
+          ],
+          "category": "Governance"
+        }
+      ]
+    }
+  ]
+}
