@@ -3,6 +3,7 @@ import { requireAuth, AuthenticatedRequest } from '../middleware/auth.middleware
 import { agentService } from '../services/agent.service';
 import { CandidateProfile } from '../models/CandidateProfile';
 import { ResumeVersion } from '../models/ResumeVersion';
+import { JobApplication } from '../models/JobApplication';
 
 const router = Router();
 
@@ -142,12 +143,33 @@ router.post(
         }
       }
 
+      // 4. Auto-record JobApplication entry with real stretched fields
+      let jobApplicationId: string | null = null;
+      try {
+        const app = await JobApplication.create({
+          userId: req.user!._id,
+          resumeId: targetResume?._id || (resumeId ? resumeId : undefined),
+          jobTitle: jobTitle || 'Optimized Role',
+          companyName: companyName || '',
+          jdText: rawText || '',
+          status: 'applied',
+          atsScore: result.evaluationScorecard?.overallScore || 95,
+          matchScore: result.matchReport?.overallScore || 95,
+          stretchedFields: result.stretchedFields || [],
+          interviewPrepQuestions: [],
+        });
+        jobApplicationId = app._id.toString();
+      } catch (appErr) {
+        console.warn('Auto JobApplication creation warning:', appErr);
+      }
+
       res.status(200).json({
         success: true,
         data: {
           ...result,
           savedResume: targetResume,
           appliedResumeId: targetResume?._id || resumeId || null,
+          jobApplicationId,
         },
       });
     } catch (error) {

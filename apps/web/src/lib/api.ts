@@ -215,4 +215,27 @@ export const api = {
     companyName?: string;
     rawText: string;
   }) => fetcher<any>('/agents/match', { method: 'POST', body: JSON.stringify(body) }),
+
+  // Job Applications & Interview Prep Tracker
+  getApplications: () =>
+    fetcher<{ applications: any[]; statusCounts: Record<string, number>; total: number }>('/applications'),
+  getApplicationById: (id: string) =>
+    fetcher<{ application: any }>(`/applications/${id}`),
+  createApplication: (body: {
+    resumeId?: string;
+    jobTitle: string;
+    companyName?: string;
+    jdText?: string;
+    atsScore?: number;
+    matchScore?: number;
+    stretchedFields?: any[];
+    status?: string;
+  }) => fetcher<{ application: any }>('/applications', { method: 'POST', body: JSON.stringify(body) }),
+  updateApplicationStatus: (id: string, body: { status?: string; notes?: string }) =>
+    fetcher<{ application: any }>(`/applications/${id}`, { method: 'PATCH', body: JSON.stringify(body) }),
+  deleteApplication: (id: string) =>
+    fetcher<{ message: string }>(`/applications/${id}`, { method: 'DELETE' }),
+  generateInterviewPrep: (id: string) =>
+    fetcher<{ application: any }>(`/applications/${id}/generate-prep`, { method: 'POST' }),
 };
+

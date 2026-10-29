@@ -324,7 +324,9 @@ export type AIFeature =
   | 'candidate_matching'
   | 'bullet_optimization'
   | 'career_gap_assistant'
-  | 'ats_evaluation';
+  | 'ats_evaluation'
+  | 'jd_optimization'
+  | 'interview_prep';
 
 export interface IAIUsageLog {
   id: string;
@@ -388,3 +390,51 @@ export interface IExportOptions {
   format: ExportFormat;
   includeAtsMetadata?: boolean;
 }
+
+// -----------------------------------------------------------------------------
+// Job Applications & Interview Prep
+// -----------------------------------------------------------------------------
+export interface IStretchedField {
+  field: string;
+  section: string;
+  originalValue: string;
+  enhancedValue: string;
+  riskLevel: 'low' | 'medium' | 'high';
+  interviewTip: string;
+}
+
+export interface IInterviewQuestion {
+  question: string;
+  suggestedAnswer: string;
+  relatedField: string;
+  category: 'behavioral' | 'technical' | 'experience' | 'situational';
+  difficulty: 'easy' | 'medium' | 'hard';
+}
+
+export type ApplicationStatus =
+  | 'draft'
+  | 'applied'
+  | 'shortlisted'
+  | 'interview'
+  | 'offered'
+  | 'rejected'
+  | 'withdrawn';
+
+export interface IJobApplication {
+  _id: string;
+  userId: string;
+  resumeId?: string;
+  jobTitle: string;
+  companyName: string;
+  jdText: string;
+  appliedDate: string;
+  status: ApplicationStatus;
+  atsScore: number;
+  matchScore: number;
+  stretchedFields: IStretchedField[];
+  interviewPrepQuestions: IInterviewQuestion[];
+  notes: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
